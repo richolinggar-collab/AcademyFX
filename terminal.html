@@ -49,6 +49,7 @@
     </script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        /* Ditambahkan overflow-x: hidden untuk mencegah scroll horizontal di HP */
         body { padding-top: 64px; overflow-x: hidden; }
         
         /* Nav Link Hover Animation */
@@ -125,10 +126,10 @@
         .session-box { transition: all 0.5s ease-in-out; }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white">
+<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- 1. NAVIGATION (HITAM) -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
+    <!-- 1. NAVIGATION (HITAM) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -145,19 +146,37 @@
                 <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
                 <a href="tools.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Tools</a>
                 <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
-                <a href="terminal.html" class="nav-link text-brand transition duration-300">Terminal</a>
+                <a href="terminal.html" class="nav-link text-brand active-nav transition duration-300">Terminal</a>
                 <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
                 <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
             </div>
             
-            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
-                Join Discord
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                    Join Discord
+                </a>
+                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
+        <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
+        <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
+        <a href="tools.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Tools</a>
+        <a href="jurnal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Journal</a>
+        <a href="terminal.html" class="py-4 border-b border-gray-800 text-brand font-medium mobile-nav-link">Terminal</a>
+        <a href="index.html#roadmap" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Roadmap</a>
+        <a href="about.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">About</a>
+        <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
+    </div>
+
     <!-- 2. SLIDE 1: HERO TERMINAL (PUTIH) -->
-    <section class="pt-32 pb-24 px-8 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
+    <section class="pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
         <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center relative z-10">
@@ -168,33 +187,33 @@
                 </div>
             </div>
             
-            <h1 class="text-5xl md:text-6xl font-black mb-6 text-gray-900">
-                Master the <span class="text-branddark">Market</span>. <br>
-                <span class="text-5xl md:text-6xl font-black mb-6">Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.</span>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-gray-900">
+                Master the <span class="text-branddark">Market</span>. <br class="hidden md:block">
+                <span class="text-3xl md:text-5xl lg:text-6xl font-black mb-6">Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.</span>
             </h1>
             
-            <p class="text-gray-600 text-lg md:text-2xl max-w-3xl leading-relaxed mb-16 font-medium">
+            <p class="text-gray-600 text-base md:text-2xl max-w-3xl leading-relaxed mb-12 md:mb-16 font-medium">
                 Satu layar untuk menganalisa <span class="text-branddark font-bold">fundamental flow</span> global secara <span class="text-branddark font-bold">real-time</span>. Keputusan akurat dimulai dari sini.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-8 items-center justify-center">
-                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg">
+            <div class="flex flex-col sm:flex-row gap-4 md:gap-8 items-center justify-center w-full">
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors w-full sm:w-auto justify-center sm:justify-start">
+                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg flex-shrink-0">
                         <i class="fa-solid fa-clock"></i>
                     </div>
                     <div class="text-left">
                         <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-0.5">Terminal Time</p>
-                        <p class="text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-time">00.00.00</p>
+                        <p class="text-xl md:text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-time">00.00.00</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg">
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors w-full sm:w-auto justify-center sm:justify-start">
+                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg flex-shrink-0">
                         <i class="fa-solid fa-calendar-day"></i>
                     </div>
                     <div class="text-left">
                         <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-0.5">Session Date</p>
-                        <p class="text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-date">01 Jan 2026</p>
+                        <p class="text-xl md:text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-date">01 Jan 2026</p>
                     </div>
                 </div>
             </div>
@@ -202,15 +221,15 @@
     </section>
 
     <!-- 3. SLIDE 2: PENGGERAK PASAR (HITAM) -->
-    <section class="bg-darkbg py-24 px-4 md:px-16 lg:px-24 border-b border-gray-800 relative">
+    <section class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative">
         <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
         
         <div class="max-w-[1400px] mx-auto relative z-10">
             <!-- TEKS MARKET DRIVERS DIPERBARUI -->
             <div class="text-center mb-12">
                 <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">Live · Indikator Volatilitas</p>
-                <h2 class="text-4xl md:text-5xl font-black text-white mb-6"><span class="text-brand">Core</span> Market Index</h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"><span class="text-brand">Core</span> Market Index</h2>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">
                     Pantau likuiditas global secara <span class="text-brand font-bold">real-time</span>. Sentimen makroekonomi tercermin langsung pada Emas, Kripto, Ekuitas, dan <span class="text-brand font-bold">Major Pairs</span>.
                 </p>
             </div>
@@ -239,7 +258,7 @@
             </div>
 
             <!-- 5 Mini Charts Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                 <!-- GOLD -->
                 <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
                     <div class="flex-1 tv-widget-wrapper pointer-events-none">
@@ -293,7 +312,7 @@
                 </div>
 
                 <!-- EUR/USD -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default sm:col-span-2 lg:col-span-1">
                     <div class="flex-1 tv-widget-wrapper pointer-events-none">
                         <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
                         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
@@ -307,10 +326,10 @@
             </div>
 
             <!-- Currency Strength Heatmap -->
-            <div class="bg-darkpanel border border-gray-800 rounded-2xl p-6 shadow-xl hover:border-brand transition-all duration-300">
+            <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300">
                 <div class="flex items-center gap-2 mb-6">
                     <i class="fa-solid fa-table-cells text-brand text-lg"></i>
-                    <h3 class="font-bold text-white uppercase text-xs tracking-widest">CURRENCY STRENGTH · 8 MATA UANG MAYOR</h3>
+                    <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CURRENCY STRENGTH · 8 MATA UANG MAYOR</h3>
                 </div>
                 
                 <div class="h-[400px] w-full tv-widget-wrapper">
@@ -326,24 +345,24 @@
     </section>
 
     <!-- 4. SLIDE 3: KALENDER EKONOMI & GLOBE 2D/3D TOGGLE (PUTIH) -->
-    <section class="bg-white py-32 px-4 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden">
+    <section class="bg-white py-16 md:py-32 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
         <div class="max-w-[1400px] mx-auto relative z-10">
             <!-- Header Kalender -->
-            <div class="text-center mb-16">
+            <div class="text-center mb-12 md:mb-16">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Jadwal & Data Rilis</p>
-                <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-4">Economic <span class="text-branddark">Calendar</span></h2>
-                <p class="text-gray-500 text-lg">Pantau <span class="text-branddark font-bold">high-impact news</span>. Hindari <span class="text-branddark font-bold">liquidity sweep</span> dan <span class="text-branddark font-bold">fakeout</span> saat rilis berita penting.</p>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Economic <span class="text-branddark">Calendar</span></h2>
+                <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau <span class="text-branddark font-bold">high-impact news</span>. Hindari <span class="text-branddark font-bold">liquidity sweep</span> dan <span class="text-branddark font-bold">fakeout</span> saat rilis berita penting.</p>
             </div>
 
             <!-- Kalender Widgets -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 md:mb-32">
                 <!-- TradingView Calendar -->
-                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 shadow-sm hover:border-branddark transition-colors h-[600px] flex flex-col w-full">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center gap-2 text-gray-900 font-bold text-sm">
-                            <i class="fa-solid fa-bolt text-branddark"></i> HIGH IMPACT NEWS (TradingView)
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
+                            <i class="fa-solid fa-bolt text-branddark"></i> HIGH IMPACT NEWS <span class="hidden sm:inline">(TradingView)</span>
                         </div>
                         <span class="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-1 rounded border border-red-200">LIVE</span>
                     </div>
@@ -356,16 +375,16 @@
                 </div>
 
                 <!-- Investing.com Calendar (DENGAN FILTER HIGH IMPACT & GMT+7) -->
-                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 shadow-sm hover:border-branddark transition-colors h-[600px] flex flex-col w-full">
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                        <div class="flex items-center gap-2 text-gray-900 font-bold text-sm">
-                            <i class="fa-solid fa-calendar-days text-branddark"></i> INVESTING.COM CALENDAR
+                        <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
+                            <i class="fa-solid fa-calendar-days text-branddark"></i> INVESTING.COM <span class="hidden sm:inline">CALENDAR</span>
                         </div>
                         <div class="flex items-center gap-2">
                             <!-- Label Zona Waktu (Telah dipaksa ke Jakarta GMT+7 via JS) -->
-                            <span class="bg-blue-50 text-blue-500 text-[10px] font-bold px-2 py-1 rounded border border-blue-200">WIB (GMT+7)</span>
+                            <span class="bg-blue-50 text-blue-500 text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-1 rounded border border-blue-200">WIB (GMT+7)</span>
                             <!-- Dropdown Filter Interaktif -->
-                            <select id="investing-filter" class="text-[10px] border border-gray-200 rounded px-2 py-1 bg-white font-bold text-gray-700 outline-none cursor-pointer hover:border-branddark transition-colors">
+                            <select id="investing-filter" class="text-[9px] md:text-[10px] border border-gray-200 rounded px-1.5 md:px-2 py-1 bg-white font-bold text-gray-700 outline-none cursor-pointer hover:border-branddark transition-colors">
                                 <option value="all">Semua Impact</option>
                                 <option value="high">🔥 High Impact Saja</option>
                             </select>
@@ -381,37 +400,37 @@
             <!-- Global Map Section (DENGAN KONTROL TOGGLE 2D / 3D) -->
             <div class="text-center mb-6">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Visual Interaktif</p>
-                <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
-                <p class="text-gray-400 text-lg mb-2" class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
+                <p class="text-gray-400 text-base md:text-lg mb-2 max-w-2xl mx-auto">Pantau pergerakan <span class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
                 
                 <!-- Tombol Pengatur Mode 2D / 3D -->
-                <div class="inline-flex p-1.5 bg-gray-100 rounded-2xl shadow-inner border border-gray-200 mb-8 z-30 relative">
+                <div class="inline-flex p-1.5 bg-gray-100 rounded-2xl shadow-inner border border-gray-200 mb-8 z-30 relative w-full sm:w-auto overflow-x-auto whitespace-nowrap custom-scrollbar">
                     <!-- Default Aktif (2D) -->
-                    <button id="btn-toggle-2d" class="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50">
+                    <button id="btn-toggle-2d" class="px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0">
                         <i class="fa-solid fa-map mr-1.5"></i> 2D Map Layout
                     </button>
                     <!-- Default Tidak Aktif (3D) -->
-                    <button id="btn-toggle-3d" class="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1">
+                    <button id="btn-toggle-3d" class="px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0">
                         <i class="fa-solid fa-earth-americas mr-1.5"></i> 3D Globe Render
                     </button>
                 </div>
             </div>
 
             <!-- CONTAINER UTAMA MAP -->
-            <div class="bg-gray-50 border border-gray-200 rounded-3xl shadow-sm hover:border-branddark transition-colors h-[600px] relative overflow-hidden flex items-center justify-center">
+            <div class="bg-gray-50 border border-gray-200 rounded-3xl shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] relative overflow-hidden flex items-center justify-center">
                 
                 <!-- Status Tag -->
-                <div class="absolute top-6 left-6 z-30 bg-white/90 backdrop-blur border border-gray-200 p-4 rounded-xl pointer-events-none shadow-sm">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="w-2 h-2 rounded-full bg-branddark animate-blink"></span>
-                        <span class="text-gray-900 font-bold text-xs tracking-wider" id="map-status-mode">MODE: 2D FLAT (RADAR SYNC)</span>
+                <div class="absolute top-4 left-4 md:top-6 md:left-6 z-30 bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-4 rounded-xl pointer-events-none shadow-sm max-w-[200px] md:max-w-none">
+                    <div class="flex items-center gap-2 mb-1 md:mb-2">
+                        <span class="w-2 h-2 rounded-full bg-branddark animate-blink flex-shrink-0"></span>
+                        <span class="text-gray-900 font-bold text-[10px] md:text-xs tracking-wider leading-tight" id="map-status-mode">MODE: 2D FLAT (RADAR SYNC)</span>
                     </div>
-                    <p class="text-[10px] text-gray-500 font-mono">Real-Time WIB Session Highlight</p>
+                    <p class="text-[8px] md:text-[10px] text-gray-500 font-mono hidden sm:block">Real-Time WIB Session Highlight</p>
                 </div>
 
                 <!-- Buka World Monitor CTA -->
-                <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-6 right-6 z-30 bg-white/90 backdrop-blur border border-branddark/50 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
-                    <i class="fa-solid fa-map-location-dot"></i> Buka World Monitor <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-30 bg-white/90 backdrop-blur border border-branddark/50 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-3 py-2 md:px-5 md:py-3 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
+                    <i class="fa-solid fa-map-location-dot"></i> <span class="hidden sm:inline">Buka World Monitor</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
                 </a>
 
                 <!-- ================= 2D MAP CONTAINER (Statis dengan Animasi Radar Pulse Kuning Neon) ================= -->
@@ -433,46 +452,46 @@
                     </div>
 
                     <!-- Panel Info Sesi Makro (DIBUAT REAL-TIME MENGGUNAKAN JS DI BAWAH) -->
-                    <div class="z-20 grid grid-cols-2 md:grid-cols-4 gap-4 w-full px-12 mt-16 pointer-events-none">
+                    <div class="z-20 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 w-full px-4 md:px-12 mt-8 md:mt-16 pointer-events-none">
                         
                         <!-- Tokyo Box -->
-                        <div id="session-tokyo" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                        <div id="session-tokyo" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
                             <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">ASIAN SESSION</h4>
-                                <div id="badge-tokyo"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">ASIAN</h4>
+                                <div id="badge-tokyo"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
                             </div>
-                            <p class="text-branddark text-lg font-black font-mono">TOKYO</p>
-                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-circle-check text-green-500 mr-1"></i> JPY Flow</span>
+                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">TOKYO</p>
+                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-circle-check text-green-500 mr-1 hidden md:inline"></i> JPY Flow</span>
                         </div>
                         
                         <!-- London Box -->
-                        <div id="session-london" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                        <div id="session-london" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
                             <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">EUROPEAN</h4>
-                                <div id="badge-london"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">EUROPEAN</h4>
+                                <div id="badge-london"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
                             </div>
-                            <p class="text-branddark text-lg font-black font-mono">LONDON</p>
-                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-clock text-blue-500 mr-1"></i> GBP / EUR</span>
+                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">LONDON</p>
+                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-clock text-blue-500 mr-1 hidden md:inline"></i> GBP / EUR</span>
                         </div>
                         
                         <!-- New York Box -->
-                        <div id="session-ny" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                        <div id="session-ny" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
                             <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">US SESSION</h4>
-                                <div id="badge-ny"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">US SESSION</h4>
+                                <div id="badge-ny"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
                             </div>
-                            <p class="text-branddark text-lg font-black font-mono">NEW YORK</p>
-                            <span class="text-[11px] text-gray-900 font-bold"><i class="fa-solid fa-bolt text-red-500 mr-1"></i> High Volatility</span>
+                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">NEW YORK</p>
+                            <span class="text-[9px] md:text-[11px] text-gray-900 font-bold"><i class="fa-solid fa-bolt text-red-500 mr-1 hidden md:inline"></i> High Vol</span>
                         </div>
                         
                         <!-- Sydney Box -->
-                        <div id="session-sydney" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                        <div id="session-sydney" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
                             <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">PACIFIC SESSION</h4>
-                                <div id="badge-sydney"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">PACIFIC</h4>
+                                <div id="badge-sydney"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
                             </div>
-                            <p class="text-branddark text-lg font-black font-mono">SYDNEY</p>
-                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-water text-cyan-500 mr-1"></i> AUD / NZD</span>
+                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">SYDNEY</p>
+                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-water text-cyan-500 mr-1 hidden md:inline"></i> AUD / NZD</span>
                         </div>
                     </div>
                 </div>
@@ -484,46 +503,46 @@
     </section>
 
     <!-- 5. SLIDE 4: INDIKATOR MAKRO - SEMUA TEKS DIKEMBALIKAN SESUAI SUMBER (HITAM) -->
-    <section class="bg-darkbg py-32 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative">
+    <section class="bg-darkbg py-16 md:py-32 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative">
         <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12 md:mb-16">
                 <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">Data Historis & Sumber Valid</p>
-                <h2 class="text-4xl md:text-6xl font-black text-white mb-4">Macroeconomic <span class="text-brand">Indicators</span></h2>
-                <p class="text-gray-400 text-lg">Histori rilis <span class="text-brand font-bold">high-impact data</span> 3 bulan terakhir beserta <span class="text-brand font-bold">first-hand sources</span> aslinya.</p>
+                <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4">Macroeconomic <span class="text-brand">Indicators</span></h2>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Histori rilis <span class="text-brand font-bold">high-impact data</span> 3 bulan terakhir beserta <span class="text-brand font-bold">first-hand sources</span> aslinya.</p>
             </div>
 
             <!-- Dashboard Wrapper -->
-            <div class="bg-darkpanel border border-gray-800 rounded-[2rem] p-6 md:p-10 shadow-xl">
+            <div class="bg-darkpanel border border-gray-800 rounded-[2rem] p-4 md:p-6 lg:p-10 shadow-xl">
                 <!-- 2 Tabel Makro Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
                     
                     <!-- Table 1: Inflasi & Tenaga Kerja -->
                     <div class="bg-[#0d1522] border border-gray-700 rounded-2xl shadow-sm overflow-hidden group hover:border-brand transition-colors">
-                        <div class="p-5 border-b border-gray-700 flex items-center gap-3">
+                        <div class="p-4 md:p-5 border-b border-gray-700 flex items-center gap-3">
                             <i class="fa-solid fa-users-viewfinder text-brand bg-brand/10 p-2 rounded-lg"></i>
-                            <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">INFLASI & TENAGA KERJA</h3>
+                            <h3 class="font-bold text-xs md:text-sm tracking-widest uppercase text-gray-300">INFLASI & TENAGA KERJA</h3>
                         </div>
                         <div class="custom-scrollbar overflow-x-auto">
-                            <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                            <table class="w-full text-left text-xs md:text-sm border-collapse min-w-[450px] md:min-w-[500px]">
                                 <thead>
                                     <tr class="border-b border-gray-700 bg-gray-800/50">
-                                        <th class="py-3 px-5 font-bold text-white uppercase text-[10px] tracking-wider w-1/2">Indikator</th>
-                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">May</th>
-                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">Jun</th>
-                                        <th class="py-3 px-5 font-bold text-brand uppercase text-[10px] tracking-wider text-center">Jul</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-white uppercase text-[9px] md:text-[10px] tracking-wider w-1/2">Indikator</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-gray-500 uppercase text-[9px] md:text-[10px] tracking-wider text-center">May</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-gray-500 uppercase text-[9px] md:text-[10px] tracking-wider text-center">Jun</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-brand uppercase text-[9px] md:text-[10px] tracking-wider text-center">Jul</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ADP Non-Farm Employment</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Avg Hourly Earnings m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">NFP Change</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Unemployment Rate</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">JOLTS Job Openings</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">PPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">CPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Core CPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">ADP Non-Farm Employment</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">Avg Hourly Earnings m/m</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">NFP Change</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">Unemployment Rate</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">JOLTS Job Openings</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">PPI m/m</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">CPI m/m</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">Core CPI m/m</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -531,25 +550,25 @@
 
                     <!-- Table 2: Pertumbuhan & Kebijakan -->
                     <div class="bg-[#0d1522] border border-gray-700 rounded-2xl shadow-sm overflow-hidden h-max group hover:border-brand transition-colors">
-                        <div class="p-5 border-b border-gray-700 flex items-center gap-3">
+                        <div class="p-4 md:p-5 border-b border-gray-700 flex items-center gap-3">
                             <i class="fa-solid fa-chart-line text-brand bg-brand/10 p-2 rounded-lg"></i>
-                            <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">PERTUMBUHAN & KEBIJAKAN</h3>
+                            <h3 class="font-bold text-xs md:text-sm tracking-widest uppercase text-gray-300">PERTUMBUHAN & KEBIJAKAN</h3>
                         </div>
                         <div class="custom-scrollbar overflow-x-auto">
-                            <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                            <table class="w-full text-left text-xs md:text-sm border-collapse min-w-[450px] md:min-w-[500px]">
                                 <thead>
                                     <tr class="border-b border-gray-700 bg-gray-800/50">
-                                        <th class="py-3 px-5 font-bold text-white uppercase text-[10px] tracking-wider w-1/2">Indikator</th>
-                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">May</th>
-                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">Jun</th>
-                                        <th class="py-3 px-5 font-bold text-brand uppercase text-[10px] tracking-wider text-center">Jul</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-white uppercase text-[9px] md:text-[10px] tracking-wider w-1/2">Indikator</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-gray-500 uppercase text-[9px] md:text-[10px] tracking-wider text-center">May</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-gray-500 uppercase text-[9px] md:text-[10px] tracking-wider text-center">Jun</th>
+                                        <th class="py-3 px-4 md:px-5 font-bold text-brand uppercase text-[9px] md:text-[10px] tracking-wider text-center">Jul</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ISM Manufacturing PMI</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ISM Services PMI</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Retail Sales m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
-                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">GDP (q/q)</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">ISM Manufacturing PMI</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">ISM Services PMI</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">Retail Sales m/m</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-4 md:px-5 font-medium text-gray-300">GDP (q/q)</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-gray-500">-</td><td class="py-3 px-4 md:px-5 text-center text-white font-bold">-</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -560,33 +579,33 @@
                 <div>
                     <div class="flex items-center gap-3 mb-6">
                         <i class="fa-solid fa-link text-brand text-lg"></i>
-                        <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">AKSES LANGSUNG SUMBER DATA (TANGAN PERTAMA)</h3>
+                        <h3 class="font-bold text-xs md:text-sm tracking-widest uppercase text-gray-300">AKSES LANGSUNG SUMBER DATA (TANGAN PERTAMA)</h3>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <a href="https://www.forexfactory.com/calendar" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="https://www.forexfactory.com/calendar" target="_blank" class="bg-[#0d1522] border border-gray-700 p-4 md:p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-green-500/10 flex-shrink-0 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-colors"><i class="fa-solid fa-folder-open"></i></div>
-                            <div><h4 class="text-white font-bold text-base mb-1">ForexFactory</h4><p class="text-[11px] text-gray-400 leading-relaxed">Agregator jadwal berita ekonomi global & pengingat folder merah (High Impact).</p></div>
+                            <div><h4 class="text-white font-bold text-sm md:text-base mb-1">ForexFactory</h4><p class="text-[10px] md:text-[11px] text-gray-400 leading-relaxed">Agregator jadwal berita ekonomi global & pengingat folder merah (High Impact).</p></div>
                         </a>
 
-                        <a href="https://www.federalreserve.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                        <a href="https://www.federalreserve.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-4 md:p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex-shrink-0 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-white transition-colors"><i class="fa-solid fa-building-columns"></i></div>
-                            <div><h4 class="text-white font-bold text-base mb-1">The Federal Reserve</h4><p class="text-[11px] text-gray-400 leading-relaxed">Bank Sentral AS. Sumber sentimen Hawkish/Dovish & keputusan Suku Bunga (FOMC).</p></div>
+                            <div><h4 class="text-white font-bold text-sm md:text-base mb-1">The Federal Reserve</h4><p class="text-[10px] md:text-[11px] text-gray-400 leading-relaxed">Bank Sentral AS. Sumber sentimen Hawkish/Dovish & keputusan Suku Bunga (FOMC).</p></div>
                         </a>
 
-                        <a href="https://www.bls.gov/cpi/data.htm" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                        <a href="https://www.bls.gov/cpi/data.htm" target="_blank" class="bg-[#0d1522] border border-gray-700 p-4 md:p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex-shrink-0 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><i class="fa-solid fa-users"></i></div>
-                            <div><h4 class="text-white font-bold text-base mb-1">Biro Statistik (BLS)</h4><p class="text-[11px] text-gray-400 leading-relaxed">Pusat rilis resmi untuk data Tenaga Kerja (NFP) dan Inflasi Konsumen (CPI).</p></div>
+                            <div><h4 class="text-white font-bold text-sm md:text-base mb-1">Biro Statistik (BLS)</h4><p class="text-[10px] md:text-[11px] text-gray-400 leading-relaxed">Pusat rilis resmi untuk data Tenaga Kerja (NFP) dan Inflasi Konsumen (CPI).</p></div>
                         </a>
 
-                        <a href="https://www.bea.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                        <a href="https://www.bea.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-4 md:p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex-shrink-0 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors"><i class="fa-solid fa-chart-pie"></i></div>
-                            <div><h4 class="text-white font-bold text-base mb-1">Biro Analisis (BEA)</h4><p class="text-[11px] text-gray-400 leading-relaxed">Mengeluarkan PDB (Pertumbuhan Ekonomi) dan Indeks PCE (Inflasi favorit The Fed).</p></div>
+                            <div><h4 class="text-white font-bold text-sm md:text-base mb-1">Biro Analisis (BEA)</h4><p class="text-[10px] md:text-[11px] text-gray-400 leading-relaxed">Mengeluarkan PDB (Pertumbuhan Ekonomi) dan Indeks PCE (Inflasi favorit The Fed).</p></div>
                         </a>
 
-                        <a href="https://www.census.gov/data.html" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                        <a href="https://www.census.gov/data.html" target="_blank" class="bg-[#0d1522] border border-gray-700 p-4 md:p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
                             <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex-shrink-0 flex items-center justify-center text-orange-600 group-hover:bg-orange-500 group-hover:text-white transition-colors"><i class="fa-solid fa-cart-shopping"></i></div>
-                            <div><h4 class="text-white font-bold text-base mb-1">US Census Bureau</h4><p class="text-[11px] text-gray-400 leading-relaxed">Sumber rilis Retail Sales (Penjualan Ritel). Indikator utama daya beli masyarakat AS.</p></div>
+                            <div><h4 class="text-white font-bold text-sm md:text-base mb-1">US Census Bureau</h4><p class="text-[10px] md:text-[11px] text-gray-400 leading-relaxed">Sumber rilis Retail Sales (Penjualan Ritel). Indikator utama daya beli masyarakat AS.</p></div>
                         </a>
                     </div>
                 </div>
@@ -596,69 +615,69 @@
 
     <!-- 6. SLIDE 5: DISCORD CTA EKSKLUSIF (PUTIH) -->
     <!-- Elemen Diluruskan Sepenuhnya (Transform Rotate Dihapus) -->
-    <section class="bg-white py-32 px-8 md:px-16 lg:px-24 relative overflow-hidden border-t border-gray-200">
-        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-branddark/5 rounded-full blur-[150px] pointer-events-none"></div>
+    <section class="bg-white py-16 md:py-32 px-5 md:px-16 lg:px-24 relative overflow-hidden border-t border-gray-200">
+        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] bg-branddark/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
         
-        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             
-            <div class="text-left">
-                <div class="inline-flex items-center gap-2 mb-6 border border-branddark/30 bg-branddark/10 px-4 py-2 rounded-full text-xs font-bold text-branddark uppercase tracking-widest">
+            <div class="text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 mb-6 border border-branddark/30 bg-branddark/10 px-4 py-2 rounded-full text-[10px] md:text-xs font-bold text-branddark uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-branddark animate-blink"></span> LIVE COMMUNITY
                 </div>
-                <h2 class="text-7xl md:text-6xl font-black">
+                <h2 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-4">
                     Tingkatkan <span class="text-branddark">Trading Edge</span> Anda. <br>Execute <span class="text-branddark">Now</span>.
                 </h2>
-                <p class="text-gray-600 mb-10 text-xl leading-relaxed max-w-lg">
+                <p class="text-gray-600 mb-8 md:mb-10 text-base md:text-xl leading-relaxed max-w-lg mx-auto lg:mx-0">
                     Akses <span class="text-branddark font-bold">exclusive setup</span>, diskusi <span class="text-branddark font-bold">market action</span> secara real-time tiap <span class="text-branddark font-bold">New York Session</span>, dan bergabung bersama ribuan <span class="text-branddark font-bold">trader</span> lainnya di <span class="text-branddark font-bold">inner circle</span> Discord resmi AcademyFX.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row items-center justify-start gap-6">
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-6">
                     <!-- Tombol Discord tanpa efek Glow (Glow Dihapus, menggunakan shadow standar) -->
-                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand text-darkbg font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md text-lg flex items-center gap-3">
-                        <i class="fa-brands fa-discord text-2xl"></i> Join Discord Sekarang
+                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand text-darkbg font-bold py-4 px-8 md:px-10 rounded-full transition-all duration-300 transform md:hover:scale-105 shadow-md text-base md:text-lg flex items-center justify-center gap-3 w-full sm:w-auto">
+                        <i class="fa-brands fa-discord text-xl md:text-2xl"></i> Join Discord Sekarang
                     </a>
                     
-                    <a href="index.html" class="text-gray-500 hover:text-gray-900 font-bold text-sm flex items-center gap-2 transition-colors group">
-                        Kembali ke Beranda <i class="fa-solid fa-angle-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 font-bold text-xs md:text-sm flex items-center justify-center gap-2 transition-colors group w-full sm:w-auto">
+                        Kembali ke Beranda <i class="fa-solid fa-angle-right text-[10px] md:text-xs group-hover:translate-x-1 transition-transform"></i>
                     </a>
                 </div>
             </div>
 
             <!-- Ilustrasi Chat Discord Mockup (LURUS PRESISI) -->
-            <div class="relative lg:ml-auto w-full max-w-md">
-                <div class="bg-[#313338] rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
-                    <div class="bg-[#2B2D31] px-5 py-4 flex items-center gap-3 border-b border-[#1E1F22] shadow-sm">
+            <div class="relative w-full max-w-md mx-auto lg:ml-auto mt-10 lg:mt-0">
+                <div class="bg-[#313338] rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50 text-left">
+                    <div class="bg-[#2B2D31] px-4 md:px-5 py-3 md:py-4 flex items-center gap-3 border-b border-[#1E1F22] shadow-sm">
                         <i class="fa-solid fa-hashtag text-gray-400 text-lg"></i>
-                        <span class="text-white font-bold text-base tracking-wide">live-trading-room</span>
+                        <span class="text-white font-bold text-sm md:text-base tracking-wide">live-trading-room</span>
                     </div>
                     
-                    <div class="p-6 space-y-6">
-                        <div class="flex gap-4">
-                            <div class="w-10 h-10 rounded-full bg-branddark flex-shrink-0 flex items-center justify-center text-white font-black text-sm shadow-[0_0_10px_rgba(0,184,204,0.3)]">
+                    <div class="p-4 md:p-6 space-y-4 md:space-y-6 custom-scrollbar overflow-y-auto max-h-[300px] md:max-h-none">
+                        <div class="flex gap-3 md:gap-4">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-branddark flex-shrink-0 flex items-center justify-center text-white font-black text-xs md:text-sm shadow-[0_0_10px_rgba(0,184,204,0.3)]">
                                 AFX
                             </div>
                             <div>
-                                <div class="flex items-baseline gap-2 mb-1">
-                                    <span class="text-branddark font-bold text-sm">Coach AcademyFX</span>
-                                    <span class="bg-branddark/20 text-branddark text-[9px] px-1.5 py-0.5 rounded uppercase font-bold">Mentor</span>
-                                    <span class="text-xs text-gray-400">Hari ini 08:30 PM</span>
+                                <div class="flex items-baseline gap-2 mb-1 flex-wrap">
+                                    <span class="text-branddark font-bold text-xs md:text-sm">Coach AcademyFX</span>
+                                    <span class="bg-branddark/20 text-branddark text-[8px] md:text-[9px] px-1.5 py-0.5 rounded uppercase font-bold">Mentor</span>
+                                    <span class="text-[10px] md:text-xs text-gray-400">Hari ini 08:30 PM</span>
                                 </div>
-                                <p class="text-gray-300 text-sm leading-relaxed">
+                                <p class="text-gray-300 text-xs md:text-sm leading-relaxed">
                                     ⚠️ Perhatian semuanya! NFP rilis 15 menit lagi. Pastikan amankan posisi atau geser SL ke BEP. Prediksi volatilitas akan sangat ekstrim di XAUUSD.
                                 </p>
                             </div>
                         </div>
 
-                        <div class="flex gap-4">
-                            <div class="w-10 h-10 rounded-full bg-blue-500 flex-shrink-0 flex items-center justify-center text-white font-bold">
+                        <div class="flex gap-3 md:gap-4">
+                            <div class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-blue-500 flex-shrink-0 flex items-center justify-center text-white font-bold text-xs md:text-base">
                                 <i class="fa-solid fa-user"></i>
                             </div>
                             <div>
-                                <div class="flex items-baseline gap-2 mb-1">
-                                    <span class="text-white font-bold text-sm">TraderPro99</span>
-                                    <span class="text-xs text-gray-400">Hari ini 08:32 PM</span>
+                                <div class="flex items-baseline gap-2 mb-1 flex-wrap">
+                                    <span class="text-white font-bold text-xs md:text-sm">TraderPro99</span>
+                                    <span class="text-[10px] md:text-xs text-gray-400">Hari ini 08:32 PM</span>
                                 </div>
-                                <p class="text-gray-300 text-sm leading-relaxed">
+                                <p class="text-gray-300 text-xs md:text-sm leading-relaxed">
                                     Siap coach! Setup Gold kemarin udah running profit +40 pips, sebagian lot udah di-close. Santai nunggu news. 🔥💰
                                 </p>
                             </div>
@@ -666,41 +685,45 @@
                     </div>
                     
                     <div class="p-4 bg-[#313338] border-t border-[#1E1F22]">
-                        <div class="bg-[#383A40] rounded-xl px-4 py-3.5 text-gray-400 text-sm flex items-center gap-3">
+                        <div class="bg-[#383A40] rounded-xl px-4 py-3 text-gray-400 text-xs md:text-sm flex items-center gap-3">
                             <i class="fa-solid fa-circle-plus text-gray-300"></i>
-                            <span>Message #live-trading-room...</span>
+                            <span class="truncate">Message #live-trading-room...</span>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- 7. FOOTER (HITAM) -->
-    <footer class="bg-darkbg text-gray-400 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
-        <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6">
+    <footer class="bg-darkbg text-gray-400 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed">
                 <strong class="text-white">Disclaimer.</strong> AcademyFX adalah platform edukasi dan program funding berbasis skill. Seluruh konten bersifat edukatif, bukan rekomendasi investasi. AcademyFX tidak berafiliasi dengan broker manapun, tidak menjual sinyal, copy trading, atau layanan investasi, dan tidak menjamin profit. Trading memiliki risiko kerugian. 
-                <a href="#" class="text-brand font-medium hover:underline">Disclaimer</a> · 
-                <a href="#" class="text-brand font-medium hover:underline">Terms & Conditions</a>
+                <br class="block md:hidden mt-2">
+                <a href="#" class="text-brand font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Disclaimer</a> <span class="hidden md:inline">·</span> 
+                <a href="#" class="text-brand font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Terms & Conditions</a>
             </p>
         </div>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-        <div class="flex items-center gap-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
+            <p class="text-center md:text-left w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+        <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                    <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                    <i class="fa-brands fa-discord text-lg md:text-xl"></i> <span class="hidden md:inline">Komunitas Discord</span>
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- TOMBOL WHATSAPP MELAYANG -->
-    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 md:bottom-6 md:right-6 bg-white text-gray-800 px-3 md:px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
         <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
             <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="flex flex-col pr-2">
+        <div class="hidden sm:flex flex-col pr-2">
             <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
             <span class="text-sm font-bold leading-none text-gray-800">Chat Admin</span>
         </div>
@@ -708,6 +731,34 @@
 
     <!-- SCRIPTS CONTROL & RENDER -->
     <script>
+        // MOBILE MENU TOGGLE
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileBtn && mobileMenu) {
+                const icon = mobileBtn.querySelector('i');
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('-translate-y-full');
+                    if(mobileMenu.classList.contains('-translate-y-full')) {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    }
+                }
+
+                mobileBtn.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        });
+
         // 1. REAL TIME CLOCK SCRIPT
         function updateTerminalClock() {
             const now = new Date();
@@ -747,11 +798,11 @@
                 if (isOpen) {
                     box.classList.remove('opacity-50', 'grayscale', 'scale-95');
                     box.classList.add('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
-                    badge.innerHTML = '<span class="text-green-500 font-bold text-[10px]"><i class="fa-solid fa-circle text-[8px] animate-pulse relative -top-[1px] mr-1"></i> OPEN</span>';
+                    badge.innerHTML = '<span class="text-green-500 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-circle text-[6px] md:text-[8px] animate-pulse relative -top-[1px] mr-1"></i> OPEN</span>';
                 } else {
                     box.classList.add('opacity-50', 'grayscale', 'scale-95');
                     box.classList.remove('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
-                    badge.innerHTML = '<span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span>';
+                    badge.innerHTML = '<span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span>';
                 }
             };
 
@@ -843,8 +894,8 @@
         const statusMode = document.getElementById('map-status-mode');
 
         btn2D.addEventListener('click', () => {
-            btn2D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50";
-            btn3D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1";
+            btn2D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0";
+            btn3D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0";
             
             view3D.classList.add('hidden');
             view2D.classList.remove('hidden');
@@ -852,8 +903,8 @@
         });
 
         btn3D.addEventListener('click', () => {
-            btn3D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50";
-            btn2D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1";
+            btn3D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0";
+            btn2D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0";
             
             view2D.classList.add('hidden');
             view3D.classList.remove('hidden');
