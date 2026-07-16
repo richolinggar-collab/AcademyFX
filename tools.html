@@ -48,12 +48,18 @@
         .bg-grid-pattern {
             background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+');
         }
+
+        /* Scrollbars untuk Mockup */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #6b7280; }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white">
+<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- NAVIGATION (GELAP) -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
+    <!-- NAVIGATION (GELAP) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -69,131 +75,149 @@
             <div class="hidden md:flex space-x-8 text-sm font-medium">
                 <a href="index.html#home" class="nav-link text-gray-300 hover:text-brand transition duration-300">Home</a>
                 <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
-                <a href="tools.html" class="nav-link text-brand transition duration-300">Tools</a>
+                <a href="tools.html" class="nav-link text-brand active-nav transition duration-300">Tools</a>
                 <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
                 <a href="terminal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Terminal</a>
                 <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
                 <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
             </div>
             
-            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
-                Join Discord
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                    Join Discord
+                </a>
+                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
+        <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
+        <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
+        <a href="tools.html" class="py-4 border-b border-gray-800 text-brand font-medium mobile-nav-link">Tools</a>
+        <a href="jurnal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Journal</a>
+        <a href="terminal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Terminal</a>
+        <a href="index.html#roadmap" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Roadmap</a>
+        <a href="about.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">About</a>
+        <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
+    </div>
+
     <!-- SLIDE 1: HERO SECTION (TERANG) -->
-    <!-- Padding dan Max-Width disamakan dengan index -->
-    <section class="pt-32 pb-24 px-8 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
+    <!-- Padding disamakan dengan responsivitas mobile (px-5 md:px-16) -->
+    <section class="pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
         <div class="max-w-6xl mx-auto w-full flex flex-col items-center text-center relative z-10">
             <!-- Badge -->
-            <div class="inline-flex items-center gap-2 border-2 border-gray-200 bg-gray-50 px-5 py-2 rounded-full text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-10 shadow-sm cursor-default hover:border-branddark transition-colors">
+            <div class="inline-flex items-center gap-2 border-2 border-gray-200 bg-gray-50 px-5 py-2 rounded-full text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-8 md:mb-10 shadow-sm cursor-default hover:border-branddark transition-colors">
                 <span class="w-2 h-2 rounded-full bg-branddark animate-pulse"></span> FREE TOOLS · ACADEMYFX
             </div>
             
-            <!-- Headline Eksklusif AcademyFX (Ukuran disamakan dengan index: text-5xl md:text-7xl font-extrabold) -->
-            <h1 class="text-5xl md:text-6xl font-black mb-6 text-gray-900">
+            <!-- Headline Eksklusif AcademyFX -->
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-gray-900 leading-tight">
                 Entry market dengan rencana,<br class="hidden md:block"> eksekusi dengan <span class="text-branddark">ukuran lot yang bijaksana.</span>
             </h1>
             
-            <p class="text-gray-500 text-lg max-w-2xl leading-relaxed mb-16">
+            <p class="text-gray-500 text-base md:text-lg max-w-2xl leading-relaxed mb-12 md:mb-16">
                 Rangkaian kalkulator interaktif dan perangkat analitik. Diciptakan untuk menghilangkan keraguan dan mematangkan setiap eksekusi harian Anda.
             </p>
 
             <!-- Quotes Motivasi 1 -->
-            <div class="bg-branddark/5 border-l-4 border-branddark p-6 rounded-r-2xl max-w-3xl text-left relative group">
+            <div class="bg-branddark/5 border-l-4 border-branddark p-5 md:p-6 rounded-r-2xl max-w-3xl text-left relative group w-full">
                 <i class="fa-solid fa-quote-left absolute top-4 right-6 text-4xl text-branddark/10 group-hover:scale-110 transition-transform"></i>
-                <p class="text-gray-700 italic font-medium text-lg leading-relaxed">
-                    "Profesional sejati tidak pernah membiarkan hasil akhirnya ditentukan oleh tebakan. Mereka mengukurnya dengan data."
+                <p class="text-gray-700 italic font-medium text-base md:text-lg leading-relaxed relative z-10">
+                    "Profesional Trader tidak pernah membiarkan hasil akhirnya ditentukan oleh tebakan. Mereka mengukurnya dengan data."
                 </p>
-                <p class="text-branddark font-bold text-xs mt-3 uppercase tracking-widest">— AcademyFX Mindset</p>
+                <p class="text-branddark font-bold text-[10px] md:text-xs mt-3 uppercase tracking-widest">— AcademyFX Mindset</p>
             </div>
         </div>
     </section>
 
     <!-- SLIDE 2: DIREKTORI TOOLS (GELAP) -->
     <!-- Max-Width diubah ke max-w-6xl dan py-24 agar sejajar presisi -->
-    <section class="bg-darkbg py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
+    <section class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none"></div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-brand/5 rounded-full blur-[100px] pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-brand/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="max-w-6xl mx-auto relative z-10">
-            <div class="mb-16">
+            <div class="mb-12 md:mb-16 text-center md:text-left">
                 <p class="text-brand font-bold text-[10px] uppercase tracking-widest mb-2">01 / TERSEDIA SEKARANG</p>
-                <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Pilih tool yang kamu butuhkan.</h2>
-                <p class="text-gray-400 max-w-xl text-lg">Klik kartu di bawah ini untuk membuka halaman kalkulasi Anda secara terpisah.</p>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">Pilih tool yang kamu butuhkan.</h2>
+                <p class="text-gray-400 max-w-xl text-base md:text-lg mx-auto md:mx-0">Klik kartu di bawah ini untuk membuka halaman kalkulasi Anda secara terpisah.</p>
             </div>
 
             <!-- 4 Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-16 md:mb-20">
                 <!-- Card 1 -->
-                <a href="jam-sesi.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-300 group block relative flex flex-col justify-between">
+                <a href="jam-sesi.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-6 md:p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group block relative flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-start mb-10">
-                            <span class="text-gray-500 font-bold text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 01</span>
-                            <span class="bg-brand/10 text-brand font-bold text-[10px] px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
+                        <div class="flex justify-between items-start mb-8 md:mb-10">
+                            <span class="text-gray-500 font-bold text-[10px] md:text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 01</span>
+                            <span class="bg-brand/10 text-brand font-bold text-[9px] md:text-[10px] px-2 md:px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
                         </div>
-                        <div class="w-14 h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-2xl mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-xl md:text-2xl mb-6 md:mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
                             <i class="fa-solid fa-clock"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-4">Jam Sesi Forex</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-10">Tracker real-time sesi Sydney, Tokyo, London, NY. Pantau jam overlap likuiditas tinggi.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-3 md:mb-4">Jam Sesi Forex</h3>
+                        <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-8 md:mb-10">Tracker real-time sesi Sydney, Tokyo, London, NY. Pantau jam overlap likuiditas tinggi.</p>
                     </div>
-                    <div class="text-brand font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
+                    <div class="text-brand font-bold text-xs md:text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
                         Buka tool <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </a>
 
                 <!-- Card 2 -->
-                <a href="position-size.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-300 group block relative flex flex-col justify-between">
+                <a href="position-size.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-6 md:p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group block relative flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-start mb-10">
-                            <span class="text-gray-500 font-bold text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 02</span>
-                            <span class="bg-brand/10 text-brand font-bold text-[10px] px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
+                        <div class="flex justify-between items-start mb-8 md:mb-10">
+                            <span class="text-gray-500 font-bold text-[10px] md:text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 02</span>
+                            <span class="bg-brand/10 text-brand font-bold text-[9px] md:text-[10px] px-2 md:px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
                         </div>
-                        <div class="w-14 h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-2xl mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-xl md:text-2xl mb-6 md:mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
                             <i class="fa-solid fa-calculator"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-4">Position Size Calc</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-10">Hitung lot size presisi dari modal, persentase risiko, dan pips SL Anda sebelum entry.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-3 md:mb-4">Position Size Calc</h3>
+                        <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-8 md:mb-10">Hitung lot size presisi dari modal, persentase risiko, dan pips SL Anda sebelum entry.</p>
                     </div>
-                    <div class="text-brand font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
+                    <div class="text-brand font-bold text-xs md:text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
                         Buka tool <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </a>
 
                 <!-- Card 3 -->
-                <a href="compounding.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-300 group block relative flex flex-col justify-between">
+                <a href="compounding.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-6 md:p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group block relative flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-start mb-10">
-                            <span class="text-gray-500 font-bold text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 03</span>
-                            <span class="bg-brand/10 text-brand font-bold text-[10px] px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
+                        <div class="flex justify-between items-start mb-8 md:mb-10">
+                            <span class="text-gray-500 font-bold text-[10px] md:text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 03</span>
+                            <span class="bg-brand/10 text-brand font-bold text-[9px] md:text-[10px] px-2 md:px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
                         </div>
-                        <div class="w-14 h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-2xl mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-xl md:text-2xl mb-6 md:mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
                             <i class="fa-solid fa-arrow-trend-up"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-4">Compounding Calc</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-10">Simulasikan ekspektasi rasional pertumbuhan akun Anda dalam jangka panjang.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-3 md:mb-4">Compounding Calc</h3>
+                        <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-8 md:mb-10">Simulasikan ekspektasi rasional pertumbuhan akun Anda dalam jangka panjang.</p>
                     </div>
-                    <div class="text-brand font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
+                    <div class="text-brand font-bold text-xs md:text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
                         Buka tool <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </a>
 
                 <!-- Card 4 (Drawdown Calculator) -->
-                <a href="drawdown.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-300 group block relative flex flex-col justify-between">
+                <a href="drawdown.html" class="bg-[#0f172a] border-2 border-gray-700 hover:border-brand rounded-3xl p-6 md:p-8 hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group block relative flex flex-col justify-between">
                     <div>
-                        <div class="flex justify-between items-start mb-10">
-                            <span class="text-gray-500 font-bold text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 04</span>
-                            <span class="bg-brand/10 text-brand font-bold text-[10px] px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
+                        <div class="flex justify-between items-start mb-8 md:mb-10">
+                            <span class="text-gray-500 font-bold text-[10px] md:text-xs tracking-wider group-hover:text-gray-300 transition-colors">/ TOOL 04</span>
+                            <span class="bg-brand/10 text-brand font-bold text-[9px] md:text-[10px] px-2 md:px-3 py-1 rounded-md tracking-widest border border-brand/20">LIVE</span>
                         </div>
-                        <div class="w-14 h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-2xl mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
+                        <div class="w-12 h-12 md:w-14 md:h-14 bg-darkbg border border-gray-600 rounded-2xl flex items-center justify-center text-brand text-xl md:text-2xl mb-6 md:mb-8 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-transparent transition-all shadow-lg">
                             <i class="fa-solid fa-arrow-trend-down"></i>
                         </div>
-                        <h3 class="font-bold text-xl text-white mb-4">Drawdown Calc</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-10">Hitung toleransi risiko kerugian beruntun dan maksimum penarikan modal Anda.</p>
+                        <h3 class="font-bold text-lg md:text-xl text-white mb-3 md:mb-4">Drawdown Calc</h3>
+                        <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-8 md:mb-10">Hitung toleransi risiko kerugian beruntun dan maksimum penarikan modal Anda.</p>
                     </div>
-                    <div class="text-brand font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
+                    <div class="text-brand font-bold text-xs md:text-sm flex items-center gap-2 group-hover:gap-3 transition-all relative">
                         Buka tool <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 </a>
@@ -202,7 +226,7 @@
             <!-- Quotes Motivasi 2 -->
             <div class="border-t border-gray-800 pt-10 text-center">
                 <i class="fa-solid fa-star text-brand/30 text-2xl mb-4"></i>
-                <p class="text-gray-400 italic text-xl md:text-2xl font-light max-w-4xl mx-auto">
+                <p class="text-gray-400 italic text-lg md:text-2xl font-light max-w-4xl mx-auto px-4 md:px-0">
                     "Kedisiplinan bukan hanya soal menahan diri dari godaan market, tapi soal menggunakan alat yang tepat di waktu yang tepat."
                 </p>
             </div>
@@ -210,39 +234,39 @@
     </section>
 
     <!-- SLIDE 3: VALUE & FILOSOFI (TERANG) -->
-    <section class="bg-[#f8f9fa] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+    <section class="bg-[#f8f9fa] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-200">
         <div class="max-w-6xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">MINDSET SHIFT</p>
-                    <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">Berhenti Berjudi, <br><span class="text-branddark">Mulai Berbisnis.</span></h2>
-                    <p class="text-gray-500 text-lg leading-relaxed mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
+                <div class="text-center lg:text-left">
+                    <p class="text-branddark font-bold text-[10px] md:text-xs tracking-widest uppercase mb-4">MINDSET SHIFT</p>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">Berhenti Berjudi, <br><span class="text-branddark">Mulai Berbisnis.</span></h2>
+                    <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-8">
                         Trading adalah permainan probabilitas dan manajemen risiko. Mengandalkan insting dan "feeling" sama saja dengan menyumbangkan uang Anda ke market. Dengan alat kalkulasi yang tepat, Anda mengubah ketidakpastian menjadi statistik yang terukur.
                     </p>
                     
-                    <ul class="space-y-4 mb-10">
-                        <li class="flex items-center gap-4 text-gray-700 font-medium">
-                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full"></i> Lindungi modal (Capital Preservation).
+                    <ul class="space-y-4 mb-10 text-left mx-auto lg:mx-0 max-w-md">
+                        <li class="flex items-center gap-4 text-gray-700 font-medium text-sm md:text-base">
+                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full flex-shrink-0"></i> Lindungi modal (Capital Preservation).
                         </li>
-                        <li class="flex items-center gap-4 text-gray-700 font-medium">
-                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full"></i> Ukur asimetri Risk/Reward yang ideal.
+                        <li class="flex items-center gap-4 text-gray-700 font-medium text-sm md:text-base">
+                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full flex-shrink-0"></i> Ukur asimetri Risk/Reward yang ideal.
                         </li>
-                        <li class="flex items-center gap-4 text-gray-700 font-medium">
-                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full"></i> Hilangkan bias emosional.
+                        <li class="flex items-center gap-4 text-gray-700 font-medium text-sm md:text-base">
+                            <i class="fa-solid fa-check text-branddark bg-branddark/10 p-2 rounded-full flex-shrink-0"></i> Hilangkan bias emosional.
                         </li>
                     </ul>
                 </div>
 
                 <!-- Quotes Motivasi 3 dalam bentuk Poster -->
-                <div class="bg-white border-2 border-gray-300 p-10 rounded-3xl shadow-xl relative group hover:border-branddark transition-colors duration-500 cursor-default">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-branddark/5 rounded-bl-full group-hover:scale-110 transition-transform"></div>
-                    <div class="w-16 h-16 bg-gray-50 border border-gray-200 rounded-full flex items-center justify-center text-branddark text-2xl mb-8">
+                <div class="bg-white border-2 border-gray-300 p-8 md:p-10 rounded-3xl shadow-xl relative group hover:border-branddark transition-colors duration-500 cursor-default">
+                    <div class="absolute top-0 right-0 w-24 h-24 md:w-32 md:h-32 bg-branddark/5 rounded-bl-full group-hover:scale-110 transition-transform"></div>
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-50 border border-gray-200 rounded-full flex items-center justify-center text-branddark text-xl md:text-2xl mb-6 md:mb-8">
                         <i class="fa-solid fa-brain"></i>
                     </div>
-                    <p class="text-gray-800 text-2xl font-bold leading-relaxed mb-8 relative z-10">
+                    <p class="text-gray-800 text-xl md:text-2xl font-bold leading-relaxed mb-6 md:mb-8 relative z-10">
                         "Sistem yang baik akan menyelamatkan Anda dari emosi Anda sendiri pada hari-hari terburuk di market."
                     </p>
-                    <div class="w-16 h-1 bg-branddark rounded-full"></div>
+                    <div class="w-12 md:w-16 h-1 bg-branddark rounded-full"></div>
                 </div>
             </div>
         </div>
@@ -250,38 +274,38 @@
 
     <!-- SLIDE 4: CTA / COMMUNITY (GELAP DENGAN DISCORD MOCKUP) -->
     <!-- Max-Width diubah ke max-w-6xl -->
-    <section class="py-24 px-8 md:px-16 lg:px-24 relative overflow-hidden bg-darkpanel border-t border-gray-800">
+    <section class="py-16 md:py-24 px-5 md:px-16 lg:px-24 relative overflow-hidden bg-darkpanel border-t border-gray-800">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-16 bg-brand/10 blur-[60px] pointer-events-none"></div>
 
-        <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center">
             
             <!-- Teks & Tombol (Kiri) -->
-            <div>
-                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-white leading-tight">Kurang <span class="text-brand">Satu Tool?</span></h2>
-                <p class="text-gray-400 mb-10 text-lg leading-relaxed">
+            <div class="text-center lg:text-left">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-white leading-tight">Kurang <span class="text-brand">Satu Tool?</span></h2>
+                <p class="text-gray-400 mb-8 md:mb-10 text-base md:text-lg leading-relaxed">
                     Jika ada kalkulator, instrumen jurnal khusus, atau alat analitik spesifik yang Anda butuhkan namun belum tersedia, beritahu kami di Discord. Kami akan mendesainnya secara khusus untuk mempermudah gaya trading Anda.
                 </p>
 
-                <div class="flex flex-col sm:flex-row items-center gap-6 mb-10">
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-6 mb-8 md:mb-10">
                     <!-- Tombol Discord Warna Tosca -->
-                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 text-lg flex items-center justify-center gap-3 w-full sm:w-auto group">
-                        <i class="fa-brands fa-discord text-2xl group-hover:rotate-12 transition-transform"></i> Request di Discord
+                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-3.5 md:py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 md:hover:scale-105 text-base md:text-lg flex items-center justify-center gap-3 w-full sm:w-auto group">
+                        <i class="fa-brands fa-discord text-xl md:text-2xl group-hover:rotate-12 transition-transform"></i> Request di Discord
                     </a>
                 </div>
 
                 <!-- Quotes Motivasi 4 -->
-                <div class="bg-darkbg border border-gray-800 p-6 rounded-2xl hover:border-brand/50 transition-colors">
-                    <p class="text-gray-400 italic text-md leading-relaxed">
+                <div class="bg-darkbg border border-gray-800 p-5 md:p-6 rounded-2xl hover:border-brand/50 transition-colors text-left">
+                    <p class="text-gray-400 italic text-sm md:text-base leading-relaxed">
                         "Berkembang sendirian itu mungkin, tapi tumbuh bersama sebuah komunitas profesional akan membawa Anda melangkah jauh lebih cepat."
                     </p>
                 </div>
             </div>
 
             <!-- Discord Mockup interaktif (Kanan) -->
-            <div class="relative perspective-1000 group mt-10 lg:mt-0">
+            <div class="relative perspective-1000 group mt-10 lg:mt-0 max-w-md mx-auto w-full">
                 <div class="absolute -inset-2 bg-gradient-to-tr from-brand to-[#5865F2] rounded-xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
 
-                <div class="bg-discord rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 group-hover:rotate-y-[-2deg] group-hover:rotate-x-[2deg] relative z-10">
+                <div class="bg-discord rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 lg:group-hover:rotate-y-[-2deg] lg:group-hover:rotate-x-[2deg] relative z-10 text-left">
                     <!-- Discord Header -->
                     <div class="bg-discorddark px-4 py-3 border-b border-[#1e1f22] flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-3">
@@ -298,41 +322,41 @@
                     <!-- Discord Chat Area -->
                     <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
                         <!-- Message 1 -->
-                        <div class="flex gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
-                            <img src="https://ui-avatars.com/api/?name=Budi+T&background=10B981&color=fff" class="w-10 h-10 rounded-full hover:scale-105 transition cursor-pointer flex-shrink-0" alt="Avatar">
+                        <div class="flex gap-3 md:gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
+                            <img src="https://ui-avatars.com/api/?name=Budi+T&background=10B981&color=fff" class="w-8 h-8 md:w-10 md:h-10 rounded-full hover:scale-105 transition cursor-pointer flex-shrink-0" alt="Avatar">
                             <div>
-                                <h4 class="text-green-400 font-semibold text-sm cursor-pointer hover:underline">Budi_Trader <span class="text-xs text-gray-500 font-normal ml-2">Hari ini pukul 14:10</span></h4>
-                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">
+                                <h4 class="text-green-400 font-semibold text-xs md:text-sm cursor-pointer hover:underline">Budi_Trader <span class="text-[10px] md:text-xs text-gray-500 font-normal ml-2">Hari ini pukul 14:10</span></h4>
+                                <p class="text-gray-200 text-xs md:text-sm mt-1 leading-relaxed">
                                     Bang Richo, bisa tolong buatin kalkulator <i>Risk of Ruin</i> gak di website? Biar lebih gampang ngitung probabilitas MC kalau lagi <i>backtest</i> strategi baru.
                                 </p>
                             </div>
                         </div>
 
                         <!-- Message 2 (Admin/Richo) -->
-                        <div class="flex gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
+                        <div class="flex gap-3 md:gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
                             <!-- Icon Admin sebagai Avatar (Logo AcademyFX) -->
-                            <div class="relative w-10 h-10 rounded-full shadow-[0_0_10px_rgba(0,229,255,0.4)] bg-brand flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-105 transition">
-                                <svg class="w-5 h-5 text-darkbg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <div class="relative w-8 h-8 md:w-10 md:h-10 rounded-full shadow-[0_0_10px_rgba(0,229,255,0.4)] bg-brand flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-105 transition">
+                                <svg class="w-4 h-4 md:w-5 md:h-5 text-darkbg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 17l6-6 4 4 8-8"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 7h4v4"></path>
                                 </svg>
                                 <!-- Online Badge Hijau -->
-                                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#313338] rounded-full"></div>
+                                <div class="absolute bottom-0 right-0 w-2.5 h-2.5 md:w-3 md:h-3 bg-green-500 border-2 border-[#313338] rounded-full"></div>
                             </div>
 
                             <div>
-                                <h4 class="text-brand font-semibold text-sm flex items-center gap-2 cursor-pointer hover:underline">Richo G.
-                                    <span class="bg-[#5865F2] text-white text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider"><i class="fa-solid fa-check text-[8px]"></i> ADMIN</span>
-                                    <span class="text-xs text-gray-500 font-normal">Hari ini pukul 14:15</span>
+                                <h4 class="text-brand font-semibold text-xs md:text-sm flex items-center gap-2 cursor-pointer hover:underline flex-wrap">Richo G.
+                                    <span class="bg-[#5865F2] text-white text-[8px] md:text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider"><i class="fa-solid fa-check text-[6px] md:text-[8px]"></i> ADMIN</span>
+                                    <span class="text-[10px] md:text-xs text-gray-500 font-normal">Hari ini pukul 14:15</span>
                                 </h4>
-                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Ide bagus bro Budi! Risk of Ruin emang penting banget buat tes ketahanan sistem. Saya masukin ke <i>roadmap developer</i> minggu ini ya, pantau terus update di #announcement 🚀</p>
+                                <p class="text-gray-200 text-xs md:text-sm mt-1 leading-relaxed">Ide bagus bro Budi! Risk of Ruin emang penting banget buat tes ketahanan sistem. Saya masukin ke <i>roadmap developer</i> minggu ini ya, pantau terus update di #announcement 🚀</p>
                                 <!-- Discord Reactions -->
                                 <div class="flex gap-2 mt-2">
                                     <div class="bg-[#2b2d31] border border-brand/30 rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-brand/10 transition">
-                                        <span class="text-sm">🔥</span> <span class="text-xs text-brand font-bold">7</span>
+                                        <span class="text-xs md:text-sm">🔥</span> <span class="text-[10px] md:text-xs text-brand font-bold">7</span>
                                     </div>
                                     <div class="bg-[#2b2d31] border border-transparent rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-700 transition">
-                                        <span class="text-sm">🙏</span> <span class="text-xs text-gray-400 font-bold">3</span>
+                                        <span class="text-xs md:text-sm">🙏</span> <span class="text-[10px] md:text-xs text-gray-400 font-bold">3</span>
                                     </div>
                                 </div>
                             </div>
@@ -341,9 +365,9 @@
 
                     <!-- Discord Input Area -->
                     <div class="p-4 bg-discord">
-                        <div class="bg-[#383a40] rounded-lg px-4 py-3 flex items-center justify-between text-gray-500 text-sm cursor-text hover:bg-gray-700 transition">
-                            <span>Mengirim pesan ke #request-tools...</span>
-                            <div class="flex gap-3 text-gray-400">
+                        <div class="bg-[#383a40] rounded-lg px-4 py-3 flex items-center justify-between text-gray-500 text-xs md:text-sm cursor-text hover:bg-gray-700 transition">
+                            <span class="truncate">Mengirim pesan ke #request-tools...</span>
+                            <div class="flex gap-2 md:gap-3 text-gray-400">
                                 <i class="fa-solid fa-circle-plus hover:text-white transition cursor-pointer"></i>
                                 <i class="fa-solid fa-face-smile hover:text-white transition cursor-pointer"></i>
                             </div>
@@ -355,38 +379,68 @@
     </section>
 
     <!-- FOOTER (TERANG) -->
-    <footer class="bg-[#f8f9fa] text-gray-500 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-200">
-        <div class="max-w-6xl mx-auto border-b border-gray-200 pb-6 mb-6">
+    <footer class="bg-[#f8f9fa] text-gray-500 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-200">
+        <div class="max-w-6xl mx-auto border-b border-gray-200 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed">
                 <strong class="text-gray-700">Disclaimer.</strong> AcademyFX adalah platform edukasi dan program funding berbasis skill. Seluruh konten bersifat edukatif, bukan rekomendasi investasi. AcademyFX tidak berafiliasi dengan broker manapun, tidak menjual sinyal, copy trading, atau layanan investasi, dan tidak menjamin profit. Trading memiliki risiko kerugian. Founder AcademyFX Richo G. 
-                <a href="#" class="text-blue-500 hover:underline">Disclaimer</a> · 
-                <a href="#" class="text-blue-500 hover:underline">Terms & Conditions</a>
+                <br class="block md:hidden mt-2">
+                <a href="#" class="text-blue-500 hover:underline inline-block mt-2 md:mt-0">Disclaimer</a> <span class="hidden md:inline">·</span> 
+                <a href="#" class="text-blue-500 hover:underline inline-block mt-2 md:mt-0 ml-2 md:ml-0">Terms & Conditions</a>
             </p>
         </div>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-            <div class="flex items-center gap-6">
-                <a class="flex items-center gap-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4 text-center md:text-left">
+            <p class="w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+            <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                    <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                    <i class="fa-brands fa-discord text-lg md:text-xl"></i> <span class="hidden md:inline">Komunitas Discord</span>
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- TOMBOL WHATSAPP MELAYANG -->
-    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 md:bottom-6 md:right-6 bg-white text-gray-800 px-3 md:px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
         <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
             <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="flex flex-col pr-2">
+        <div class="hidden sm:flex flex-col pr-2">
             <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
             <span class="text-sm font-bold leading-none text-gray-800">Chat Admin</span>
         </div>
     </a>
 
+    <!-- SCROLLSPY & MOBILE MENU SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // MOBILE MENU TOGGLE
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileBtn && mobileMenu) {
+                const icon = mobileBtn.querySelector('i');
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('-translate-y-full');
+                    if(mobileMenu.classList.contains('-translate-y-full')) {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    }
+                }
+
+                mobileBtn.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
