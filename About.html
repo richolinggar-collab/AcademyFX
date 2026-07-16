@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Founder - AcademyFX</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: '#00e5ff',
+                        branddark: '#00b8cc',
+                        darkbg: '#060b13',
+                        darkpanel: '#0a111d',
+                        discord: '#313338',
+                        discorddark: '#2b2d31'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+        body { padding-top: 64px; }
+        
+        /* Nav Link Hover Animation */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #00e5ff;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active-nav::after { 
+            width: 100%;
+            }
+
+        /* Custom Scrollbar for mockups */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+
+        /* Background Hero Founder - Efek Hitam Monokrom */
+        .bg-hero-founder {
+            background-color: #000000;
+            background-image: linear-gradient(90deg, #03060a 40%, rgba(3,6,10,0.85) 65%, transparent 100%), url('Foto 3.JPG');
+            background-size: cover;
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-blend-mode: luminosity; 
+        }
+    </style>
+</head>
+<body class="antialiased font-sans flex flex-col min-h-screen text-white bg-darkbg">
+
+    <!-- NAVIGATION (GELAP) -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 17l6-6 4 4 8-8"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 7h4v4"></path>
+                    </svg>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-white group-hover:text-brand transition duration-300">AcademyFX</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="index.html#home" class="nav-link text-gray-300 hover:text-brand transition duration-300">Home</a>
+                <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
+                <a href="tools.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Tools</a>
+                <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
+                <a href="terminal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Terminal</a>
+                <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
+                <!-- Menu "About" aktif/di-highlight -->
+                <a href="about.html" class="nav-link text-brand transition duration-300">About</a>
+            </div>
+            
+            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                Join Discord
+            </a>
+        </div>
+    </nav>
+
+    <!-- SLIDE 1: HERO FOUNDER (Efek Monokrom Gelap) DIKEMBALIKAN KE MAX-W-7XL -->
+    <section class="bg-hero-founder min-h-[90vh] flex items-center relative overflow-hidden border-b border-gray-800 pt-10">
+        <div class="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 flex items-center relative z-10 w-full">
+            <!-- Area Teks di sebelah kiri -->
+            <div class="w-full md:w-7/12 mt-10 lg:mt-0">
+                <div class="inline-block bg-brand/10 border border-brand/20 px-4 py-1.5 rounded-full mb-6 hover:bg-brand/20 hover:scale-105 transition-all cursor-default">
+                    <span class="text-brand font-bold text-[10px] tracking-widest uppercase"><i class="fa-solid fa-user-tie mr-2"></i>The Founder</span>
+                </div>
+                
+                <!-- Judul Visi Utama (Mindset, Psychology, Method) -->
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-4 text-white">
+                    The Ultimate Edge: <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-white">Mindset, Psychology & Method.</span>
+                </h1>
+                
+                <!-- Nama dengan gaya Title Eksekutif -->
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-12 h-[2px] bg-brand animate-pulse-slow"></div>
+                    <h2 class="text-xl md:text-2xl text-gray-200 font-semibold tracking-wide">
+                        Richo G. <span class="text-gray-500 font-light text-lg">| Founder</span>
+                    </h2>
+                </div>
+                
+                <p class="text-gray-400 text-lg mb-8 leading-relaxed border-l-2 border-brand/40 pl-5">
+                    "Saya menginisiasi AcademyFX dengan satu tujuan yang jelas: membentuk lingkungan yang menolak spekulasi buta. Di sini, kita menjadikan <strong>manajemen risiko, probabilitas objektif, dan kedisiplinan</strong> sebagai fondasi utama untuk bertahan dan bertumbuh."
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#cerita" class="bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-3.5 px-8 rounded transition transform hover:scale-105 hover:-translate-y-1 shadow-[0_0_15px_rgba(0,229,255,0.2)] hover:shadow-[0_0_25px_rgba(0,229,255,0.4)]">Kisah Perjalanan</a>
+                    <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="border border-gray-600 hover:border-brand hover:text-brand text-white font-semibold py-3.5 px-6 rounded transition flex items-center gap-2 group">
+                        <i class="fa-brands fa-instagram text-xl group-hover:scale-110 transition"></i> Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 2: PERJALANAN (TEMA TERANG, TANPA FOTO) -->
+    <section id="cerita" class="bg-white py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+        <div class="max-w-4xl mx-auto text-center relative">
+            <i class="fa-solid fa-quote-left absolute -top-8 -left-8 text-6xl text-branddark opacity-10"></i>
+            
+            <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">AWAL PERJALANAN</p>
+            <h2 class="text-3xl md:text-5xl font-bold mb-10 text-gray-900">Fase <span class="text-branddark relative inline-block">Jatuh Bangun.<span class="absolute bottom-1 left-0 w-full h-3 bg-brand/30 -z-10 -rotate-1"></span></span></h2>
+            
+            <div class="space-y-8 text-gray-600 leading-relaxed text-lg">
+                <p>
+                    Seperti kebanyakan pemula, awal mula perjalanan trading saya diwarnai oleh kebingungan, emosi yang meledak-ledak, dan ekspektasi yang tidak realistis terhadap market. Saya pernah berjudi dengan probabilitas dan mengorbankan risk management.
+                </p>
+                <p>
+                    Momen titik balik (turning point) terjadi ketika saya menyadari bahwa trading bukanlah tentang memprediksi harga secara akurat, melainkan tentang <span class="text-gray-900 font-bold">bagaimana kita mengelola risiko saat prediksi kita salah</span>. Di situlah sistem trading yang sesungguhnya mulai terbentuk.
+                </p>
+            </div>
+            
+            <div class="mt-12 w-24 h-1 bg-branddark mx-auto rounded-full opacity-50"></div>
+        </div>
+    </section>
+
+    <!-- SLIDE 3: KENAPA ACADEMYFX LAHIR (TEMA GELAP INTERAKTIF) -->
+    <section class="bg-darkpanel py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand/10 rounded-full blur-[80px]"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10 text-center">
+            <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">THE MISSION</p>
+            <h2 class="text-3xl md:text-5xl font-bold mb-16 text-white">Mengapa <span class="text-brand">AcademyFX</span> Dibuat?</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-[#0f172a] p-10 rounded-2xl border border-gray-700 hover:border-brand shadow-sm hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-500 text-left group cursor-default">
+                    <div class="w-16 h-16 bg-brand/10 rounded-2xl flex items-center justify-center text-brand text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-white group-hover:text-brand transition">Mencegah Kerugian Pemula</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Terlalu banyak trader hancur karena edukasi yang menjanjikan "cepat kaya". Saya ingin meruntuhkan stigma tersebut dengan edukasi berlandaskan realita.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-[#0f172a] p-10 rounded-2xl border border-gray-700 hover:border-brand shadow-sm hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-500 text-left group cursor-default">
+                    <div class="w-16 h-16 bg-brand/10 rounded-2xl flex items-center justify-center text-brand text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-white group-hover:text-brand transition">Sistem & Tools Lengkap</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Trader butuh senjata yang tepat. Oleh karena itu, saya menyatukan Jurnal Trading, Live Terminal, dan Kalkulator dalam satu ekosistem.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-[#0f172a] p-10 rounded-2xl border border-gray-700 hover:border-brand shadow-sm hover:shadow-[0_10px_30px_rgba(0,229,255,0.15)] hover:-translate-y-3 transition-all duration-500 text-left group cursor-default">
+                    <div class="w-16 h-16 bg-brand/10 rounded-2xl flex items-center justify-center text-brand text-2xl mb-6 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-white group-hover:text-brand transition">Membangun Lingkungan</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Trading adalah profesi yang sepi. Saya membangun komunitas Discord agar kita bisa saling mengevaluasi, berdiskusi teknikal, dan tumbuh bersama secara sehat.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 4: CORE TRADING PHILOSOPHY (TEMA TERANG BORDER TEGAS) -->
+    <section class="bg-[#f8f9fa] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">ATURAN EMAS</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-900">Prinsip Personal <span class="text-branddark relative inline-block">Trader<span class="absolute bottom-1 left-0 w-full h-3 bg-brand/30 -z-10 -rotate-1"></span></span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                    Setiap trader profesional memiliki "aturan emas" yang tidak boleh dilanggar. Ini adalah prinsip yang saya terapkan pada akun pribadi saya, dan saya turunkan ke dalam materi AcademyFX.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Rule 1 -->
+                <div class="bg-white p-10 rounded-2xl border-2 border-gray-300 hover:border-branddark shadow-sm hover:shadow-[0_10px_30px_rgba(0,184,204,0.15)] hover:-translate-y-3 transition-all duration-500 text-center group cursor-default">
+                    <div class="w-20 h-20 bg-gray-50 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 text-3xl mb-6 mx-auto group-hover:scale-110 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-percent"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-xl mb-3 group-hover:text-branddark transition">Risk < 2% Per Trade</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed">Jangan pernah merisikokan lebih dari 1-2% modal dalam satu eksekusi. Bertahan hidup adalah prioritas utama.</p>
+                </div>
+                
+                <!-- Rule 2 -->
+                <div class="bg-white p-10 rounded-2xl border-2 border-gray-300 hover:border-branddark shadow-sm hover:shadow-[0_10px_30px_rgba(0,184,204,0.15)] hover:-translate-y-3 transition-all duration-500 text-center group cursor-default">
+                    <div class="w-20 h-20 bg-gray-50 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 text-3xl mb-6 mx-auto group-hover:scale-110 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-xl mb-3 group-hover:text-branddark transition">Trade What You See</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed">Jangan berdebat dengan arah market. Eksekusi berdasarkan data dan konfirmasi chart, bukan sekadar feeling semata.</p>
+                </div>
+                
+                <!-- Rule 3 -->
+                <div class="bg-white p-10 rounded-2xl border-2 border-gray-300 hover:border-branddark shadow-sm hover:shadow-[0_10px_30px_rgba(0,184,204,0.15)] hover:-translate-y-3 transition-all duration-500 text-center group cursor-default">
+                    <div class="w-20 h-20 bg-gray-50 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 text-3xl mb-6 mx-auto group-hover:scale-110 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-500 shadow-sm">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900 text-xl mb-3 group-hover:text-branddark transition">No Revenge Trading</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed">Ketika terkena Stop Loss, matikan layar. Market selalu ada besok, namun psikologi yang hancur butuh waktu lama pulih.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE 5: CTA AKHIR DENGAN MOCKUP DISCORD (GELAP GRADASI) -->
+    <section class="py-24 px-8 md:px-16 lg:px-24 relative overflow-hidden bg-gradient-to-b from-darkbg to-[#081220] border-t border-gray-800">
+        <!-- Efek cahaya atas -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-16 bg-brand/10 blur-[60px] pointer-events-none"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Teks Ajakan -->
+            <div>
+                <div class="inline-flex items-center gap-2 text-brand bg-brand/10 px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest mb-6">
+                    <i class="fa-brands fa-discord"></i> Exclusive Community
+                </div>
+                <h2 class="text-4xl md:text-[3.5rem] font-black mb-6 text-white leading-tight">Bersiap Memulai <br>Transformasi Anda?</h2>
+                <p class="text-gray-400 mb-10 text-lg leading-relaxed">
+                    Membangun karir trading yang konsisten butuh lingkungan yang suportif. Bergabunglah bersama ekosistem kami, diskusikan pandangan pasar Anda, dan temukan ritme trading profesional yang sebenarnya.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center gap-6">
+                    <!-- Tombol Tosca (Brand) -->
+                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-4 px-8 rounded-xl transition transform hover:-translate-y-1  flex items-center justify-center gap-3 text-lg group w-full sm:w-auto">
+                        <i class="fa-brands fa-discord text-2xl group-hover:scale-110 transition"></i> Join Server Discord
+                    </a>
+                    
+                    <a href="index.html" class="text-gray-400 hover:text-white font-bold text-lg flex items-center justify-center gap-2 transition-colors group w-full sm:w-auto">
+                        Kembali ke Beranda <i class="fa-solid fa-angle-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Discord Mockup interaktif -->
+            <div class="relative perspective-1000 group mt-10 lg:mt-0">
+                <!-- Efek gradasi ke brand -->
+                <div class="absolute -inset-2 bg-gradient-to-tr from-branddark to-brand rounded-xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
+                
+                <div class="bg-discord rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 group-hover:rotate-y-[-2deg] group-hover:rotate-x-[2deg] relative z-10">
+                    <!-- Discord Header -->
+                    <div class="bg-discorddark px-4 py-3 border-b border-[#1e1f22] flex items-center justify-between shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-hashtag text-gray-400 text-lg"></i>
+                            <span class="text-white font-bold tracking-wide text-sm">market-discussion</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-gray-400">
+                            <i class="fa-solid fa-bell-slash hover:text-white transition cursor-pointer"></i>
+                            <i class="fa-solid fa-thumbtack hover:text-white transition cursor-pointer"></i>
+                            <i class="fa-solid fa-users hover:text-white transition cursor-pointer"></i>
+                        </div>
+                    </div>
+                    
+                    <!-- Discord Chat Area -->
+                    <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
+                        <!-- Message 1 -->
+                        <div class="flex gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
+                            <img src="https://ui-avatars.com/api/?name=Alex&background=F59E0B&color=fff" class="w-10 h-10 rounded-full hover:scale-105 transition cursor-pointer flex-shrink-0" alt="Avatar">
+                            <div>
+                                <h4 class="text-yellow-500 font-semibold text-sm cursor-pointer hover:underline">Alex_Trader <span class="text-xs text-gray-500 font-normal ml-2">Hari ini pukul 09:15</span></h4>
+                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">
+                                    Ada pandangan untuk XAUUSD hari ini? Secara struktur H4 masih bullish kuat tapi harga tertahan di zona resisten 2030. Nunggu konfirmasi breakout atau cari setup sell pendek?
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Message 2 (Admin/Richo dengan Icon Official) -->
+                        <div class="flex gap-4 group/msg hover:bg-[#2e3035] -mx-4 px-4 py-1 transition-colors">
+                            <!-- Icon Admin sebagai Avatar (Logo AcademyFX) -->
+                            <div class="relative w-10 h-10 rounded-full shadow-[0_0_10px_rgba(0,229,255,0.4)] bg-brand flex items-center justify-center flex-shrink-0 cursor-pointer hover:scale-105 transition">
+                                <svg class="w-5 h-5 text-darkbg" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 17l6-6 4 4 8-8"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 7h4v4"></path>
+                                </svg>
+                                <!-- Online Badge Hijau -->
+                                <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-[#313338] rounded-full"></div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-brand font-semibold text-sm flex items-center gap-2 cursor-pointer hover:underline">Richo G. 
+                                    <span class="bg-[#5865F2] text-white text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider"><i class="fa-solid fa-check text-[8px]"></i> ADMIN</span>
+                                    <span class="text-xs text-gray-500 font-normal">Hari ini pukul 09:22</span>
+                                </h4>
+                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Betul lex, struktur mayor masih dipegang Buyer. Kalau mau counter tren pastikan ada konfirmasi <i>bearish divergence</i> di M15 dan gunakan lot kecil (Risk < 1%). Selalu <strong>Trade What You See!</strong> 📈</p>
+                                <!-- Discord Reactions -->
+                                <div class="flex gap-2 mt-2">
+                                    <div class="bg-[#2b2d31] border border-brand/30 rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-brand/10 transition">
+                                        <span class="text-sm">🔥</span> <span class="text-xs text-brand font-bold">5</span>
+                                    </div>
+                                    <div class="bg-[#2b2d31] border border-transparent rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-700 transition">
+                                        <span class="text-sm">👀</span> <span class="text-xs text-gray-400 font-bold">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Discord Input Area -->
+                    <div class="p-4 bg-discord">
+                        <div class="bg-[#383a40] rounded-lg px-4 py-3 flex items-center justify-between text-gray-500 text-sm cursor-text hover:bg-gray-700 transition">
+                            <span>Mengirim pesan ke #market-discussion...</span>
+                            <div class="flex gap-3 text-gray-400">
+                                <i class="fa-solid fa-circle-plus hover:text-white transition cursor-pointer"></i>
+                                <i class="fa-solid fa-face-smile hover:text-white transition cursor-pointer"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (TEMA TERANG, SAMA DENGAN INDEX) -->
+    <footer class="bg-[#f8f9fa] text-gray-500 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-200">
+        <div class="max-w-6xl mx-auto border-b border-gray-200 pb-6 mb-6">
+            <p class="leading-relaxed">
+                <strong class="text-gray-700">Disclaimer.</strong> AcademyFX adalah platform edukasi dan program funding berbasis skill. Seluruh konten bersifat edukatif, bukan rekomendasi investasi. AcademyFX tidak berafiliasi dengan broker manapun, tidak menjual sinyal, copy trading, atau layanan investasi, dan tidak menjamin profit. Trading memiliki risiko kerugian. Founder AcademyFX Richo G. 
+                <a href="#" class="text-blue-500 hover:underline">Disclaimer</a> · 
+                <a href="#" class="text-blue-500 hover:underline">Terms & Conditions</a> · 
+                <a href="#" class="text-blue-500 hover:underline">Risk Disclosure</a>
+            </p>
+        </div>
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+            <div class="flex items-center gap-6">
+                <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
+                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                </a>
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
+                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOMBOL WHATSAPP MELAYANG -->
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+        <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="flex flex-col pr-2">
+            <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
+            <span class="text-sm font-bold leading-none text-gray-800">Chat Admin</span>
+        </div>
+    </a>
+
+</body>
+</html>
