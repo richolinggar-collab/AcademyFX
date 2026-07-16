@@ -35,6 +35,7 @@
     </script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        /* Ditambahkan overflow-x: hidden untuk mencegah scroll horizontal di HP */
         body { padding-top: 64px; overflow-x: hidden; }
         
         /* Nav Link Hover Animation */
@@ -83,10 +84,10 @@
         .discord-scrollbar::-webkit-scrollbar-thumb:hover { background: #6b7280; }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white">
+<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- NAVIGATION (GELAP) -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
+    <!-- NAVIGATION (GELAP) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -101,21 +102,39 @@
             <div class="hidden md:flex space-x-8 text-sm font-medium">
                 <a href="index.html#home" class="nav-link text-gray-300 hover:text-brand transition duration-300">Home</a>
                 <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
-                <a href="tools.html" class="nav-link text-brand transition duration-300">Tools</a>
+                <a href="tools.html" class="nav-link text-brand active-nav transition duration-300">Tools</a>
                 <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
                 <a href="terminal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Terminal</a>
                 <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
                 <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
             </div>
             
-            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
-                Join Discord
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                    Join Discord
+                </a>
+                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
+        <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
+        <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
+        <a href="tools.html" class="py-4 border-b border-gray-800 text-brand font-medium mobile-nav-link">Tools</a>
+        <a href="jurnal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Journal</a>
+        <a href="terminal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Terminal</a>
+        <a href="index.html#roadmap" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Roadmap</a>
+        <a href="about.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">About</a>
+        <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
+    </div>
+
     <!-- SECTION 1: HERO (TERANG) -->
-    <section class="pt-32 pb-24 px-8 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-[#f8fafc] text-center">
+    <section class="pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-[#f8fafc] text-center">
         <!-- Grid pattern light -->
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgwLCAwLCAwLCAwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50 pointer-events-none"></div>
 
@@ -129,57 +148,56 @@
                 <span class="text-branddark drop-shadow-sm">Aman & Presisi?</span>
             </h1>
             
-            <p class="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
+            <p class="text-gray-500 text-base md:text-xl max-w-2xl mx-auto leading-relaxed font-medium">
                 Berhenti menebak-nebak ukuran lot. Hitung secara akurat berdasarkan modal, persentase risiko, dan jarak <strong>Stop Loss</strong> Anda. Dilengkapi kalibrasi dinamis untuk XAUUSD dan Major/Cross Pairs.
             </p>
         </div>
     </section>
 
     <!-- SECTION 2: MODE 01 (GELAP) -->
-    <section class="bg-darkbg py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800">
+    <section class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-12 md:mb-16 text-center">
                 <p class="text-brand font-black text-[10px] uppercase tracking-widest mb-2">MODE 01 / FIXED LOT</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Hitung lot dari input spesifik.</h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto font-medium">Cocok kalau Anda sudah punya angka pasti: Modal X, Risk Y%, SL Z pips. Hasilnya adalah angka mutlak.</p>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-4">Hitung lot dari input spesifik.</h2>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-medium">Cocok kalau Anda sudah punya angka pasti: Modal X, Risk Y%, SL Z pips. Hasilnya adalah angka mutlak.</p>
             </div>
 
             <!-- Grid 12 Kolom: Proporsi 7 untuk Input, 5 untuk Hasil (Ramping & Proporsional) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
                 <!-- Input Box (Dark) -->
-                <div class="lg:col-span-7 bg-darkpanel border-2 border-gray-800 rounded-[2rem] p-8 md:p-10 shadow-lg relative z-10 flex flex-col group h-fit transition-all duration-300 hover:border-brand/40 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)]">
+                <div class="lg:col-span-7 bg-darkpanel border-2 border-gray-800 rounded-[2rem] p-6 md:p-10 shadow-lg relative z-10 flex flex-col group h-fit transition-all duration-300 hover:border-brand/40 hover:shadow-[0_0_30px_rgba(0,229,255,0.1)]">
                     <div class="mb-8 border-b border-gray-800 pb-6 flex items-center justify-between">
                         <div>
-                            <h3 class="font-bold text-2xl text-white tracking-tight group-hover:text-brand transition-colors">Input Trading Setup</h3>
+                            <h3 class="font-bold text-xl md:text-2xl text-white tracking-tight group-hover:text-brand transition-colors">Input Trading Setup</h3>
                             <p class="text-xs text-gray-400 font-medium mt-1">Isi data di bawah. Hasil di kanan akan update otomatis.</p>
                         </div>
-                        <i class="fa-solid fa-keyboard text-brand text-2xl opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        <i class="fa-solid fa-keyboard text-brand text-2xl opacity-50 group-hover:opacity-100 transition-opacity hidden sm:block"></i>
                     </div>
                     
                     <div class="space-y-6">
                         <!-- Instrument -->
                         <div>
-                            <div class="flex justify-between mb-2">
-                                <label class="text-xs font-bold text-gray-300 uppercase tracking-wide">Instrumen / Pair</label>
-                                <span class="text-[10px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 py-0.5 rounded">AUTO PIP VALUE</span>
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="text-[11px] md:text-xs font-bold text-gray-300 uppercase tracking-wide">Instrumen / Pair</label>
+                                <span class="text-[8px] md:text-[10px] text-brand font-bold bg-brand/10 border border-brand/20 px-2 py-0.5 rounded">AUTO PIP VALUE</span>
                             </div>
-                            <select id="fix-pipvalue" class="calc-input-dark cursor-pointer text-sm" onchange="calcFixed()">
+                            <select id="fix-pipvalue" class="calc-input-dark cursor-pointer text-xs md:text-sm" onchange="calcFixed()">
                                 <option value="10">XAUUSD (Gold) - $10/pip</option>
-                                <option value="10">EURUSD, GBPUSD, AUDUSD, NZDUSD - $10/pip</option>
-                                <option value="6.7">USDJPY, EURJPY, GBPJPY, AUDJPY - $6.7/pip</option>
+                                <option value="10">EURUSD, GBPUSD, AUDUSD - $10/pip</option>
+                                <option value="6.7">USDJPY, EURJPY, GBPJPY - $6.7/pip</option>
                                 <option value="7.3">USDCAD, EURCAD, GBPCAD - $7.3/pip</option>
                                 <option value="11.1">USDCHF, EURCHF, GBPCHF - $11.1/pip</option>
-                                <option value="1">BTCUSD (Asumsi 1 Lot = 1 BTC) - $1/pip</option>
-                                <option value="0.1">ETHUSD (Asumsi 1 Lot = 1 ETH) - $0.1/pip</option>
+                                <option value="1">BTCUSD (1 Lot = 1 BTC) - $1/pip</option>
                             </select>
                         </div>
 
                         <!-- Balance -->
                         <div>
                             <div class="flex justify-between mb-2 mt-4">
-                                <label class="text-xs font-bold text-gray-300 uppercase tracking-wide">Modal / Account Balance</label>
-                                <span class="text-[10px] text-gray-500 font-bold">DALAM USD ($)</span>
+                                <label class="text-[11px] md:text-xs font-bold text-gray-300 uppercase tracking-wide">Modal / Balance</label>
+                                <span class="text-[8px] md:text-[10px] text-gray-500 font-bold">DALAM USD ($)</span>
                             </div>
                             <div class="relative">
                                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-brand font-black">$</span>
@@ -190,37 +208,37 @@
                         <!-- Risk -->
                         <div>
                             <div class="flex justify-between mb-2 mt-4">
-                                <label class="text-xs font-bold text-gray-300 uppercase tracking-wide">Risk Per Trade</label>
-                                <span class="text-[10px] text-gray-500 font-bold">% DARI MODAL</span>
+                                <label class="text-[11px] md:text-xs font-bold text-gray-300 uppercase tracking-wide">Risk Per Trade</label>
+                                <span class="text-[8px] md:text-[10px] text-gray-500 font-bold">% DARI MODAL</span>
                             </div>
                             <div class="relative">
                                 <input type="number" id="fix-risk" class="calc-input-dark pr-8" value="1" step="0.1" oninput="calcFixed()">
                                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-brand font-black">%</span>
                             </div>
                             <!-- Quick Buttons -->
-                            <div class="flex gap-3 mt-3">
-                                <button onclick="setFixRisk(0.5)" class="flex-1 py-2 text-xs font-bold border-2 border-gray-700 text-gray-400 rounded-xl hover:bg-brand/10 hover:border-brand hover:text-brand transition-colors">0.5%</button>
-                                <button onclick="setFixRisk(1)" class="flex-1 py-2 text-xs font-bold bg-brand text-darkbg border-2 border-brand rounded-xl hover:bg-branddark transition-colors shadow-[0_4px_10px_rgba(0,229,255,0.3)]">1.0%</button>
-                                <button onclick="setFixRisk(2)" class="flex-1 py-2 text-xs font-bold border-2 border-gray-700 text-gray-400 rounded-xl hover:bg-brand/10 hover:border-brand hover:text-brand transition-colors">2.0%</button>
+                            <div class="flex gap-2 md:gap-3 mt-3">
+                                <button onclick="setFixRisk(0.5)" class="flex-1 py-2 text-[10px] md:text-xs font-bold border-2 border-gray-700 text-gray-400 rounded-xl hover:bg-brand/10 hover:border-brand hover:text-brand transition-colors">0.5%</button>
+                                <button onclick="setFixRisk(1)" class="flex-1 py-2 text-[10px] md:text-xs font-bold bg-brand text-darkbg border-2 border-brand rounded-xl hover:bg-branddark transition-colors shadow-[0_4px_10px_rgba(0,229,255,0.3)]">1.0%</button>
+                                <button onclick="setFixRisk(2)" class="flex-1 py-2 text-[10px] md:text-xs font-bold border-2 border-gray-700 text-gray-400 rounded-xl hover:bg-brand/10 hover:border-brand hover:text-brand transition-colors">2.0%</button>
                             </div>
                         </div>
 
                         <!-- Stop Loss -->
                         <div>
                             <div class="flex justify-between mb-2 mt-4">
-                                <label class="text-xs font-bold text-gray-300 uppercase tracking-wide">Jarak Stop Loss</label>
-                                <span class="text-[10px] text-gray-500 font-bold">DALAM PIPS</span>
+                                <label class="text-[11px] md:text-xs font-bold text-gray-300 uppercase tracking-wide">Jarak Stop Loss</label>
+                                <span class="text-[8px] md:text-[10px] text-gray-500 font-bold">DALAM PIPS</span>
                             </div>
                             <div class="relative">
                                 <input type="number" id="fix-sl" class="calc-input-dark pr-16" value="30" oninput="calcFixed()">
-                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-brand font-black text-xs">PIPS</span>
+                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-brand font-black text-[10px] md:text-xs">PIPS</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Output Box (Black Solid Background) -->
-                <div class="lg:col-span-5 bg-black border-2 border-brand/30 rounded-[2rem] p-8 shadow-[0_0_40px_rgba(0,229,255,0.1)] relative overflow-hidden flex flex-col h-fit transition-all duration-300 hover:border-brand hover:shadow-[0_0_50px_rgba(0,229,255,0.2)] hover:-translate-y-1">
+                <div class="lg:col-span-5 bg-black border-2 border-brand/30 rounded-[2rem] p-6 md:p-8 shadow-[0_0_40px_rgba(0,229,255,0.1)] relative overflow-hidden flex flex-col h-fit transition-all duration-300 hover:border-brand hover:shadow-[0_0_50px_rgba(0,229,255,0.2)] hover:-translate-y-1">
                     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-brand/20 rounded-full blur-[80px] pointer-events-none"></div>
                     
                     <div class="inline-flex items-center gap-2 bg-brand/10 border border-brand/30 text-brand px-3 py-1.5 rounded-full mb-6 relative z-10 w-max mx-auto lg:mx-0">
@@ -231,20 +249,20 @@
                     <div class="text-center relative z-10 mb-6 border-b border-gray-800 pb-6">
                         <p class="text-gray-400 text-sm font-medium mb-3">Lot size rekomendasi (Aman):</p>
                         <div class="flex items-baseline justify-center gap-2 mb-4">
-                            <span id="out-fix-lot" class="text-[4.5rem] md:text-[5.5rem] leading-none font-black text-white tabular-nums tracking-tighter drop-shadow-lg">0.03</span>
-                            <span class="text-xl font-bold text-brand mb-2">Lot</span>
+                            <span id="out-fix-lot" class="text-5xl md:text-[5.5rem] leading-none font-black text-white tabular-nums tracking-tighter drop-shadow-lg truncate">0.03</span>
+                            <span class="text-lg md:text-xl font-bold text-brand mb-1 md:mb-2">Lot</span>
                         </div>
                         <div class="bg-[#060b13] border border-gray-800 text-gray-400 text-[10px] font-medium px-3 py-1.5 rounded-lg inline-block" id="out-fix-desc">XAUUSD (Gold) • 30 pips SL • 1% risk</div>
                     </div>
 
-                    <div class="space-y-3 text-sm font-medium relative z-10">
+                    <div class="space-y-3 text-xs md:text-sm font-medium relative z-10">
                         <div class="flex justify-between items-center bg-[#060b13] p-4 rounded-xl border border-gray-800">
                             <span class="text-gray-400 flex items-center gap-2"><i class="fa-solid fa-sack-dollar text-red-400"></i> Risiko</span>
                             <span id="out-fix-riskusd" class="font-bold text-red-400">-$10.00</span>
                         </div>
                         <div class="flex justify-between items-center bg-[#060b13] p-4 rounded-xl border border-gray-800">
                             <span class="text-gray-400 flex items-center gap-2"><i class="fa-solid fa-cubes text-gray-500"></i> Size</span>
-                            <span id="out-fix-units" class="font-bold text-white">3,333 <span class="text-gray-600 text-[10px] font-normal uppercase ml-1">Units</span></span>
+                            <span id="out-fix-units" class="font-bold text-white">3,333 <span class="text-gray-600 text-[9px] md:text-[10px] font-normal uppercase ml-1">Units</span></span>
                         </div>
                         <div class="flex justify-between items-center bg-[#060b13] p-4 rounded-xl border border-gray-800">
                             <span class="text-gray-400 flex items-center gap-2"><i class="fa-solid fa-tag text-brand"></i> Nilai per Pip</span>
@@ -258,41 +276,40 @@
     </section>
 
     <!-- SECTION 3: MODE 02 DYNAMIC SLIDERS (TERANG) -->
-    <section class="bg-[#f8fafc] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+    <section class="bg-[#f8fafc] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-200">
         <div class="max-w-9xl mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-12 md:mb-16 text-center">
                 <p class="text-branddark font-black text-[10px] uppercase tracking-widest mb-2">MODE 02 / DYNAMIC LOT</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Geser slider, lihat saran lot.</h2>
-                <p class="text-gray-500 text-lg max-w-2xl mx-auto font-medium">Cocok kalau Anda masih mencari skenario: <i>"Kalau modal segini, risk segini, lot amannya berapa?"</i>. Lihat 3 zona langsung secara <i>real-time</i>.</p>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Geser slider, lihat saran lot.</h2>
+                <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto font-medium">Cocok kalau Anda masih mencari skenario: <i>"Kalau modal segini, risk segini, lot amannya berapa?"</i>. Lihat 3 zona langsung secara <i>real-time</i>.</p>
             </div>
 
             <!-- Grid 12 Kolom (7:5) -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 
                 <!-- Input Sliders Box (TERANG) -->
-                <div class="lg:col-span-7 bg-white border-2 border-gray-200 rounded-[2rem] p-8 md:p-10 shadow-sm relative z-10 flex flex-col group hover:border-branddark hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-fit">
+                <div class="lg:col-span-7 bg-white border-2 border-gray-200 rounded-[2rem] p-6 md:p-10 shadow-sm relative z-10 flex flex-col group hover:border-branddark hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-fit">
                     <div class="mb-8 border-b border-gray-100 pb-6 flex items-center justify-between">
                         <div>
-                            <h3 class="font-bold text-2xl text-gray-900 tracking-tight group-hover:text-branddark transition-colors">Set Skenario Dinamis</h3>
+                            <h3 class="font-bold text-xl md:text-2xl text-gray-900 tracking-tight group-hover:text-branddark transition-colors">Set Skenario Dinamis</h3>
                             <p class="text-xs text-gray-500 font-medium mt-1">Geser 3 slider di bawah untuk update target zona.</p>
                         </div>
-                        <i class="fa-solid fa-sliders text-brand text-2xl opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        <i class="fa-solid fa-sliders text-brand text-2xl opacity-50 group-hover:opacity-100 transition-opacity hidden sm:block"></i>
                     </div>
                     
                     <div class="space-y-8 flex-1">
                         <!-- Instrument Dynamic -->
                         <div>
                             <div class="flex justify-between items-end mb-3">
-                                <label class="text-sm font-bold text-gray-700 block tracking-wide">Instrumen Base</label>
+                                <label class="text-xs md:text-sm font-bold text-gray-700 block tracking-wide">Instrumen Base</label>
                             </div>
-                            <select id="dyn-pipvalue" class="calc-input-light cursor-pointer text-sm" onchange="calcDynamic()">
+                            <select id="dyn-pipvalue" class="calc-input-light cursor-pointer text-xs md:text-sm" onchange="calcDynamic()">
                                 <option value="10">XAUUSD (Gold) - $10/pip</option>
-                                <option value="10">EURUSD, GBPUSD, AUDUSD, NZDUSD - $10/pip</option>
-                                <option value="6.7">USDJPY, EURJPY, GBPJPY, AUDJPY - $6.7/pip</option>
+                                <option value="10">EURUSD, GBPUSD, AUDUSD - $10/pip</option>
+                                <option value="6.7">USDJPY, EURJPY, GBPJPY - $6.7/pip</option>
                                 <option value="7.3">USDCAD, EURCAD, GBPCAD - $7.3/pip</option>
                                 <option value="11.1">USDCHF, EURCHF, GBPCHF - $11.1/pip</option>
-                                <option value="1">BTCUSD (Asumsi 1 Lot = 1 BTC) - $1/pip</option>
-                                <option value="0.1">ETHUSD (Asumsi 1 Lot = 1 ETH) - $0.1/pip</option>
+                                <option value="1">BTCUSD (1 Lot = 1 BTC) - $1/pip</option>
                             </select>
                         </div>
 
@@ -300,10 +317,10 @@
                         <div class="pt-4 border-t border-gray-100">
                             <div class="flex justify-between items-end mb-4">
                                 <div>
-                                    <label class="text-sm font-bold text-gray-500 block tracking-wide mb-1">Modal Account</label>
-                                    <span id="val-dyn-bal" class="text-3xl font-black text-gray-900 tracking-tight">$1,000</span>
+                                    <label class="text-xs md:text-sm font-bold text-gray-500 block tracking-wide mb-1">Modal Account</label>
+                                    <span id="val-dyn-bal" class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">$1,000</span>
                                 </div>
-                                <span class="bg-brandlight text-branddark text-[10px] font-bold px-3 py-1 rounded border border-brand/20">LIVE ADJUST</span>
+                                <span class="bg-brandlight text-branddark text-[8px] md:text-[10px] font-bold px-2 py-1 md:px-3 rounded border border-brand/20">LIVE ADJUST</span>
                             </div>
                             <input type="range" id="dyn-balance" class="light-slider" min="100" max="10000" step="100" value="1000" oninput="calcDynamic()">
                             <div class="flex justify-between text-[10px] text-gray-400 font-bold mt-2">
@@ -315,9 +332,9 @@
                         <div>
                             <div class="flex justify-between items-end mb-4">
                                 <div>
-                                    <label class="text-sm font-bold text-gray-500 block tracking-wide mb-1">Risk Per Trade</label>
-                                    <span id="val-dyn-risk" class="text-3xl font-black text-gray-900 tracking-tight">1.0%</span>
-                                    <span id="val-dyn-riskusd" class="text-xs text-red-500 font-bold ml-2 bg-red-50 px-2 py-0.5 rounded border border-red-100">-$10.00</span>
+                                    <label class="text-xs md:text-sm font-bold text-gray-500 block tracking-wide mb-1">Risk Per Trade</label>
+                                    <span id="val-dyn-risk" class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">1.0%</span>
+                                    <span id="val-dyn-riskusd" class="text-xs text-red-500 font-bold ml-1 md:ml-2 bg-red-50 px-2 py-0.5 rounded border border-red-100">-$10.00</span>
                                 </div>
                             </div>
                             <input type="range" id="dyn-risk" class="light-slider" min="0.1" max="5.0" step="0.1" value="1.0" oninput="calcDynamic()">
@@ -330,9 +347,9 @@
                         <div>
                             <div class="flex justify-between items-end mb-4">
                                 <div>
-                                    <label class="text-sm font-bold text-gray-500 block tracking-wide mb-1">Stop Loss Jarak</label>
-                                    <span id="val-dyn-sl" class="text-3xl font-black text-gray-900 tracking-tight">30</span>
-                                    <span class="text-xs text-gray-500 font-bold ml-1 uppercase">Pips</span>
+                                    <label class="text-xs md:text-sm font-bold text-gray-500 block tracking-wide mb-1">Stop Loss Jarak</label>
+                                    <span id="val-dyn-sl" class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">30</span>
+                                    <span class="text-[10px] md:text-xs text-gray-500 font-bold ml-1 uppercase">Pips</span>
                                 </div>
                             </div>
                             <input type="range" id="dyn-sl" class="light-slider" min="5" max="100" step="5" value="30" oninput="calcDynamic()">
@@ -344,7 +361,7 @@
                 </div>
 
                 <!-- Output Box (TERANG - Sesuai Permintaan) -->
-                <div class="lg:col-span-5 bg-white border-2 border-gray-200 rounded-[2rem] p-8 shadow-xl relative overflow-hidden flex flex-col h-fit transition-all duration-300 hover:border-branddark hover:-translate-y-1">
+                <div class="lg:col-span-5 bg-white border-2 border-gray-200 rounded-[2rem] p-6 md:p-8 shadow-xl relative overflow-hidden flex flex-col h-fit transition-all duration-300 hover:border-branddark hover:-translate-y-1">
                     <div class="inline-flex items-center gap-2 bg-brandlight border border-brand/20 text-branddark px-3 py-1.5 rounded-full mb-6 relative z-10 w-max mx-auto lg:mx-0">
                         <i class="fa-solid fa-layer-group"></i>
                         <p class="font-bold text-[10px] uppercase tracking-widest">3 ZONA LOT SIZE</p>
@@ -356,33 +373,33 @@
                     
                     <div class="grid grid-cols-1 gap-4 relative z-10">
                         <!-- Standard (Highlighted Light Mode) -->
-                        <div class="bg-white rounded-2xl p-6 text-center relative transform scale-105 shadow-[0_10px_30px_rgba(0,184,204,0.15)] z-20 border-2 border-brand">
-                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-darkbg text-[9px] font-black px-3 py-1 rounded-full uppercase shadow-md tracking-wider">PILIHAN (1%)</div>
-                            <div class="flex justify-between items-center mb-1">
-                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wide">Standard</p>
-                                <p id="out-dyn-pct-std" class="text-[10px] font-bold text-gray-700 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">1.0% Risk</p>
+                        <div class="bg-white rounded-2xl p-6 text-center relative transform md:scale-105 shadow-[0_10px_30px_rgba(0,184,204,0.15)] z-20 border-2 border-brand">
+                            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-darkbg text-[8px] md:text-[9px] font-black px-3 py-1 rounded-full uppercase shadow-md tracking-wider">PILIHAN (1%)</div>
+                            <div class="flex justify-between items-center mb-1 mt-1 md:mt-0">
+                                <p class="text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-wide">Standard</p>
+                                <p id="out-dyn-pct-std" class="text-[9px] md:text-[10px] font-bold text-gray-700 bg-gray-100 border border-gray-200 px-2 py-0.5 rounded">1.0% Risk</p>
                             </div>
-                            <p id="out-dyn-lot-std" class="text-[3.5rem] font-black text-gray-900 tracking-tighter leading-none mt-2">0.03 <span class="text-lg text-branddark">Lot</span></p>
+                            <p id="out-dyn-lot-std" class="text-4xl md:text-[3.5rem] font-black text-gray-900 tracking-tighter leading-none mt-2 truncate">0.03 <span class="text-base md:text-lg text-branddark">Lot</span></p>
                         </div>
                         
-                        <div class="grid grid-cols-2 gap-4 mt-3">
+                        <div class="grid grid-cols-2 gap-3 md:gap-4 mt-3">
                             <!-- Konservatif -->
-                            <div class="border border-gray-200 bg-gray-50 rounded-xl p-5 text-center flex flex-col justify-center">
-                                <p class="text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wide">Konservatif</p>
-                                <p id="out-dyn-lot-kon" class="text-2xl font-black text-gray-900 mb-2">0.01</p>
-                                <p class="text-[10px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded inline-block mx-auto">0.5% Risk</p>
+                            <div class="border border-gray-200 bg-gray-50 rounded-xl p-4 md:p-5 text-center flex flex-col justify-center">
+                                <p class="text-[9px] md:text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wide">Konservatif</p>
+                                <p id="out-dyn-lot-kon" class="text-xl md:text-2xl font-black text-gray-900 mb-2 truncate">0.01</p>
+                                <p class="text-[9px] md:text-[10px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded inline-block mx-auto">0.5% Risk</p>
                             </div>
                             <!-- Agresif -->
-                            <div class="border border-gray-200 bg-gray-50 rounded-xl p-5 text-center flex flex-col justify-center">
-                                <p class="text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wide">Agresif</p>
-                                <p id="out-dyn-lot-agr" class="text-2xl font-black text-gray-900 mb-2">0.06</p>
-                                <p class="text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded inline-block mx-auto">2.0% Risk</p>
+                            <div class="border border-gray-200 bg-gray-50 rounded-xl p-4 md:p-5 text-center flex flex-col justify-center">
+                                <p class="text-[9px] md:text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wide">Agresif</p>
+                                <p id="out-dyn-lot-agr" class="text-xl md:text-2xl font-black text-gray-900 mb-2 truncate">0.06</p>
+                                <p class="text-[9px] md:text-[10px] font-bold text-red-600 bg-red-100 px-2 py-0.5 rounded inline-block mx-auto">2.0% Risk</p>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="mt-8 text-xs text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-200 relative z-10 flex gap-3 items-start">
-                        <i class="fa-solid fa-lightbulb text-yellow-500 text-base flex-shrink-0"></i>
+                    <div class="mt-6 md:mt-8 text-xs text-gray-600 leading-relaxed bg-gray-50 p-4 rounded-xl border border-gray-200 relative z-10 flex gap-3 items-start">
+                        <i class="fa-solid fa-lightbulb text-yellow-500 text-base flex-shrink-0 mt-0.5"></i>
                         <p>
                             Gunakan zona <strong class="text-gray-900">Standard</strong> untuk pertumbuhan stabil. <strong class="text-red-500">Agresif</strong> hanya disarankan jika Anda memiliki <i>win rate</i> konsisten di atas 60%.
                         </p>
@@ -394,37 +411,37 @@
     </section>
 
     <!-- SECTION 4: QUICK PRESETS (GELAP) -->
-    <section class="bg-darkbg py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800">
+    <section class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-12 md:mb-16 text-center">
                 <p class="text-brand font-bold text-[10px] uppercase tracking-widest mb-2">03 / QUICK PRESETS</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-white mb-4">Klik buat coba skenario.</h2>
-                <p class="text-gray-400 text-lg max-w-2xl mx-auto font-medium">Preset profil trader Indonesia — klik kotak untuk <i>auto-fill</i> kalkulator Mode 01 di atas.</p>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-4">Klik buat coba skenario.</h2>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto font-medium">Preset profil trader Indonesia — klik kotak untuk <i>auto-fill</i> kalkulator Mode 01 di atas.</p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-stretch">
                 <!-- Preset 1 -->
-                <button onclick="applyPreset(100, 1, 30)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
+                <button onclick="applyPreset(100, 1, 30)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 group-hover:text-brand transition-colors">/ MODAL KECIL</p>
-                    <p class="font-black text-white text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$100 · 1% · 30 pips</p>
+                    <p class="font-black text-white text-lg md:text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$100 · 1% · 30 pips</p>
                     <p class="text-xs text-gray-400 font-medium mt-auto">Pemula Gold<br><span class="inline-block mt-2 font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-500/20">Risk: $1 per trade</span></p>
                 </button>
                 <!-- Preset 2 -->
-                <button onclick="applyPreset(500, 1, 20)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
+                <button onclick="applyPreset(500, 1, 20)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 group-hover:text-brand transition-colors">/ STARTING UP</p>
-                    <p class="font-black text-white text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$500 · 1% · 20 pips</p>
+                    <p class="font-black text-white text-lg md:text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$500 · 1% · 20 pips</p>
                     <p class="text-xs text-gray-400 font-medium mt-auto">Konservatif Scalper<br><span class="inline-block mt-2 font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-500/20">Risk: $5 per trade</span></p>
                 </button>
                 <!-- Preset 3 -->
-                <button onclick="applyPreset(1000, 2, 50)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
+                <button onclick="applyPreset(1000, 2, 50)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 group-hover:text-brand transition-colors">/ MEDIUM SWING</p>
-                    <p class="font-black text-white text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$1,000 · 2% · 50 pips</p>
+                    <p class="font-black text-white text-lg md:text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$1,000 · 2% · 50 pips</p>
                     <p class="text-xs text-gray-400 font-medium mt-auto">Swing Trader Gold<br><span class="inline-block mt-2 font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-500/20">Risk: $20 per trade</span></p>
                 </button>
                 <!-- Preset 4 -->
-                <button onclick="applyPreset(5000, 1, 30)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
+                <button onclick="applyPreset(5000, 1, 30)" class="h-full flex flex-col text-left bg-darkpanel border-2 border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-2 transition-all duration-300 group">
                     <p class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3 group-hover:text-brand transition-colors">/ SERIUS</p>
-                    <p class="font-black text-white text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$5,000 · 1% · 30 pips</p>
+                    <p class="font-black text-white text-lg md:text-xl tracking-tight mb-2 group-hover:text-brand transition-colors">$5,000 · 1% · 30 pips</p>
                     <p class="text-xs text-gray-400 font-medium mt-auto">Extra Capital Level<br><span class="inline-block mt-2 font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-500/20">Risk: $50 per trade</span></p>
                 </button>
             </div>
@@ -432,17 +449,17 @@
     </section>
 
     <!-- SECTION 5: ATURAN SIZING (TERANG - GRADASI TEXT) -->
-    <section class="bg-[#f8fafc] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+    <section class="bg-[#f8fafc] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-200">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-16 text-center">
+            <div class="mb-12 md:mb-16 text-center">
                 <p class="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-2">04 / THE RULES</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Yang penting kamu paham <br class="hidden md:block">sebelum pencet buy.</h2>
-                <p class="text-gray-500 max-w-2xl text-lg font-medium mx-auto">Position size salah = akun cepat habis. Tidak peduli seberapa bagus teknikal analisa-nya.</p>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Yang penting kamu paham <br class="hidden md:block">sebelum pencet buy.</h2>
+                <p class="text-gray-500 max-w-2xl text-base md:text-lg font-medium mx-auto">Position size salah = akun cepat habis. Tidak peduli seberapa bagus teknikal analisa-nya.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
                 <!-- Aturan 1 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-percent text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 01</p>
@@ -451,7 +468,7 @@
                     <p class="text-gray-500 text-sm leading-relaxed mt-auto font-medium">Risk lebih dari 2% berarti rentetan <i>loss</i> beruntun bisa menghabiskan akun dengan cepat. Pro trader umumnya disiplin di angka 0.5%–1% per eksekusi.</p>
                 </div>
                 <!-- Aturan 2 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-shield-halved text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 02</p>
@@ -460,7 +477,7 @@
                     <p class="text-gray-500 text-sm leading-relaxed mt-auto font-medium">Tentukan SL berdasarkan struktur chart. Lalu hitung lot mengikuti SL tersebut. <strong>Jangan dibalik</strong> — menentukan lot gajah lalu SL asal-asalan itu <i>gambling</i>.</p>
                 </div>
                 <!-- Aturan 3 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-coins text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 03</p>
@@ -469,7 +486,7 @@
                     <p class="text-gray-500 text-sm leading-relaxed mt-auto font-medium">Pip value berbeda per instrumen. Gold & Major Pair rata-rata $10/lot standard, tapi JPY pairs bisa ~$6.7/lot. Selalu gunakan kalkulator yang tepat.</p>
                 </div>
                 <!-- Aturan 4 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-bolt text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 04</p>
@@ -478,7 +495,7 @@
                     <p class="text-gray-500 text-sm leading-relaxed mt-auto font-medium">Leverage 1:500 cuma <i>tools</i> (alat) agar margin yang ditahan broker lebih kecil. Besar kecilnya profit dan <i>loss</i> murni ditentukan oleh <strong>Lot Size</strong>.</p>
                 </div>
                 <!-- Aturan 5 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-stopwatch text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 05</p>
@@ -487,7 +504,7 @@
                     <p class="text-gray-500 text-sm leading-relaxed mt-auto font-medium">Bookmark halaman kalkulator ini. Biasakan menghitung ukuran posisi sebelum MT4/MT5 terbuka agar tidak FOMO (terbawa emosi) memencet Lot sembarangan.</p>
                 </div>
                 <!-- Aturan 6 -->
-                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl hover:border-branddark transition-all duration-300 shadow-sm hover:shadow-xl hover:-translate-y-2 cursor-pointer group">
                     <div class="flex items-center gap-3 mb-4">
                         <i class="fa-solid fa-building-columns text-gray-400 group-hover:text-branddark text-xl transition-colors"></i>
                         <p class="text-gray-400 group-hover:text-branddark font-bold text-[10px] uppercase tracking-widest transition-colors">/ ATURAN 06</p>
@@ -500,21 +517,21 @@
     </section>
 
     <!-- SLIDE 6: CTA AKHIR DENGAN MOCKUP DISCORD (GELAP) -->
-    <section class="py-24 px-8 md:px-16 lg:px-24 relative overflow-hidden bg-gradient-to-b from-darkbg to-[#081220] border-t border-gray-800">
+    <section class="py-16 md:py-24 px-5 md:px-16 lg:px-24 relative overflow-hidden bg-gradient-to-b from-darkbg to-[#081220] border-t border-gray-800">
         <!-- Efek cahaya atas -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-16 bg-brand/10 blur-[60px] pointer-events-none"></div>
         
-        <div class="max-w-7xl mx-auto relative z-10 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="max-w-7xl mx-auto relative z-10 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             
             <!-- Teks Ajakan -->
             <div class="text-center lg:text-left">
                 <div class="inline-flex items-center justify-center gap-2 border border-brand/30 bg-brand/10 px-4 py-1.5 rounded-full font-bold text-[10px] text-brand uppercase tracking-widest mb-6 shadow-[0_0_10px_rgba(0,229,255,0.2)]">
                     <i class="fa-brands fa-discord"></i> Exclusive Community
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6 tracking-tighter leading-tight text-white">
-                    Berhenti Bermimpi. <br>Mulai Eksekusi.
+                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter leading-tight text-white">
+                    Berhenti Bermimpi. <br class="hidden md:block">Mulai Eksekusi.
                 </h2>
-                <p class="text-gray-400 mb-10 text-lg leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
+                <p class="text-gray-400 mb-10 text-base md:text-lg leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
                     Bingung menentukan <i>lot size</i> atau mencari momentum yang tepat? Diskusikan <i>setup</i> teknikal dan manajemen risiko Anda bersama ribuan trader profesional lainnya.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -531,7 +548,7 @@
             <div class="relative group mt-10 lg:mt-0">
                 <div class="absolute -inset-2 bg-gradient-to-tr from-[#5865F2] to-brand rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
                 
-                <div class="bg-discordbg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 hover:-translate-y-2 relative z-10 text-left">
+                <div class="bg-discordbg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 md:hover:-translate-y-2 relative z-10 text-left">
                     <!-- Discord Header -->
                     <div class="bg-discordheader px-4 py-3 border-b border-[#1e1f22] flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-3">
@@ -601,40 +618,69 @@
     </section>
 
     <!-- FOOTER (TERANG) -->
-    <footer class="bg-white text-gray-500 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-200">
+    <footer class="bg-white text-gray-500 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-200">
         <div class="max-w-7xl mx-auto border-b border-gray-100 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed">
                 <strong class="text-gray-800">Risk Warning.</strong> AcademyFX merupakan sarana edukasi literasi finansial dan bukan saran investasi (<i>Financial Advice</i>). Seluruh data pada kalkulator ini murni simulasi matematis yang mengasumsikan standar <i>pip value</i> umum. Hasil trading masa lalu tidak menjamin hasil di masa depan. Trading memiliki risiko kehilangan sebagian atau seluruh dana. 
-                <a href="#" class="text-branddark font-medium hover:underline ml-1">Disclaimer</a> · 
-                <a href="#" class="text-branddark font-medium hover:underline">Terms & Conditions</a>
+                <br class="block md:hidden mt-2">
+                <a href="#" class="text-branddark font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Disclaimer</a> <span class="hidden md:inline">·</span> 
+                <a href="#" class="text-branddark font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Terms & Conditions</a>
             </p>
         </div>
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="font-medium text-gray-400 text-center md:text-left w-full">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-        <div class="flex items-center gap-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
+            <p class="font-medium text-gray-400 text-center md:text-left w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+        <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                    <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                    <i class="fa-brands fa-discord text-lg md:text-xl"></i> <span class="hidden md:inline">Komunitas Discord</span>
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- TOMBOL WHATSAPP MELAYANG -->
-    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-xl border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 md:bottom-6 md:right-6 bg-white text-gray-800 px-3 md:px-4 py-3 rounded-full shadow-xl border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
         <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
             <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="flex flex-col pr-2">
+        <div class="hidden sm:flex flex-col pr-2">
             <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
             <span class="text-sm font-bold leading-none text-gray-800 tracking-tight">Chat Admin</span>
         </div>
     </a>
 
-    <!-- JAVASCRIPT LOGIC (PRO CALCULATORS) -->
+    <!-- JAVASCRIPT LOGIC (PRO CALCULATORS & MOBILE MENU) -->
     <script>
+        // MOBILE MENU TOGGLE
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileBtn && mobileMenu) {
+                const icon = mobileBtn.querySelector('i');
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('-translate-y-full');
+                    if(mobileMenu.classList.contains('-translate-y-full')) {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    }
+                }
+
+                mobileBtn.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        });
+
         const formatMoney = (amount) => {
             return "$" + parseFloat(amount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
