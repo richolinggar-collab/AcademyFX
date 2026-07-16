@@ -57,10 +57,10 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #1e1f22; border-radius: 4px; }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white">
+<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- NAVIGATION (GELAP) -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
+    <!-- NAVIGATION (GELAP) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -75,21 +75,39 @@
             <div class="hidden md:flex space-x-8 text-sm font-medium">
                 <a href="index.html#home" class="nav-link text-gray-300 hover:text-brand transition duration-300">Home</a>
                 <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
-                <a href="tools.html" class="nav-link text-brand transition duration-300">Tools</a>
+                <a href="tools.html" class="nav-link text-brand active-nav transition duration-300">Tools</a>
                 <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
                 <a href="terminal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Terminal</a>
                 <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
                 <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
             </div>
             
-            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
-                Join Discord
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                    Join Discord
+                </a>
+                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
+        <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
+        <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
+        <a href="tools.html" class="py-4 border-b border-gray-800 text-brand font-medium mobile-nav-link">Tools</a>
+        <a href="jurnal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Journal</a>
+        <a href="terminal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Terminal</a>
+        <a href="index.html#roadmap" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Roadmap</a>
+        <a href="about.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">About</a>
+        <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
+    </div>
+
     <!-- SLIDE 1: HERO SECTION (TERANG) -->
-    <section class="pt-40 pb-16 px-8 md:px-16 lg:px-24 bg-white relative overflow-hidden text-center border-b border-gray-200">
+    <section class="pt-32 pb-16 px-5 md:px-16 lg:px-24 bg-white relative overflow-hidden text-center border-b border-gray-200">
         <div class="max-w-4xl mx-auto relative z-10">
             <!-- Badge -->
             <div class="inline-flex items-center gap-2 border-2 border-gray-200 bg-gray-50 px-5 py-2 rounded-full text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-8 shadow-sm cursor-default hover:border-branddark transition-colors">
@@ -104,7 +122,7 @@
                 <p class="text-gray-800 text-xl md:text-2xl font-semibold italic">
                     "Protect the downside, and the upside will take care of itself."
                 </p>
-                <p class="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                <p class="text-gray-500 text-base md:text-xl leading-relaxed max-w-2xl mx-auto">
                     Bertahanlah untuk trading di hari esok. Pahami batas toleransi risiko Anda dan simulasikan kedalaman kerugian beruntun (<em>losing streak</em>) sebelum market benar-benar menguji psikologi Anda.
                 </p>
             </div>
@@ -112,7 +130,7 @@
     </section>
 
     <!-- SLIDE 2: CALCULATOR TOOL SECTION (GELAP) -->
-    <section class="bg-darkbg py-20 px-8 md:px-16 lg:px-24 relative overflow-hidden">
+    <section class="bg-darkbg py-16 md:py-20 px-5 md:px-16 lg:px-24 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-30 pointer-events-none"></div>
         <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand/5 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -120,7 +138,7 @@
         <div class="max-w-6xl mx-auto relative z-10 flex flex-col lg:flex-row gap-8 items-stretch lg:h-[580px]">
             
             <!-- PANEL INPUT (KIRI) -->
-            <div class="w-full lg:w-1/3 bg-darkpanel border border-gray-800 rounded-3xl p-8 shadow-2xl flex flex-col">
+            <div class="w-full lg:w-1/3 bg-darkpanel border border-gray-800 rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col">
                 <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-3 shrink-0">
                     <i class="fa-solid fa-sliders text-brand"></i> Parameter Risiko
                 </h3>
@@ -154,34 +172,34 @@
                 </div>
 
                 <!-- Tombol didorong ke bawah (mt-auto) agar menempel seimbang dengan akhir tabel kotak kanan -->
-                <button onclick="calculateDrawdown()" class="w-full bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(0,229,255,0.3)] hover:shadow-[0_0_25px_rgba(0,229,255,0.5)] mt-auto shrink-0">
+                <button onclick="calculateDrawdown()" class="w-full bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(0,229,255,0.3)] hover:shadow-[0_0_25px_rgba(0,229,255,0.5)] mt-6 lg:mt-auto shrink-0">
                     Hitung Drawdown <i class="fa-solid fa-arrow-rotate-right ml-2"></i>
                 </button>
             </div>
 
             <!-- PANEL HASIL (KANAN) -->
-            <div class="w-full lg:w-2/3 bg-darkpanel border border-gray-800 rounded-3xl p-8 shadow-2xl flex flex-col">
+            <div class="w-full lg:w-2/3 bg-darkpanel border border-gray-800 rounded-3xl p-6 md:p-8 shadow-2xl flex flex-col min-h-[400px]">
                 <div class="flex justify-between items-end mb-6 shrink-0">
                     <div>
                         <h3 class="text-xl font-bold text-white mb-1">Simulasi Consecutive Losses</h3>
-                        <p class="text-sm text-gray-400">Proyeksi penurunan saldo modal secara bertahap.</p>
+                        <p class="text-xs md:text-sm text-gray-400">Proyeksi penurunan saldo modal secara bertahap.</p>
                     </div>
-                    <div class="hidden sm:block text-right">
-                        <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">Total Loss Nominal (Trade 1)</p>
-                        <p class="text-xl font-black text-[#ef4444]" id="firstLossAmount">-$100.00</p>
+                    <div class="text-right">
+                        <p class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">Total Loss Nominal <span class="hidden sm:inline">(Trade 1)</span></p>
+                        <p class="text-lg md:text-xl font-black text-[#ef4444]" id="firstLossAmount">-$100.00</p>
                     </div>
                 </div>
 
                 <!-- FLEX-1 dan MIN-H-0 agar bisa discroll tanpa menjebol batas kotak -->
-                <div class="flex-1 min-h-0 overflow-y-auto table-scrollbar border border-gray-800 rounded-xl bg-[#0f172a] relative">
-                    <table class="w-full text-left border-collapse">
+                <div class="flex-1 min-h-0 overflow-y-auto overflow-x-auto table-scrollbar border border-gray-800 rounded-xl bg-[#0f172a] relative">
+                    <table class="w-full text-left border-collapse min-w-[500px]">
                         <!-- Z-10 dan sticky top-0 agar header nempel saat isinya discroll ke bawah -->
                         <thead class="bg-[#1e293b] sticky top-0 z-10 shadow-md border-b border-gray-700">
                             <tr>
-                                <th class="py-4 px-6 text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4"># Loss Ke-</th>
-                                <th class="py-4 px-6 text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4">Nominal Loss</th>
-                                <th class="py-4 px-6 text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4">Sisa Saldo</th>
-                                <th class="py-4 px-6 text-xs font-bold text-brand uppercase tracking-wider text-right w-1/4">Total DD %</th>
+                                <th class="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4"># Loss Ke-</th>
+                                <th class="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4">Nominal Loss</th>
+                                <th class="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-gray-300 uppercase tracking-wider w-1/4">Sisa Saldo</th>
+                                <th class="py-4 px-4 md:px-6 text-[10px] md:text-xs font-bold text-brand uppercase tracking-wider text-right w-1/4">Total DD %</th>
                             </tr>
                         </thead>
                         <tbody id="resultTableBody" class="divide-y divide-gray-800/50">
@@ -195,21 +213,21 @@
     </section>
 
     <!-- SLIDE 3: EDUKASI & VALUE (TERANG) -->
-    <section class="bg-[#f8f9fa] py-24 px-8 md:px-16 lg:px-24 border-y border-gray-200">
-        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+    <section class="bg-[#f8f9fa] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-y border-gray-200">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
             <div>
-                <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Risk Management</p>
-                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight">Mencegah Margin Call & <br>Gagal Prop Firm.</h2>
-                <p class="text-gray-500 text-lg leading-relaxed mb-6">
+                <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4 text-center md:text-left">Risk Management</p>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-6 leading-tight text-center md:text-left">Mencegah Margin Call & <br class="hidden md:block">Gagal Prop Firm.</h2>
+                <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-6 text-center md:text-left">
                     Salah satu penyebab utama trader gagal adalah karena menggunakan persentase risiko yang tidak realistis. 
                 </p>
-                <p class="text-gray-500 text-lg leading-relaxed mb-8">
+                <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-8 text-center md:text-left">
                     Setiap sistem trading pasti akan mengalami fase kerugian beruntun (<em>losing streak</em>). Jika Anda merisikokan 5% per trade, hanya butuh 4 kali loss untuk menyentuh batas Maximum Drawdown (10%) di prop firm.
                 </p>
             </div>
-            <div class="bg-white border-2 border-gray-200 p-8 rounded-3xl shadow-xl">
-                <h4 class="font-bold text-xl mb-4 text-gray-800">Fakta Penurunan Modal (Drawdown)</h4>
-                <ul class="space-y-4 text-gray-600 text-sm">
+            <div class="bg-white border-2 border-gray-200 p-6 md:p-8 rounded-3xl shadow-xl">
+                <h4 class="font-bold text-lg md:text-xl mb-4 text-gray-800">Fakta Penurunan Modal (Drawdown)</h4>
+                <ul class="space-y-4 text-gray-600 text-xs md:text-sm">
                     <li class="flex gap-3">
                         <i class="fa-solid fa-circle-exclamation text-branddark mt-1"></i>
                         <span>Jika Anda kehilangan <strong>10%</strong> modal, Anda butuh profit <strong>11.11%</strong> untuk kembali balik modal (Breakeven).</span>
@@ -231,18 +249,18 @@
     </section>
 
     <!-- SLIDE 4: 3 LANGKAH MENGATASI DRAWDOWN (GELAP) -->
-    <section class="bg-darkpanel py-24 px-8 md:px-16 lg:px-24 relative overflow-hidden">
+    <section class="bg-darkpanel py-16 md:py-24 px-5 md:px-16 lg:px-24 relative overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-20 bg-brand/10 blur-[80px] pointer-events-none"></div>
         
-        <div class="max-w-6xl mx-auto relative z-10 text-center mb-16">
+        <div class="max-w-6xl mx-auto relative z-10 text-center mb-12 md:mb-16">
             <h2 class="text-3xl md:text-5xl font-black text-white mb-6">Cara Bangkit Dari <span class="text-brand">Drawdown.</span></h2>
-            <p class="text-gray-400 text-lg max-w-2xl mx-auto">Masa penarikan modal bukan akhir dari segalanya. Ini adalah tiga langkah logis dan objektif untuk merespons <em>losing streak</em> tanpa merusak sistem Anda.</p>
+            <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Masa penarikan modal bukan akhir dari segalanya. Ini adalah tiga langkah logis dan objektif untuk merespons <em>losing streak</em> tanpa merusak sistem Anda.</p>
         </div>
 
-        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <!-- Langkah 1 -->
-            <div class="bg-[#0f172a] border border-gray-800 p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group">
-                <div class="w-14 h-14 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
+            <div class="bg-[#0f172a] border border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group text-center md:text-left">
+                <div class="w-14 h-14 mx-auto md:mx-0 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-4">1. Hentikan Perdarahan</h3>
@@ -252,8 +270,8 @@
             </div>
 
             <!-- Langkah 2 -->
-            <div class="bg-[#0f172a] border border-gray-800 p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group">
-                <div class="w-14 h-14 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
+            <div class="bg-[#0f172a] border border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group text-center md:text-left">
+                <div class="w-14 h-14 mx-auto md:mx-0 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
                     <i class="fa-solid fa-clipboard-list"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-4">2. Audit Objektif</h3>
@@ -263,8 +281,8 @@
             </div>
 
             <!-- Langkah 3 -->
-            <div class="bg-[#0f172a] border border-gray-800 p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group">
-                <div class="w-14 h-14 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
+            <div class="bg-[#0f172a] border border-gray-800 p-6 md:p-8 rounded-3xl hover:border-brand/50 transition-all duration-300 group text-center md:text-left">
+                <div class="w-14 h-14 mx-auto md:mx-0 rounded-2xl bg-gray-800/80 flex items-center justify-center text-brand text-2xl mb-6 border border-gray-700 group-hover:bg-brand group-hover:text-darkbg transition-colors shadow-lg">
                     <i class="fa-solid fa-battery-full"></i>
                 </div>
                 <h3 class="text-xl font-bold text-white mb-4">3. Bangun Kepercayaan Diri</h3>
@@ -276,21 +294,21 @@
     </section>
 
     <!-- SLIDE 5: CALL TO ACTION + DISCORD MOCKUP (TERANG) -->
-    <section class="bg-white py-24 px-8 md:px-16 lg:px-24 border-y border-gray-200">
+    <section class="bg-white py-16 md:py-24 px-5 md:px-16 lg:px-24 border-y border-gray-200">
         <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             <!-- Teks & Tombol (Kiri) -->
-            <div>
-                <div class="w-16 h-16 bg-brand/10 text-branddark rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm border border-brand/20">
+            <div class="text-center lg:text-left">
+                <div class="w-16 h-16 mx-auto lg:mx-0 bg-brand/10 text-branddark rounded-full flex items-center justify-center text-2xl mb-6 shadow-sm border border-brand/20">
                     <i class="fa-solid fa-users"></i>
                 </div>
                 <h2 class="text-3xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">Jangan Hadapi <br><span class="text-branddark">Drawdown</span> Sendirian.</h2>
-                <p class="text-gray-500 text-lg leading-relaxed mb-10">
+                <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
                     Masa-masa kerugian (losing streak) sangat menguji mental psikologis Anda. Bergabunglah bersama ratusan trader rasional lainnya di Discord AcademyFX untuk saling mengevaluasi jurnal dan memulihkan mental trading Anda.
                 </p>
                 
                 <!-- Tombol Tosca -->
-                <div class="flex flex-col sm:flex-row items-center gap-6">
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6">
                     <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] text-darkbg font-bold py-4 px-8 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 shadow-[0_0_20px_rgba(0,229,255,0.4)] text-lg flex items-center justify-center gap-3 w-full sm:w-auto group">
                         <i class="fa-brands fa-discord text-2xl group-hover:rotate-12 transition-transform"></i> Join Komunitas Discord
                     </a>
@@ -301,7 +319,7 @@
             <div class="relative perspective-1000 group mt-10 lg:mt-0">
                 <div class="absolute -inset-2 bg-gradient-to-tr from-brand to-[#5865F2] rounded-xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
 
-                <div class="bg-discord rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[380px] transition-transform duration-700 group-hover:rotate-y-[-2deg] group-hover:rotate-x-[2deg] relative z-10 text-left">
+                <div class="bg-discord rounded-xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[380px] transition-transform duration-700 lg:group-hover:rotate-y-[-2deg] lg:group-hover:rotate-x-[2deg] relative z-10 text-left">
                     <!-- Discord Header -->
                     <div class="bg-discorddark px-4 py-3 border-b border-[#1e1f22] flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-3">
@@ -342,13 +360,13 @@
                                     <span class="bg-[#5865F2] text-white text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider"><i class="fa-solid fa-check text-[8px]"></i> ADMIN</span>
                                     <span class="text-xs text-gray-500 font-normal">Hari ini pukul 14:15</span>
                                 </h4>
-                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Mantap bro Budi! Memang itu tujuannya, biar kita lebih objektif ngatur <i>position sizing</i> dan nggak asal tebak risiko. Lanjut disiplin dan amankan modalnya! 🔥</p>
+                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Mantap bro Budi! Memang itu tujuannya, biar kita lebih objektif ngatur <i>position sizing</i> dan nggak asal tebak risiko. Lanjut disiplin dan amankan modalnya! 💪</p>
                                 <div class="flex gap-2 mt-2">
                                     <div class="bg-[#2b2d31] border border-brand/30 rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-brand/10 transition">
-                                        <span class="text-sm">🔥</span> <span class="text-xs text-brand font-bold">5</span>
+                                        <span class="text-sm">💪</span> <span class="text-xs text-brand font-bold">5</span>
                                     </div>
                                     <div class="bg-[#2b2d31] border border-transparent rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-700 transition">
-                                        <span class="text-sm">💯</span> <span class="text-xs text-gray-400 font-bold">2</span>
+                                        <span class="text-sm">🔥</span> <span class="text-xs text-gray-400 font-bold">2</span>
                                     </div>
                                 </div>
                             </div>
@@ -372,40 +390,70 @@
     </section>
 
     <!-- FOOTER (GELAP) -->
-    <footer class="bg-darkbg text-gray-500 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10">
-        <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6">
+    <footer class="bg-darkbg text-gray-500 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10">
+        <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed text-gray-400">
                 <strong class="text-gray-300">Disclaimer.</strong> AcademyFX adalah platform edukasi dan program funding berbasis skill. Seluruh konten bersifat edukatif, bukan rekomendasi investasi. AcademyFX tidak berafiliasi dengan broker manapun, tidak menjual sinyal, copy trading, atau layanan investasi, dan tidak menjamin profit. Trading memiliki risiko kerugian. 
-                <a href="#" class="text-brand hover:underline">Disclaimer</a> · 
-                <a href="#" class="text-brand hover:underline">Terms & Conditions</a>
+                <br class="block md:hidden mt-2">
+                <a href="#" class="text-brand hover:underline inline-block mt-2 md:mt-0 md:ml-1">Disclaimer</a> <span class="hidden md:inline">·</span> 
+                <a href="#" class="text-brand hover:underline inline-block mt-2 md:mt-0 md:ml-1">Terms & Conditions</a>
             </p>
         </div>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-            <div class="flex items-center gap-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
+            <p class="font-medium text-gray-500 text-center md:text-left w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+            <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                    <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                    <i class="fa-brands fa-discord text-lg md:text-xl"></i> <span class="hidden md:inline">Komunitas Discord</span>
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- TOMBOL WHATSAPP MELAYANG -->
-    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 md:bottom-6 md:right-6 bg-white text-gray-800 px-3 md:px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
         <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
             <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="flex flex-col pr-2">
+        <div class="hidden sm:flex flex-col pr-2">
             <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
             <span class="text-sm font-bold leading-none text-gray-800">Chat Admin</span>
         </div>
     </a>
 
-    <!-- JAVASCRIPT UNTUK LOGIKA KALKULATOR DRAWDOWN -->
+    <!-- JAVASCRIPT UNTUK LOGIKA KALKULATOR DRAWDOWN & MOBILE MENU -->
     <script>
+        // MOBILE MENU TOGGLE
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileBtn && mobileMenu) {
+                const icon = mobileBtn.querySelector('i');
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('-translate-y-full');
+                    if(mobileMenu.classList.contains('-translate-y-full')) {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    }
+                }
+
+                mobileBtn.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        });
+
+        // CALCULATOR LOGIC
         document.getElementById('calcRisk').addEventListener('input', function(e) {
             document.getElementById('riskLabelValue').innerText = e.target.value + '%';
         });
@@ -450,10 +498,10 @@
                 let balColorClass = "text-white font-medium";
 
                 tr.innerHTML = `
-                    <td class="py-3 px-6 text-sm text-gray-500 font-semibold">Loss ${i}</td>
-                    <td class="py-3 px-6 text-sm ${lossColorClass}">-$${lossAmount.toFixed(2)}</td>
-                    <td class="py-3 px-6 text-sm ${balColorClass}">$${currentBalance.toFixed(2)}</td>
-                    <td class="py-3 px-6 text-sm text-right ${ddColorClass}">-${totalDrawdownPercent.toFixed(2)}%</td>
+                    <td class="py-3 px-4 md:px-6 text-[10px] md:text-sm text-gray-500 font-semibold">Loss ${i}</td>
+                    <td class="py-3 px-4 md:px-6 text-[10px] md:text-sm ${lossColorClass}">-$${lossAmount.toFixed(2)}</td>
+                    <td class="py-3 px-4 md:px-6 text-[10px] md:text-sm ${balColorClass}">$${currentBalance.toFixed(2)}</td>
+                    <td class="py-3 px-4 md:px-6 text-[10px] md:text-sm text-right ${ddColorClass}">-${totalDrawdownPercent.toFixed(2)}%</td>
                 `;
                 
                 tableBody.appendChild(tr);
