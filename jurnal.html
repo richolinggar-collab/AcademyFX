@@ -40,7 +40,7 @@
     </script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 64px; }
-        body { padding-top: 64px; }
+        body { padding-top: 64px; overflow-x: hidden; }
         
         /* Nav Link Hover Animation */
         .nav-link { position: relative; }
@@ -66,10 +66,10 @@
         .discord-scrollbar::-webkit-scrollbar-thumb:hover { background: #6b7280; }
     </style>
 </head>
-<body class="antialiased font-sans flex flex-col min-h-screen text-white bg-darkbg">
+<body class="antialiased font-sans flex flex-col min-h-screen text-white bg-darkbg overflow-x-hidden">
 
-    <!-- NAVIGATION (GELAP) -->
-    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
+    <!-- NAVIGATION (GELAP) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -86,36 +86,54 @@
                 <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
                 <a href="tools.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Tools</a>
                 <!-- Journal di-highlight aktif, Terminal ditambahkan -->
-                <a href="jurnal.html" class="nav-link text-brand transition duration-300">Journal</a>
+                <a href="jurnal.html" class="nav-link text-brand active-nav transition duration-300">Journal</a>
                 <a href="terminal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Terminal</a>
                 <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
                 <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
             </div>
             
-            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
-                Join Discord
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                    Join Discord
+                </a>
+                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
         </div>
     </nav>
+
+    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
+        <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
+        <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
+        <a href="tools.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Tools</a>
+        <a href="jurnal.html" class="py-4 border-b border-gray-800 text-brand font-medium mobile-nav-link">Journal</a>
+        <a href="terminal.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Terminal</a>
+        <a href="index.html#roadmap" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Roadmap</a>
+        <a href="about.html" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">About</a>
+        <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
+    </div>
 
     <!-- SLIDE 1: HERO JOURNAL (GELAP) -->
     <!-- Hero tetap menggunakan max-w-7xl seperti di halaman index -->
     <section class="min-h-[95vh] flex items-center relative overflow-hidden bg-darkbg border-b border-gray-800 pt-10">
         <!-- Background Accent -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-brand/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+        <div class="absolute top-0 right-0 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-brand/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+        <div class="absolute bottom-0 left-0 w-[200px] h-[200px] md:w-[400px] md:h-[400px] bg-brand/5 rounded-full blur-[100px] pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
 
-        <div class="max-w-7xl mx-auto px-8 md:px-16 lg:px-24 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 py-20">
+        <div class="max-w-7xl mx-auto px-5 md:px-16 lg:px-24 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10 py-16 md:py-20">
             <!-- Teks -->
             <div class="relative z-20 text-center lg:text-left">
                 <div class="inline-block bg-brand/10 border border-brand/20 px-4 py-1.5 rounded-full mb-6 cursor-default hover:bg-brand/20 transition-all hover:scale-105">
                     <span class="text-brand font-bold text-[10px] tracking-widest uppercase"><i class="fa-solid fa-chart-line mr-2"></i>Official AcademyFX Tool</span>
                 </div>
-                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[1.05] mb-6 text-white transition-all">
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[1.05] mb-6 text-white transition-all">
                     Data Adalah <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand to-white">Senjata Utama.</span>
                 </h1>
-                <p class="text-gray-400 text-lg mb-8 leading-relaxed font-medium">
+                <p class="text-gray-400 text-base md:text-lg mb-8 leading-relaxed font-medium">
                     Trading tanpa jurnal hanyalah perjudian. Evaluasi probabilitas, pantau pertumbuhan ekuitas, dan tingkatkan kedisiplinan Anda dengan <strong>The Ultimate Trading Journal</strong>. Sistem pelacakan interaktif khusus untuk trader pro.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -142,93 +160,95 @@
                             <div class="w-3 h-3 rounded-full bg-[#ffbd2e] hover:scale-110 transition cursor-pointer"></div>
                             <div class="w-3 h-3 rounded-full bg-[#27c93f] hover:scale-110 transition cursor-pointer"></div>
                         </div>
-                        <div class="mx-auto text-xs text-gray-500 font-medium flex items-center gap-2 bg-white px-3 py-1 rounded-full shadow-sm">
+                        <div class="mx-auto text-[10px] md:text-xs text-gray-500 font-medium flex items-center gap-2 bg-white px-3 py-1 rounded-full shadow-sm truncate max-w-[200px] md:max-w-none">
                             <i class="fa-solid fa-lock text-[10px] text-green-600"></i> docs.google.com/spreadsheets/jurnal-rglfx
                         </div>
                     </div>
 
                     <!-- Inner App Replica -->
-                    <div class="p-4 bg-[#f8f9fa] text-xs">
-                        <!-- Top Header -->
-                        <div class="bg-blue-600 text-white font-bold text-center py-2 rounded-t-md mb-2 shadow-sm text-sm uppercase tracking-wide">Trading Journal Account by Richo G.</div>
-                        
-                        <!-- Dash Grid -->
-                        <div class="grid grid-cols-3 gap-2 mb-3">
-                            <!-- Left: Balance -->
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center border border-gray-300 bg-white p-2 rounded hover:border-blue-400 transition">
-                                    <span class="font-bold text-blue-800">Masukan Modal</span>
-                                    <span class="font-mono font-bold">$ 100.00</span>
-                                </div>
-                                <div class="border border-gray-300 bg-white p-2 rounded text-center hover:border-brand transition shadow-sm">
-                                    <span class="text-[10px] font-bold text-gray-500 uppercase tracking-widest">BALANCE AKTUAL</span><br>
-                                    <span class="text-xl font-black text-gray-900">$ 101.00</span>
-                                </div>
-                            </div>
+                    <div class="p-4 bg-[#f8f9fa] text-xs overflow-x-auto">
+                        <div class="min-w-[400px]">
+                            <!-- Top Header -->
+                            <div class="bg-blue-600 text-white font-bold text-center py-2 rounded-t-md mb-2 shadow-sm text-sm uppercase tracking-wide">Trading Journal Account by Richo G.</div>
                             
-                            <!-- Mid: Winrate Circle PRESISI (Donut Chart) -->
-                            <div class="border border-gray-300 bg-white rounded p-2 flex flex-col items-center justify-center hover:shadow-md transition group/circle">
-                                <!-- CSS Conic Gradient untuk porsi Akurat: Biru 66.67%, Merah sisa -->
-                                <div class="w-16 h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm" style="background: conic-gradient(#2563eb 0% 66.67%, #ef4444 66.67% 100%);">
-                                    <!-- Inner White Circle -->
-                                    <div class="w-12 h-12 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
-                                        <span class="block text-[6px] font-bold text-gray-500 uppercase leading-tight text-center mt-0.5">Total<br>Trade</span>
-                                        <span class="text-xl font-black text-gray-900 leading-none">3</span>
+                            <!-- Dash Grid -->
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                <!-- Left: Balance -->
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center border border-gray-300 bg-white p-2 rounded hover:border-blue-400 transition">
+                                        <span class="font-bold text-blue-800 text-[10px] md:text-xs">Masukan Modal</span>
+                                        <span class="font-mono font-bold text-[10px] md:text-xs">$ 100.00</span>
+                                    </div>
+                                    <div class="border border-gray-300 bg-white p-2 rounded text-center hover:border-brand transition shadow-sm">
+                                        <span class="text-[8px] md:text-[10px] font-bold text-gray-500 uppercase tracking-widest">BALANCE AKTUAL</span><br>
+                                        <span class="text-lg md:text-xl font-black text-gray-900">$ 101.00</span>
                                     </div>
                                 </div>
-                                <div class="flex justify-between w-full mt-2 px-1 text-center items-end">
-                                    <div>
-                                        <span class="block text-blue-600 font-bold text-sm leading-none">2</span>
-                                        <span class="block text-blue-600 font-bold text-[7px] uppercase tracking-wider">Win</span>
+                                
+                                <!-- Mid: Winrate Circle PRESISI (Donut Chart) -->
+                                <div class="border border-gray-300 bg-white rounded p-2 flex flex-col items-center justify-center hover:shadow-md transition group/circle">
+                                    <!-- CSS Conic Gradient untuk porsi Akurat: Biru 66.67%, Merah sisa -->
+                                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-sm" style="background: conic-gradient(#2563eb 0% 66.67%, #ef4444 66.67% 100%);">
+                                        <!-- Inner White Circle -->
+                                        <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex flex-col items-center justify-center shadow-inner">
+                                            <span class="block text-[5px] md:text-[6px] font-bold text-gray-500 uppercase leading-tight text-center mt-0.5">Total<br>Trade</span>
+                                            <span class="text-lg md:text-xl font-black text-gray-900 leading-none">3</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="block text-gray-400 font-bold text-[6px] mb-0.5 uppercase tracking-wide">Winrate</span>
-                                        <span class="block text-gray-800 font-bold text-xs leading-none">66.67%</span>
+                                    <div class="flex justify-between w-full mt-2 px-1 text-center items-end">
+                                        <div>
+                                            <span class="block text-blue-600 font-bold text-xs md:text-sm leading-none">2</span>
+                                            <span class="block text-blue-600 font-bold text-[6px] md:text-[7px] uppercase tracking-wider">Win</span>
+                                        </div>
+                                        <div>
+                                            <span class="block text-gray-400 font-bold text-[5px] md:text-[6px] mb-0.5 uppercase tracking-wide">Winrate</span>
+                                            <span class="block text-gray-800 font-bold text-[10px] md:text-xs leading-none">66.67%</span>
+                                        </div>
+                                        <div>
+                                            <span class="block text-red-500 font-bold text-xs md:text-sm leading-none">1</span>
+                                            <span class="block text-red-500 font-bold text-[6px] md:text-[7px] uppercase tracking-wider">Loss</span>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <span class="block text-red-500 font-bold text-sm leading-none">1</span>
-                                        <span class="block text-red-500 font-bold text-[7px] uppercase tracking-wider">Loss</span>
+                                </div>
+                                
+                                <!-- Right: Chart placeholder -->
+                                <div class="border border-gray-300 bg-white rounded p-2 flex flex-col hover:border-brand transition">
+                                    <span class="text-[8px] md:text-[9px] font-bold text-gray-500 text-center mb-1 uppercase tracking-widest">Growth (%)</span>
+                                    <div class="flex-grow relative flex items-end justify-center bg-gray-50 rounded overflow-hidden">
+                                        <!-- Pseudo Chart Line -->
+                                        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+                                            <polyline fill="none" stroke="#2563eb" stroke-width="3" points="0,90 33,60 66,30 100,50" />
+                                        </svg>
                                     </div>
                                 </div>
                             </div>
-                            
-                            <!-- Right: Chart placeholder -->
-                            <div class="border border-gray-300 bg-white rounded p-2 flex flex-col hover:border-brand transition">
-                                <span class="text-[9px] font-bold text-gray-500 text-center mb-1 uppercase tracking-widest">Growth (%)</span>
-                                <div class="flex-grow relative flex items-end justify-center bg-gray-50 rounded overflow-hidden">
-                                    <!-- Pseudo Chart Line -->
-                                    <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-                                        <polyline fill="none" stroke="#2563eb" stroke-width="3" points="0,90 33,60 66,30 100,50" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!-- Table Replica -->
-                        <div class="bg-white border border-gray-300 rounded overflow-hidden shadow-sm">
-                            <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-300 text-[9px] font-bold text-gray-600 text-center py-1">
-                                <div>PAIR</div><div>POS</div><div>ENTRY</div><div>SL</div><div>LOT</div><div>RESULT</div><div>P/L</div>
-                            </div>
-                            <div class="grid grid-cols-7 text-[10px] text-gray-800 text-center py-1.5 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                                <div class="font-bold text-gray-900">GBPUSD</div>
-                                <div class="bg-blue-600 text-white rounded-[2px] mx-1 text-[8px] flex items-center justify-center font-bold tracking-wider">BUY</div>
-                                <div class="font-mono">1.3405</div><div class="font-mono">1.3365</div><div class="font-mono font-medium">0.1</div>
-                                <div class="bg-blue-600 text-white rounded-[2px] mx-1 font-bold text-[9px] flex items-center justify-center">WIN</div>
-                                <div class="text-green-600 font-mono font-bold">$ 2.00</div>
-                            </div>
-                            <div class="grid grid-cols-7 text-[10px] text-gray-800 text-center py-1.5 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition">
-                                <div class="font-bold text-gray-900">XAUUSD</div>
-                                <div class="bg-blue-600 text-white rounded-[2px] mx-1 text-[8px] flex items-center justify-center font-bold tracking-wider">BUY</div>
-                                <div class="font-mono">2030.1</div><div class="font-mono">2025.0</div><div class="font-mono font-medium">0.2</div>
-                                <div class="bg-blue-600 text-white rounded-[2px] mx-1 font-bold text-[9px] flex items-center justify-center">WIN</div>
-                                <div class="text-green-600 font-mono font-bold">$ 4.00</div>
-                            </div>
-                            <div class="grid grid-cols-7 text-[10px] text-gray-800 text-center py-1.5 hover:bg-red-50 cursor-pointer transition">
-                                <div class="font-bold text-gray-900">EURUSD</div>
-                                <div class="bg-red-500 text-white rounded-[2px] mx-1 text-[8px] flex items-center justify-center font-bold tracking-wider">SELL</div>
-                                <div class="font-mono">1.0850</div><div class="font-mono">1.0880</div><div class="font-mono font-medium">0.1</div>
-                                <div class="bg-red-600 text-white rounded-[2px] mx-1 font-bold text-[9px] flex items-center justify-center">LOSS</div>
-                                <div class="text-red-500 font-mono font-bold">-$ 5.00</div>
+                            <!-- Table Replica -->
+                            <div class="bg-white border border-gray-300 rounded overflow-hidden shadow-sm">
+                                <div class="grid grid-cols-7 bg-gray-100 border-b border-gray-300 text-[8px] md:text-[9px] font-bold text-gray-600 text-center py-1">
+                                    <div>PAIR</div><div>POS</div><div>ENTRY</div><div>SL</div><div>LOT</div><div>RESULT</div><div>P/L</div>
+                                </div>
+                                <div class="grid grid-cols-7 text-[9px] md:text-[10px] text-gray-800 text-center py-1.5 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                                    <div class="font-bold text-gray-900">GBPUSD</div>
+                                    <div class="bg-blue-600 text-white rounded-[2px] mx-1 text-[7px] md:text-[8px] flex items-center justify-center font-bold tracking-wider">BUY</div>
+                                    <div class="font-mono">1.3405</div><div class="font-mono">1.3365</div><div class="font-mono font-medium">0.1</div>
+                                    <div class="bg-blue-600 text-white rounded-[2px] mx-1 font-bold text-[8px] md:text-[9px] flex items-center justify-center">WIN</div>
+                                    <div class="text-green-600 font-mono font-bold">$ 2.00</div>
+                                </div>
+                                <div class="grid grid-cols-7 text-[9px] md:text-[10px] text-gray-800 text-center py-1.5 border-b border-gray-100 hover:bg-blue-50 cursor-pointer transition">
+                                    <div class="font-bold text-gray-900">XAUUSD</div>
+                                    <div class="bg-blue-600 text-white rounded-[2px] mx-1 text-[7px] md:text-[8px] flex items-center justify-center font-bold tracking-wider">BUY</div>
+                                    <div class="font-mono">2030.1</div><div class="font-mono">2025.0</div><div class="font-mono font-medium">0.2</div>
+                                    <div class="bg-blue-600 text-white rounded-[2px] mx-1 font-bold text-[8px] md:text-[9px] flex items-center justify-center">WIN</div>
+                                    <div class="text-green-600 font-mono font-bold">$ 4.00</div>
+                                </div>
+                                <div class="grid grid-cols-7 text-[9px] md:text-[10px] text-gray-800 text-center py-1.5 hover:bg-red-50 cursor-pointer transition">
+                                    <div class="font-bold text-gray-900">EURUSD</div>
+                                    <div class="bg-red-500 text-white rounded-[2px] mx-1 text-[7px] md:text-[8px] flex items-center justify-center font-bold tracking-wider">SELL</div>
+                                    <div class="font-mono">1.0850</div><div class="font-mono">1.0880</div><div class="font-mono font-medium">0.1</div>
+                                    <div class="bg-red-600 text-white rounded-[2px] mx-1 font-bold text-[8px] md:text-[9px] flex items-center justify-center">LOSS</div>
+                                    <div class="text-red-500 font-mono font-bold">-$ 5.00</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -239,17 +259,17 @@
 
     <!-- SLIDE 2: MENGAPA HARUS JURNAL (TERANG - GRADASI HITAM PUDAR) -->
     <!-- Diubah ke max-w-6xl -->
-    <section class="bg-[#f8fafc] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+    <section class="bg-[#f8fafc] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-200">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12 md:mb-16">
                 <p class="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-2">01 / THE PSYCHOLOGY</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Mengapa 90% Trader Gagal?</h2>
-                <p class="text-gray-500 max-w-2xl text-lg font-medium mx-auto">Trader yang mengandalkan ingatan akan selalu kalah dengan trader yang mengandalkan data dan probabilitas nyata.</p>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Mengapa 90% Trader Gagal?</h2>
+                <p class="text-gray-500 max-w-2xl text-base md:text-lg font-medium mx-auto">Trader yang mengandalkan ingatan akan selalu kalah dengan trader yang mengandalkan data dan probabilitas nyata.</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                 <!-- Card 1 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
                     <div class="w-16 h-16 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-center text-gray-400 text-2xl mb-6 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-300 shadow-sm">
                         <i class="fa-solid fa-brain"></i>
                     </div>
@@ -257,7 +277,7 @@
                     <p class="text-gray-500 leading-relaxed text-sm font-medium mt-auto">Trader sering mengingat kemenangan besar dan melupakan rentetan kerugian kecil. Jurnal memaksa Anda melihat realita dan data objektif, bukan perasaan.</p>
                 </div>
                 <!-- Card 2 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
                     <div class="w-16 h-16 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-center text-gray-400 text-2xl mb-6 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-300 shadow-sm">
                         <i class="fa-solid fa-chart-pie"></i>
                     </div>
@@ -265,7 +285,7 @@
                     <p class="text-gray-500 leading-relaxed text-sm font-medium mt-auto">Anda tidak bisa memperbaiki apa yang tidak bisa Anda ukur. Tanpa rekaman rasio Risk/Reward dan Win Rate, sistem trading Anda hanya mengandalkan tebakan.</p>
                 </div>
                 <!-- Card 3 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group">
                     <div class="w-16 h-16 bg-gray-50 rounded-2xl border border-gray-200 flex items-center justify-center text-gray-400 text-2xl mb-6 group-hover:bg-branddark group-hover:text-white group-hover:border-transparent transition-all duration-300 shadow-sm">
                         <i class="fa-solid fa-repeat"></i>
                     </div>
@@ -278,30 +298,30 @@
 
     <!-- SLIDE 3: FITUR UTAMA (GELAP) -->
     <!-- Diubah ke max-w-6xl -->
-    <section id="fitur" class="bg-darkbg py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
+    <section id="fitur" class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
         <!-- Grid pattern background -->
         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjAyKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-50"></div>
         
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
             <!-- Interaktif Dashboard Element -->
             <div class="order-2 lg:order-1 relative group">
                 <div class="absolute -inset-2 bg-gradient-to-tr from-brand to-transparent rounded-[2rem] blur-xl opacity-20 group-hover:opacity-40 transition duration-500"></div>
-                <div class="bg-darkpanel border-2 border-gray-800 group-hover:border-brand p-8 md:p-10 rounded-[2rem] relative shadow-2xl transition-all transform group-hover:scale-[1.02] group-hover:-translate-y-2 duration-500">
+                <div class="bg-darkpanel border-2 border-gray-800 group-hover:border-brand p-6 md:p-10 rounded-[2rem] relative shadow-2xl transition-all transform group-hover:scale-[1.02] group-hover:-translate-y-2 duration-500">
                     <div class="flex justify-between items-center mb-8 border-b border-gray-800 pb-4">
                         <h4 class="font-bold text-xl text-white flex items-center gap-2"><i class="fa-solid fa-bolt text-brand"></i> Live Analytics</h4>
                         <span class="text-brand font-mono font-bold text-sm bg-brand/10 border border-brand/20 px-3 py-1 rounded-full animate-pulse">Auto Sync</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-[#111827] p-6 rounded-2xl border border-gray-800 group-hover:border-brand/50 transition-colors">
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Total Net Profit</p>
-                            <p class="text-3xl font-black text-white group-hover:text-green-400 transition-colors">$ 450.00</p>
+                        <div class="bg-[#111827] p-4 md:p-6 rounded-2xl border border-gray-800 group-hover:border-brand/50 transition-colors">
+                            <p class="text-gray-500 text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-2">Total Net Profit</p>
+                            <p class="text-xl md:text-3xl font-black text-white group-hover:text-green-400 transition-colors truncate">$ 450.00</p>
                         </div>
-                        <div class="bg-[#111827] p-6 rounded-2xl border border-gray-800 group-hover:border-brand/50 transition-colors">
-                            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest mb-2">Avg Win Rate</p>
-                            <p class="text-3xl font-black text-brand">66.67%</p>
+                        <div class="bg-[#111827] p-4 md:p-6 rounded-2xl border border-gray-800 group-hover:border-brand/50 transition-colors">
+                            <p class="text-gray-500 text-[9px] md:text-[10px] font-bold uppercase tracking-widest mb-2">Avg Win Rate</p>
+                            <p class="text-xl md:text-3xl font-black text-brand truncate">66.67%</p>
                         </div>
                     </div>
-                    <div class="h-32 w-full border-l-2 border-b-2 border-gray-700 relative flex items-end group-hover:border-brand/50 transition-colors">
+                    <div class="h-24 md:h-32 w-full border-l-2 border-b-2 border-gray-700 relative flex items-end group-hover:border-brand/50 transition-colors">
                         <svg class="absolute inset-0 h-full w-full drop-shadow-[0_0_8px_rgba(0,229,255,0.8)]" preserveAspectRatio="none" viewBox="0 0 100 100">
                             <path d="M0,100 L15,85 L30,90 L50,60 L70,40 L85,50 L100,20" fill="none" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -313,34 +333,34 @@
             <!-- Teks -->
             <div class="order-1 lg:order-2 text-center lg:text-left">
                 <p class="text-brand font-bold text-[10px] tracking-widest uppercase mb-2">THE SYSTEM</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight mb-10 text-white">Otomatisasi Analisis <br class="hidden md:block">Performa Anda.</h2>
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight mb-10 text-white">Otomatisasi Analisis <br class="hidden md:block">Performa Anda.</h2>
                 
                 <ul class="space-y-4">
-                    <li class="flex gap-5 items-start group cursor-default bg-darkpanel p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
-                            <i class="fa-solid fa-calculator text-lg"></i>
+                    <li class="flex gap-4 md:gap-5 items-start group cursor-default bg-darkpanel p-4 md:p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
+                            <i class="fa-solid fa-calculator text-base md:text-lg"></i>
                         </div>
                         <div class="text-left">
-                            <h4 class="font-extrabold text-white text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Kalkulasi Otomatis</h4>
-                            <p class="text-gray-400 leading-relaxed text-sm font-medium">Cukup masukkan modal awal, entry, dan SL/TP. Jurnal akan menghitung otomatis <i>Equity</i>, Risk to Reward, dan Lot Size.</p>
+                            <h4 class="font-extrabold text-white text-base md:text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Kalkulasi Otomatis</h4>
+                            <p class="text-gray-400 leading-relaxed text-xs md:text-sm font-medium">Cukup masukkan modal awal, entry, dan SL/TP. Jurnal akan menghitung otomatis <i>Equity</i>, Risk to Reward, dan Lot Size.</p>
                         </div>
                     </li>
-                    <li class="flex gap-5 items-start group cursor-default bg-darkpanel p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
-                            <i class="fa-solid fa-chart-line text-lg"></i>
+                    <li class="flex gap-4 md:gap-5 items-start group cursor-default bg-darkpanel p-4 md:p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
+                            <i class="fa-solid fa-chart-line text-base md:text-lg"></i>
                         </div>
                         <div class="text-left">
-                            <h4 class="font-extrabold text-white text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Equity Curve Visual</h4>
-                            <p class="text-gray-400 leading-relaxed text-sm font-medium">Lacak pertumbuhan persentase akun Anda (% Growth) dari waktu ke waktu melalui grafik garis interaktif yang terus diperbarui.</p>
+                            <h4 class="font-extrabold text-white text-base md:text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Equity Curve Visual</h4>
+                            <p class="text-gray-400 leading-relaxed text-xs md:text-sm font-medium">Lacak pertumbuhan persentase akun Anda (% Growth) dari waktu ke waktu melalui grafik garis interaktif yang terus diperbarui.</p>
                         </div>
                     </li>
-                    <li class="flex gap-5 items-start group cursor-default bg-darkpanel p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
-                        <div class="w-12 h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
-                            <i class="fa-solid fa-check-double text-lg"></i>
+                    <li class="flex gap-4 md:gap-5 items-start group cursor-default bg-darkpanel p-4 md:p-5 rounded-2xl border-2 border-gray-800 hover:border-brand transition-all duration-300">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#111827] border border-gray-700 flex items-center justify-center text-brand flex-shrink-0 group-hover:scale-110 group-hover:bg-brand group-hover:text-darkbg group-hover:border-brand transition-all duration-300 shadow-lg">
+                            <i class="fa-solid fa-check-double text-base md:text-lg"></i>
                         </div>
                         <div class="text-left">
-                            <h4 class="font-extrabold text-white text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Evaluasi Win/Loss</h4>
-                            <p class="text-gray-400 leading-relaxed text-sm font-medium">Lihat rasio sejati dari setup Anda. Jurnal merekam Total Trade, jumlah Win, jumlah Loss, dan Net Profit harian secara transparan.</p>
+                            <h4 class="font-extrabold text-white text-base md:text-lg mb-1 group-hover:text-brand transition-colors tracking-tight">Evaluasi Win/Loss</h4>
+                            <p class="text-gray-400 leading-relaxed text-xs md:text-sm font-medium">Lihat rasio sejati dari setup Anda. Jurnal merekam Total Trade, jumlah Win, jumlah Loss, dan Net Profit harian secara transparan.</p>
                         </div>
                     </li>
                 </ul>
@@ -350,12 +370,12 @@
 
     <!-- SLIDE 4: METRIK MENDALAM (TERANG - GRADASI HITAM PUDAR) -->
     <!-- Diubah ke max-w-6xl -->
-    <section class="bg-[#f8fafc] py-24 px-8 md:px-16 lg:px-24 border-b border-gray-200">
+    <section class="bg-[#f8fafc] py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-200">
         <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
+            <div class="text-center mb-12 md:mb-16">
                 <p class="text-gray-400 font-bold text-[10px] uppercase tracking-widest mb-2">02 / THE METRICS</p>
-                <h2 class="text-4xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Terstruktur. Akurat. Transparan.</h2>
-                <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium">
+                <h2 class="text-3xl md:text-5xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400 mb-4">Terstruktur. Akurat. Transparan.</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto leading-relaxed font-medium text-base md:text-lg">
                     Setiap kolom pada Jurnal RGLFX didesain agar Anda tidak melewatkan detail sekecil apapun dalam setiap eksekusi di market.
                 </p>
             </div>
@@ -363,30 +383,30 @@
             <!-- Grid dengan items-stretch dan h-full agar sama tinggi -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
                 <!-- Card 1 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
                     <h4 class="text-gray-400 font-bold text-[10px] mb-3 uppercase tracking-widest group-hover:text-branddark transition-colors">Tracking Kolom</h4>
-                    <p class="text-2xl font-black text-gray-900 mb-3 tracking-tight">Pair & Posisi</p>
+                    <p class="text-xl md:text-2xl font-black text-gray-900 mb-3 tracking-tight">Pair & Posisi</p>
                     <p class="text-sm text-gray-500 leading-relaxed font-medium mt-auto">Mencatat pair (XAUUSD, GBPUSD) dan arah tren (BUY/SELL) untuk melihat kecenderungan gaya trading Anda.</p>
                 </div>
                 
                 <!-- Card 2 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
                     <h4 class="text-gray-400 font-bold text-[10px] mb-3 uppercase tracking-widest group-hover:text-branddark transition-colors">Manajemen Risiko</h4>
-                    <p class="text-2xl font-black text-gray-900 mb-3 tracking-tight">Risk & Reward</p>
+                    <p class="text-xl md:text-2xl font-black text-gray-900 mb-3 tracking-tight">Risk & Reward</p>
                     <p class="text-sm text-gray-500 leading-relaxed font-medium mt-auto">Sistem merekam <i>Risk:Reward</i> aktual per transaksi untuk memastikan Anda menjaga asimetri profit harian.</p>
                 </div>
                 
                 <!-- Card 3 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
                     <h4 class="text-gray-400 font-bold text-[10px] mb-3 uppercase tracking-widest group-hover:text-branddark transition-colors">Data Harga</h4>
-                    <p class="text-2xl font-black text-gray-900 mb-3 tracking-tight">Entry, SL, TP</p>
+                    <p class="text-xl md:text-2xl font-black text-gray-900 mb-3 tracking-tight">Entry, SL, TP</p>
                     <p class="text-sm text-gray-500 leading-relaxed font-medium mt-auto">Rekam batas harga presisi. Ketahui apakah Stop Loss Anda sering tersentuh sebelum harga berbalik arah.</p>
                 </div>
                 
                 <!-- Card 4 -->
-                <div class="h-full flex flex-col bg-white p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
+                <div class="h-full flex flex-col bg-white p-6 md:p-8 rounded-3xl border-2 border-gray-200 hover:border-branddark hover:-translate-y-2 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer group">
                     <h4 class="text-gray-400 font-bold text-[10px] mb-3 uppercase tracking-widest group-hover:text-branddark transition-colors">Hasil Ekuitas</h4>
-                    <p class="text-2xl font-black text-gray-900 mb-3 tracking-tight">Account Gain</p>
+                    <p class="text-xl md:text-2xl font-black text-gray-900 mb-3 tracking-tight">Account Gain</p>
                     <p class="text-sm text-gray-500 leading-relaxed font-medium mt-auto">Lihat persentase riil pertumbuhan modal Anda (% Gain) alih-alih hanya berpatokan pada nilai nominal Dolar.</p>
                 </div>
             </div>
@@ -395,12 +415,12 @@
 
     <!-- SLIDE 5: CARA PENGGUNAAN (GELAP) -->
     <!-- Diubah ke max-w-6xl -->
-    <section id="langkah" class="bg-darkbg py-24 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
+    <section id="langkah" class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative overflow-hidden">
         <div class="max-w-6xl mx-auto text-center relative z-10">
-            <div class="mb-16">
+            <div class="mb-12 md:mb-16">
                 <p class="text-brand font-bold text-[10px] uppercase tracking-widest mb-2">03 / PANDUAN SETUP</p>
-                <h2 class="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">3 Langkah Memulai Jurnal.</h2>
-                <p class="text-gray-400 max-w-2xl text-lg font-medium mx-auto">Tidak perlu instalasi aplikasi yang rumit. Sistem kami terintegrasi langsung dengan ekosistem Google Sheets yang aman.</p>
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-4 tracking-tight">3 Langkah Memulai Jurnal.</h2>
+                <p class="text-gray-400 max-w-2xl text-base md:text-lg font-medium mx-auto">Tidak perlu instalasi aplikasi yang rumit. Sistem kami terintegrasi langsung dengan ekosistem Google Sheets yang aman.</p>
             </div>
             
             <!-- Grid dengan items-stretch dan h-full agar sama tinggi -->
@@ -409,23 +429,23 @@
                 <div class="hidden md:block absolute top-1/2 left-[15%] w-[70%] h-1 bg-gray-800 -z-10 -translate-y-1/2"></div>
                 
                 <!-- Step 1 -->
-                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
-                    <div class="w-16 h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">1</div>
-                    <h3 class="font-extrabold text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Copy File</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed font-medium mt-auto">Klik link Jurnal yang kami sediakan, lalu pilih menu <strong class="text-white bg-gray-800 px-2 py-0.5 rounded text-xs">File > Buat Salinan</strong> agar jurnal tersimpan secara privat di Drive Anda.</p>
+                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-6 md:p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-xl md:text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">1</div>
+                    <h3 class="font-extrabold text-xl md:text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Copy File</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed font-medium mt-auto">Klik link Jurnal yang kami sediakan, lalu pilih menu <strong class="text-white bg-gray-800 px-2 py-0.5 rounded text-xs whitespace-nowrap">File > Buat Salinan</strong> agar jurnal tersimpan secara privat di Drive Anda.</p>
                 </div>
                 
                 <!-- Step 2 -->
-                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group mt-4 md:mt-0">
-                    <div class="w-16 h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">2</div>
-                    <h3 class="font-extrabold text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Set Modal & Risk</h3>
+                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-6 md:p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-xl md:text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">2</div>
+                    <h3 class="font-extrabold text-xl md:text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Set Modal & Risk</h3>
                     <p class="text-gray-400 text-sm leading-relaxed font-medium mt-auto">Masukkan nominal <strong class="text-white">"Modal Awal"</strong> Anda dan tetapkan batas <strong class="text-white">"Risk Per Trade (%)"</strong> di kotak kontrol bagian kiri atas <i>dashboard</i>.</p>
                 </div>
                 
                 <!-- Step 3 -->
-                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group mt-4 md:mt-0">
-                    <div class="w-16 h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">3</div>
-                    <h3 class="font-extrabold text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Log & Disiplin</h3>
+                <div class="h-full flex flex-col bg-darkpanel border-2 border-gray-800 hover:border-brand hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] rounded-3xl p-6 md:p-10 text-center transition-all duration-300 hover:-translate-y-2 cursor-pointer group">
+                    <div class="w-14 h-14 md:w-16 md:h-16 bg-[#111827] text-gray-400 mx-auto rounded-full flex items-center justify-center text-xl md:text-2xl font-black mb-6 shadow-lg group-hover:bg-brand group-hover:text-darkbg transition-colors duration-300">3</div>
+                    <h3 class="font-extrabold text-xl md:text-2xl text-white mb-4 group-hover:text-brand transition-colors tracking-tight">Log & Disiplin</h3>
                     <p class="text-gray-400 text-sm leading-relaxed font-medium mt-auto">Catat setiap transaksi harian. Biarkan algoritma di Google Sheets menghitung rasio kemenangan dan pertumbuhan akun secara otomatis.</p>
                 </div>
             </div>
@@ -433,25 +453,25 @@
     </section>
 
     <!-- SLIDE 6: AKSES LINK (TERANG - GRADASI HITAM PUDAR) -->
-    <section class="bg-white py-32 md:py-40 px-8 text-center relative border-b border-gray-200 flex items-center justify-center overflow-hidden">
-        <div class="max-w-6xl mx-auto relative z-10">
+    <section class="bg-white py-24 md:py-40 px-5 md:px-8 text-center relative border-b border-gray-200 flex items-center justify-center overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10 w-full">
             <!-- Headline Besar Interaktif -->
-            <h2 class="text-[3.5rem] md:text-[5.5rem] font-black leading-[1.05] tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400">
-                Trader yang konsisten, <br>
+            <h2 class="text-4xl md:text-[4rem] lg:text-[5.5rem] font-black leading-[1.05] tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-br from-black via-gray-700 to-gray-400">
+                Trader yang konsisten, <br class="hidden md:block">
                 selalu mengevaluasi.
             </h2>
 
-            <p class="text-gray-500 text-lg md:text-xl font-medium mb-12">
+            <p class="text-gray-500 text-base md:text-xl font-medium mb-12">
                 Mulai bangun rekam jejak Anda hari ini. Ekuitas terukur secara presisi.
             </p>
 
             <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8">
-                <a href="https://docs.google.com/spreadsheets/d/1Cutb8ZuyWamftCgv-aSIR4gu1dNYENrhF3ScZ8Qm1ak/edit?gid=0#gid=0" target="_blank" class="bg-[#111827] hover:bg-black text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 shadow-xl hover:shadow-2xl text-lg flex items-center gap-3">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-8">
+                <a href="https://docs.google.com/spreadsheets/d/1Cutb8ZuyWamftCgv-aSIR4gu1dNYENrhF3ScZ8Qm1ak/edit?gid=0#gid=0" target="_blank" class="bg-[#111827] hover:bg-black text-white font-bold py-4 px-8 md:px-10 rounded-full transition-all duration-300 transform md:hover:scale-105 md:hover:-translate-y-1 shadow-xl hover:shadow-2xl text-base md:text-lg flex items-center justify-center gap-3 w-full sm:w-auto">
                     Buka Jurnal Sekarang
                 </a>
                 
-                <a href="#langkah" class="text-gray-500 hover:text-gray-900 font-bold text-lg flex items-center gap-2 transition-colors group">
+                <a href="#langkah" class="text-gray-500 hover:text-gray-900 font-bold text-base md:text-lg flex items-center justify-center gap-2 transition-colors group w-full sm:w-auto">
                     Lihat tutorial setup <i class="fa-solid fa-arrow-up group-hover:-translate-y-1 transition-transform"></i>
                 </a>
             </div>
@@ -460,19 +480,19 @@
 
     <!-- SLIDE 7: CTA AKHIR DENGAN MOCKUP DISCORD (GELAP) -->
     <!-- Diubah ke max-w-6xl -->
-    <section class="py-24 px-8 md:px-16 lg:px-24 relative overflow-hidden bg-gradient-to-b from-darkbg to-[#081220] border-t border-gray-800">
+    <section class="py-16 md:py-24 px-5 md:px-16 lg:px-24 relative overflow-hidden bg-gradient-to-b from-darkbg to-[#081220] border-t border-gray-800">
         <!-- Efek cahaya atas -->
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-16 bg-brand/10 blur-[60px] pointer-events-none"></div>
         
-        <div class="max-w-6xl mx-auto relative z-10 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="max-w-6xl mx-auto relative z-10 mt-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
             
             <!-- Teks Ajakan -->
             <div class="text-center lg:text-left">
                 <div class="inline-flex items-center justify-center gap-2 border border-brand/30 bg-brand/10 px-4 py-1.5 rounded-full font-bold text-[10px] text-brand uppercase tracking-widest mb-6 shadow-[0_0_10px_rgba(0,229,255,0.2)]">
                     <i class="fa-brands fa-discord"></i> Exclusive Community
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black mb-6 tracking-tighter leading-tight text-white">Evaluasi Bersama <br>Rekan Trader.</h2>
-                <p class="text-gray-400 mb-10 text-lg leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
+                <h2 class="text-3xl md:text-5xl font-black mb-6 tracking-tighter leading-tight text-white">Evaluasi Bersama <br>Rekan Trader.</h2>
+                <p class="text-gray-400 mb-10 text-base md:text-lg leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
                     Sudah mengisi jurnal? Jangan simpan data Anda sendirian. Bagikan <i>screenshot</i> pertumbuhan <strong>Equity Curve</strong> dan rasio kemenangan Anda di <i>channel</i> khusus komunitas kami. Dapatkan <i>feedback</i> teknikal langsung dari tim AcademyFX.
                 </p>
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -486,7 +506,7 @@
             <div class="relative group mt-10 lg:mt-0">
                 <div class="absolute -inset-2 bg-gradient-to-tr from-[#5865F2] to-brand rounded-2xl blur-xl opacity-20 group-hover:opacity-40 transition duration-700"></div>
                 
-                <div class="bg-discordbg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 hover:-translate-y-2 relative z-10 text-left">
+                <div class="bg-discordbg rounded-2xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col h-[400px] transition-transform duration-700 md:hover:-translate-y-2 relative z-10 text-left">
                     <!-- Discord Header -->
                     <div class="bg-discordheader px-4 py-3 border-b border-[#1e1f22] flex items-center justify-between shadow-sm">
                         <div class="flex items-center gap-3">
@@ -529,14 +549,14 @@
                                     <span class="bg-[#5865F2] text-white text-[9px] px-1.5 py-0.5 rounded font-bold tracking-wider"><i class="fa-solid fa-check text-[8px]"></i> ADMIN</span>
                                     <span class="text-xs text-gray-500 font-normal">Hari ini pukul 10:28</span>
                                 </h4>
-                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Excellent work! Pertahankan disiplin risk management-nya 📈. Untuk Gold tadi malam kena minor support, nanti saya bedah detailnya di Live Session jam 8 ya.</p>
+                                <p class="text-gray-200 text-sm mt-1 leading-relaxed">Excellent work! Pertahankan disiplin risk management-nya 💪. Untuk Gold tadi malam kena minor support, nanti saya bedah detailnya di Live Session jam 8 ya.</p>
                                 <!-- Discord Reactions -->
                                 <div class="flex gap-2 mt-2">
                                     <div class="bg-[#2b2d31] border border-brand/30 rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-brand/10 transition">
-                                        <span class="text-sm">🔥</span> <span class="text-xs text-brand font-bold">4</span>
+                                        <span class="text-sm">💪</span> <span class="text-xs text-brand font-bold">4</span>
                                     </div>
                                     <div class="bg-[#2b2d31] border border-transparent rounded px-2 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-700 transition">
-                                        <span class="text-sm">👀</span> <span class="text-xs text-gray-400 font-bold">2</span>
+                                        <span class="text-sm">🔥</span> <span class="text-xs text-gray-400 font-bold">2</span>
                                     </div>
                                 </div>
                             </div>
@@ -560,37 +580,67 @@
 
     <!-- FOOTER (TERANG) -->
     <!-- Diubah ke max-w-6xl -->
-    <footer class="bg-white text-gray-400 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
+    <footer class="bg-white text-gray-400 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
         <div class="max-w-6xl mx-auto border-b border-gray-100 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed">
                 <strong class="text-gray-800">Risk Warning.</strong> AcademyFX merupakan sarana edukasi literasi finansial dan bukan saran investasi (<i>Financial Advice</i>). Seluruh data pada jurnal ini murni sebagai alat bantu statistik personal. Hasil trading masa lalu tidak menjamin hasil di masa depan. Trading forex, crypto, maupun saham memiliki risiko kehilangan sebagian atau seluruh dana. 
-                <a href="#" class="text-branddark font-medium hover:underline ml-1">Disclaimer</a> · 
-                <a href="#" class="text-branddark font-medium hover:underline">Terms & Conditions</a>
+                <br class="block md:hidden mt-2">
+                <a href="#" class="text-branddark font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Disclaimer</a> <span class="hidden md:inline">·</span> 
+                <a href="#" class="text-branddark font-medium hover:underline inline-block mt-2 md:mt-0 md:ml-1">Terms & Conditions</a>
             </p>
         </div>
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-        <div class="flex items-center gap-6">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
+            <p class="text-center md:text-left w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+        <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                    <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
-                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                    <i class="fa-brands fa-discord text-lg md:text-xl"></i> <span class="hidden md:inline">Komunitas Discord</span>
                 </a>
             </div>
         </div>
     </footer>
 
     <!-- TOMBOL WHATSAPP MELAYANG -->
-    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-xl border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 md:bottom-6 md:right-6 bg-white text-gray-800 px-3 md:px-4 py-3 rounded-full shadow-xl border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
         <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
             <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="flex flex-col pr-2">
+        <div class="hidden sm:flex flex-col pr-2">
             <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
             <span class="text-sm font-bold leading-none text-gray-800 tracking-tight">Chat Admin</span>
         </div>
     </a>
 
+    <!-- JAVASCRIPT UNTUK MOBILE MENU -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileBtn && mobileMenu) {
+                const icon = mobileBtn.querySelector('i');
+                const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+                function toggleMenu() {
+                    mobileMenu.classList.toggle('-translate-y-full');
+                    if(mobileMenu.classList.contains('-translate-y-full')) {
+                        icon.classList.remove('fa-xmark');
+                        icon.classList.add('fa-bars');
+                    } else {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-xmark');
+                    }
+                }
+
+                mobileBtn.addEventListener('click', toggleMenu);
+
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', toggleMenu);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
