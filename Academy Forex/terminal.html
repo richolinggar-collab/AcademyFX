@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal Ekonomi - AcademyFX</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 3D Globe Libraries -->
+    <script src="https://unpkg.com/three"></script>
+    <script src="https://unpkg.com/globe.gl"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: '#00e5ff', 
+                        branddark: '#00b8cc', 
+                        brandlight: '#e6fcfd',
+                        darkbg: '#060b13',
+                        darkpanel: '#0a111d',
+                        discord: '#5865F2'
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blink': 'blink 1s step-end infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { padding-top: 64px; overflow-x: hidden; }
+        
+        /* Nav Link Hover Animation */
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -4px; left: 0; background-color: #00e5ff;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after,
+        .nav-link.active-nav::after { 
+            width: 100%;
+            }
+
+        /* Custom Scrollbar for tables */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        
+        /* Grid Patterns */
+        .bg-grid-pattern-light {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgwLCAwLCAwLCAwLjA0KSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+');
+        }
+        .bg-grid-pattern-dark {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+');
+        }
+
+        .tv-widget-wrapper { border-radius: 1rem; overflow: hidden; }
+        .globe-container { cursor: grab; display: flex; align-items: center; justify-content: center; }
+        .globe-container:active { cursor: grabbing; }
+
+        /* Mode 2D Map Background (TOSCA TEMA) */
+        .map-2d-bg {
+            background-color: #00b8cc; 
+            -webkit-mask-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
+            mask-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
+            -webkit-mask-size: cover;
+            mask-size: cover;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+        }
+
+        /* Efek Sonar/Radar Ping yang Menarik (KUNING NEON) */
+        .radar-node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #facc15; 
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.8); 
+        }
+        .radar-node::before, .radar-node::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            border: 2px solid #facc15; 
+            transform: translate(-50%, -50%);
+            animation: radar-pulse 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+        }
+        .radar-node::after {
+            animation-delay: 1.25s;
+        }
+        @keyframes radar-pulse {
+            0% { width: 10px; height: 10px; opacity: 1; }
+            100% { width: 70px; height: 70px; opacity: 0; }
+        }
+        
+        /* Animasi Transisi Real-Time Box */
+        .session-box { transition: all 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white">
+
+    <!-- 1. NAVIGATION (HITAM) -->
+    <nav class="fixed top-0 w-full z-50 px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
+                <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 17l6-6 4 4 8-8"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 7h4v4"></path>
+                    </svg>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-white group-hover:text-brand transition duration-300">AcademyFX</span>
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="index.html#home" class="nav-link text-gray-300 hover:text-brand transition duration-300">Home</a>
+                <a href="index.html#academy" class="nav-link text-gray-300 hover:text-brand transition duration-300">Academy</a>
+                <a href="tools.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Tools</a>
+                <a href="jurnal.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">Journal</a>
+                <a href="terminal.html" class="nav-link text-brand transition duration-300">Terminal</a>
+                <a href="index.html#roadmap" class="nav-link text-gray-300 hover:text-brand transition duration-300">Roadmap</a>
+                <a href="about.html" class="nav-link text-gray-300 hover:text-brand transition duration-300">About</a>
+            </div>
+            
+            <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
+                Join Discord
+            </a>
+        </div>
+    </nav>
+
+    <!-- 2. SLIDE 1: HERO TERMINAL (PUTIH) -->
+    <section class="pt-32 pb-24 px-8 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
+        <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
+
+        <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center relative z-10">
+            <div class="inline-flex items-center gap-3 mb-8">
+                <span class="text-gray-500 font-bold text-sm">Economic Terminal</span>
+                <div class="border border-branddark/40 bg-branddark/10 px-3 py-1 rounded-full text-[9px] font-bold text-branddark uppercase tracking-widest flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-branddark animate-blink"></span> LIVE · REAL-TIME
+                </div>
+            </div>
+            
+            <h1 class="text-5xl md:text-6xl font-black mb-6 text-gray-900">
+                Master the <span class="text-branddark">Market</span>. <br>
+                <span class="text-5xl md:text-6xl font-black mb-6">Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.</span>
+            </h1>
+            
+            <p class="text-gray-600 text-lg md:text-2xl max-w-3xl leading-relaxed mb-16 font-medium">
+                Satu layar untuk menganalisa <span class="text-branddark font-bold">fundamental flow</span> global secara <span class="text-branddark font-bold">real-time</span>. Keputusan akurat dimulai dari sini.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-8 items-center justify-center">
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-0.5">Terminal Time</p>
+                        <p class="text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-time">00.00.00</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 bg-gray-50 border border-gray-200 px-6 py-4 rounded-2xl shadow-sm hover:border-branddark transition-colors">
+                    <div class="w-10 h-10 rounded-full bg-branddark/10 flex items-center justify-center text-branddark text-lg">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mb-0.5">Session Date</p>
+                        <p class="text-2xl font-black text-gray-900 font-mono tracking-wider" id="terminal-date">01 Jan 2026</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SLIDE 2: PENGGERAK PASAR (HITAM) -->
+    <section class="bg-darkbg py-24 px-4 md:px-16 lg:px-24 border-b border-gray-800 relative">
+        <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
+        
+        <div class="max-w-[1400px] mx-auto relative z-10">
+            <!-- TEKS MARKET DRIVERS DIPERBARUI -->
+            <div class="text-center mb-12">
+                <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">Live · Indikator Volatilitas</p>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-6"><span class="text-brand">Core</span> Market Index</h2>
+                <p class="text-gray-400 text-lg max-w-2xl mx-auto">
+                    Pantau likuiditas global secara <span class="text-brand font-bold">real-time</span>. Sentimen makroekonomi tercermin langsung pada Emas, Kripto, Ekuitas, dan <span class="text-brand font-bold">Major Pairs</span>.
+                </p>
+            </div>
+
+            <!-- Ticker Tape Widget -->
+            <div class="mb-8 border border-gray-800 rounded-xl overflow-hidden shadow-xl bg-darkpanel">
+                <div class="tradingview-widget-container">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+                    {
+                        "symbols": [
+                            { "description": "Gold / USD", "proName": "OANDA:XAUUSD" },
+                            { "description": "Bitcoin / USD", "proName": "BINANCE:BTCUSD" },
+                            { "description": "USD / IDR", "proName": "FX_IDC:USDIDR" },
+                            { "description": "Nasdaq 100", "proName": "CAPITALCOM:US100" },
+                            { "description": "EUR / USD", "proName": "OANDA:EURUSD" }
+                        ],
+                        "showSymbolLogo": true,
+                        "isTransparent": true,
+                        "displayMode": "adaptive",
+                        "colorTheme": "dark",
+                        "locale": "id"
+                    }
+                    </script>
+                </div>
+            </div>
+
+            <!-- 5 Mini Charts Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+                <!-- GOLD -->
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        { "symbol": "OANDA:XAUUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
+                        </script></div>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-gray-800">
+                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Emas (XAU/USD).</strong> Aset safe haven utama, sangat sensitif terhadap suku bunga & inflasi.</p>
+                    </div>
+                </div>
+
+                <!-- BITCOIN -->
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        { "symbol": "BINANCE:BTCUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
+                        </script></div>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-gray-800">
+                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Bitcoin (BTC).</strong> Penggerak pasar kripto & proksi selera risiko (risk-on) global.</p>
+                    </div>
+                </div>
+
+                <!-- USD/IDR -->
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        { "symbol": "FX_IDC:USDIDR", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
+                        </script></div>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-gray-800">
+                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Rupiah (USD/IDR).</strong> Pantau pelemahan/penguatan Rupiah terhadap Dolar secara real-time.</p>
+                    </div>
+                </div>
+
+                <!-- NASDAQ -->
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        { "symbol": "CAPITALCOM:US100", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
+                        </script></div>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-gray-800">
+                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Nasdaq 100.</strong> Indeks saham teknologi AS. Sangat fluktuatif & aktif di sesi New York.</p>
+                    </div>
+                </div>
+
+                <!-- EUR/USD -->
+                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
+                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+                        { "symbol": "OANDA:EURUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
+                        </script></div>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-gray-800">
+                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">EUR/USD.</strong> Pair forex paling likuid. Cerminan langsung pelemahan/penguatan Dolar AS.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Currency Strength Heatmap -->
+            <div class="bg-darkpanel border border-gray-800 rounded-2xl p-6 shadow-xl hover:border-brand transition-all duration-300">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fa-solid fa-table-cells text-brand text-lg"></i>
+                    <h3 class="font-bold text-white uppercase text-xs tracking-widest">CURRENCY STRENGTH · 8 MATA UANG MAYOR</h3>
+                </div>
+                
+                <div class="h-[400px] w-full tv-widget-wrapper">
+                    <div class="tradingview-widget-container">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+                        { "width": "100%", "height": "100%", "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ], "isTransparent": true, "colorTheme": "dark", "locale": "id" }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SLIDE 3: KALENDER EKONOMI & GLOBE 2D/3D TOGGLE (PUTIH) -->
+    <section class="bg-white py-32 px-4 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto relative z-10">
+            <!-- Header Kalender -->
+            <div class="text-center mb-16">
+                <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Jadwal & Data Rilis</p>
+                <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-4">Economic <span class="text-branddark">Calendar</span></h2>
+                <p class="text-gray-500 text-lg">Pantau <span class="text-branddark font-bold">high-impact news</span>. Hindari <span class="text-branddark font-bold">liquidity sweep</span> dan <span class="text-branddark font-bold">fakeout</span> saat rilis berita penting.</p>
+            </div>
+
+            <!-- Kalender Widgets -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-32">
+                <!-- TradingView Calendar -->
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 shadow-sm hover:border-branddark transition-colors h-[600px] flex flex-col w-full">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-2 text-gray-900 font-bold text-sm">
+                            <i class="fa-solid fa-bolt text-branddark"></i> HIGH IMPACT NEWS (TradingView)
+                        </div>
+                        <span class="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-1 rounded border border-red-200">LIVE</span>
+                    </div>
+                    <div class="flex-1 tv-widget-wrapper bg-white">
+                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
+                        { "colorTheme": "light", "isTransparent": false, "width": "100%", "height": "100%", "locale": "id", "importanceFilter": "1", "currencyFilter": "USD,EUR,GBP,JPY,CAD,AUD,NZD,CHF" }
+                        </script></div>
+                    </div>
+                </div>
+
+                <!-- Investing.com Calendar (DENGAN FILTER HIGH IMPACT & GMT+7) -->
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-6 shadow-sm hover:border-branddark transition-colors h-[600px] flex flex-col w-full">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-gray-900 font-bold text-sm">
+                            <i class="fa-solid fa-calendar-days text-branddark"></i> INVESTING.COM CALENDAR
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <!-- Label Zona Waktu (Telah dipaksa ke Jakarta GMT+7 via JS) -->
+                            <span class="bg-blue-50 text-blue-500 text-[10px] font-bold px-2 py-1 rounded border border-blue-200">WIB (GMT+7)</span>
+                            <!-- Dropdown Filter Interaktif -->
+                            <select id="investing-filter" class="text-[10px] border border-gray-200 rounded px-2 py-1 bg-white font-bold text-gray-700 outline-none cursor-pointer hover:border-branddark transition-colors">
+                                <option value="all">Semua Impact</option>
+                                <option value="high">🔥 High Impact Saja</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-xl overflow-hidden relative">
+                        <!-- Iframe kosongan di awal, akan di-inject JS untuk memaksa GMT+7 mengalahkan cache browser -->
+                        <iframe id="investing-iframe" src="" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Map Section (DENGAN KONTROL TOGGLE 2D / 3D) -->
+            <div class="text-center mb-6">
+                <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Visual Interaktif</p>
+                <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
+                <p class="text-gray-400 text-lg mb-2" class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
+                
+                <!-- Tombol Pengatur Mode 2D / 3D -->
+                <div class="inline-flex p-1.5 bg-gray-100 rounded-2xl shadow-inner border border-gray-200 mb-8 z-30 relative">
+                    <!-- Default Aktif (2D) -->
+                    <button id="btn-toggle-2d" class="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50">
+                        <i class="fa-solid fa-map mr-1.5"></i> 2D Map Layout
+                    </button>
+                    <!-- Default Tidak Aktif (3D) -->
+                    <button id="btn-toggle-3d" class="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1">
+                        <i class="fa-solid fa-earth-americas mr-1.5"></i> 3D Globe Render
+                    </button>
+                </div>
+            </div>
+
+            <!-- CONTAINER UTAMA MAP -->
+            <div class="bg-gray-50 border border-gray-200 rounded-3xl shadow-sm hover:border-branddark transition-colors h-[600px] relative overflow-hidden flex items-center justify-center">
+                
+                <!-- Status Tag -->
+                <div class="absolute top-6 left-6 z-30 bg-white/90 backdrop-blur border border-gray-200 p-4 rounded-xl pointer-events-none shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-branddark animate-blink"></span>
+                        <span class="text-gray-900 font-bold text-xs tracking-wider" id="map-status-mode">MODE: 2D FLAT (RADAR SYNC)</span>
+                    </div>
+                    <p class="text-[10px] text-gray-500 font-mono">Real-Time WIB Session Highlight</p>
+                </div>
+
+                <!-- Buka World Monitor CTA -->
+                <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-6 right-6 z-30 bg-white/90 backdrop-blur border border-branddark/50 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
+                    <i class="fa-solid fa-map-location-dot"></i> Buka World Monitor <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+                </a>
+
+                <!-- ================= 2D MAP CONTAINER (Statis dengan Animasi Radar Pulse Kuning Neon) ================= -->
+                <div id="map-2d-container" class="w-full h-full relative bg-gray-50 flex items-center justify-center transition-opacity duration-300 z-10">
+                    
+                    <!-- Layer Peta Dunia (CSS Masking TOSCA PEKAT 50%) -->
+                    <div class="absolute inset-0 map-2d-bg opacity-50 pointer-events-none"></div>
+                    
+                    <!-- SVG Wrapper untuk menempatkan titik radar kuning neon secara proporsional sesuai peta -->
+                    <div class="absolute inset-0 w-full h-full max-w-[1000px] mx-auto pointer-events-none z-10">
+                        <!-- NY Radar (Approx location di map) -->
+                        <div class="radar-node top-[36%] left-[28%]"></div>
+                        <!-- London Radar -->
+                        <div class="radar-node top-[26%] left-[48%]"></div>
+                        <!-- Tokyo Radar -->
+                        <div class="radar-node top-[36%] left-[86%]"></div>
+                        <!-- Sydney Radar -->
+                        <div class="radar-node top-[76%] left-[88%]"></div>
+                    </div>
+
+                    <!-- Panel Info Sesi Makro (DIBUAT REAL-TIME MENGGUNAKAN JS DI BAWAH) -->
+                    <div class="z-20 grid grid-cols-2 md:grid-cols-4 gap-4 w-full px-12 mt-16 pointer-events-none">
+                        
+                        <!-- Tokyo Box -->
+                        <div id="session-tokyo" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">ASIAN SESSION</h4>
+                                <div id="badge-tokyo"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                            </div>
+                            <p class="text-branddark text-lg font-black font-mono">TOKYO</p>
+                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-circle-check text-green-500 mr-1"></i> JPY Flow</span>
+                        </div>
+                        
+                        <!-- London Box -->
+                        <div id="session-london" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">EUROPEAN</h4>
+                                <div id="badge-london"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                            </div>
+                            <p class="text-branddark text-lg font-black font-mono">LONDON</p>
+                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-clock text-blue-500 mr-1"></i> GBP / EUR</span>
+                        </div>
+                        
+                        <!-- New York Box -->
+                        <div id="session-ny" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">US SESSION</h4>
+                                <div id="badge-ny"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                            </div>
+                            <p class="text-branddark text-lg font-black font-mono">NEW YORK</p>
+                            <span class="text-[11px] text-gray-900 font-bold"><i class="fa-solid fa-bolt text-red-500 mr-1"></i> High Volatility</span>
+                        </div>
+                        
+                        <!-- Sydney Box -->
+                        <div id="session-sydney" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
+                            <div class="flex justify-between items-center mb-1">
+                                <h4 class="text-gray-900 text-[10px] uppercase font-black tracking-widest">PACIFIC SESSION</h4>
+                                <div id="badge-sydney"><span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span></div>
+                            </div>
+                            <p class="text-branddark text-lg font-black font-mono">SYDNEY</p>
+                            <span class="text-[11px] text-gray-500"><i class="fa-solid fa-water text-cyan-500 mr-1"></i> AUD / NZD</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= 3D GLOBE CONTAINER (Disembunyikan secara default) ================= -->
+                <div id="globe-3d-container" class="w-full h-full globe-container outline-none hidden z-20"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. SLIDE 4: INDIKATOR MAKRO - SEMUA TEKS DIKEMBALIKAN SESUAI SUMBER (HITAM) -->
+    <section class="bg-darkbg py-32 px-8 md:px-16 lg:px-24 border-b border-gray-800 relative">
+        <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">Data Historis & Sumber Valid</p>
+                <h2 class="text-4xl md:text-6xl font-black text-white mb-4">Macroeconomic <span class="text-brand">Indicators</span></h2>
+                <p class="text-gray-400 text-lg">Histori rilis <span class="text-brand font-bold">high-impact data</span> 3 bulan terakhir beserta <span class="text-brand font-bold">first-hand sources</span> aslinya.</p>
+            </div>
+
+            <!-- Dashboard Wrapper -->
+            <div class="bg-darkpanel border border-gray-800 rounded-[2rem] p-6 md:p-10 shadow-xl">
+                <!-- 2 Tabel Makro Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                    
+                    <!-- Table 1: Inflasi & Tenaga Kerja -->
+                    <div class="bg-[#0d1522] border border-gray-700 rounded-2xl shadow-sm overflow-hidden group hover:border-brand transition-colors">
+                        <div class="p-5 border-b border-gray-700 flex items-center gap-3">
+                            <i class="fa-solid fa-users-viewfinder text-brand bg-brand/10 p-2 rounded-lg"></i>
+                            <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">INFLASI & TENAGA KERJA</h3>
+                        </div>
+                        <div class="custom-scrollbar overflow-x-auto">
+                            <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                                <thead>
+                                    <tr class="border-b border-gray-700 bg-gray-800/50">
+                                        <th class="py-3 px-5 font-bold text-white uppercase text-[10px] tracking-wider w-1/2">Indikator</th>
+                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">May</th>
+                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">Jun</th>
+                                        <th class="py-3 px-5 font-bold text-brand uppercase text-[10px] tracking-wider text-center">Jul</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ADP Non-Farm Employment</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Avg Hourly Earnings m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">NFP Change</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Unemployment Rate</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">JOLTS Job Openings</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">PPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">CPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Core CPI m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Table 2: Pertumbuhan & Kebijakan -->
+                    <div class="bg-[#0d1522] border border-gray-700 rounded-2xl shadow-sm overflow-hidden h-max group hover:border-brand transition-colors">
+                        <div class="p-5 border-b border-gray-700 flex items-center gap-3">
+                            <i class="fa-solid fa-chart-line text-brand bg-brand/10 p-2 rounded-lg"></i>
+                            <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">PERTUMBUHAN & KEBIJAKAN</h3>
+                        </div>
+                        <div class="custom-scrollbar overflow-x-auto">
+                            <table class="w-full text-left text-sm border-collapse min-w-[500px]">
+                                <thead>
+                                    <tr class="border-b border-gray-700 bg-gray-800/50">
+                                        <th class="py-3 px-5 font-bold text-white uppercase text-[10px] tracking-wider w-1/2">Indikator</th>
+                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">May</th>
+                                        <th class="py-3 px-5 font-bold text-gray-500 uppercase text-[10px] tracking-wider text-center">Jun</th>
+                                        <th class="py-3 px-5 font-bold text-brand uppercase text-[10px] tracking-wider text-center">Jul</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ISM Manufacturing PMI</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">ISM Services PMI</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="border-b border-gray-800 hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">Retail Sales m/m</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                    <tr class="hover:bg-gray-800/30"><td class="py-3 px-5 font-medium text-gray-300">GDP (q/q)</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-gray-500">-</td><td class="py-3 px-5 text-center text-white font-bold">-</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Link Sumber Tangan Pertama -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <i class="fa-solid fa-link text-brand text-lg"></i>
+                        <h3 class="font-bold text-sm tracking-widest uppercase text-gray-300">AKSES LANGSUNG SUMBER DATA (TANGAN PERTAMA)</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="https://www.forexfactory.com/calendar" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-green-500/10 flex-shrink-0 flex items-center justify-center text-green-500 group-hover:bg-green-500 group-hover:text-white transition-colors"><i class="fa-solid fa-folder-open"></i></div>
+                            <div><h4 class="text-white font-bold text-base mb-1">ForexFactory</h4><p class="text-[11px] text-gray-400 leading-relaxed">Agregator jadwal berita ekonomi global & pengingat folder merah (High Impact).</p></div>
+                        </a>
+
+                        <a href="https://www.federalreserve.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-yellow-500/10 flex-shrink-0 flex items-center justify-center text-yellow-500 group-hover:bg-yellow-500 group-hover:text-white transition-colors"><i class="fa-solid fa-building-columns"></i></div>
+                            <div><h4 class="text-white font-bold text-base mb-1">The Federal Reserve</h4><p class="text-[11px] text-gray-400 leading-relaxed">Bank Sentral AS. Sumber sentimen Hawkish/Dovish & keputusan Suku Bunga (FOMC).</p></div>
+                        </a>
+
+                        <a href="https://www.bls.gov/cpi/data.htm" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-blue-500/10 flex-shrink-0 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors"><i class="fa-solid fa-users"></i></div>
+                            <div><h4 class="text-white font-bold text-base mb-1">Biro Statistik (BLS)</h4><p class="text-[11px] text-gray-400 leading-relaxed">Pusat rilis resmi untuk data Tenaga Kerja (NFP) dan Inflasi Konsumen (CPI).</p></div>
+                        </a>
+
+                        <a href="https://www.bea.gov/" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex-shrink-0 flex items-center justify-center text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors"><i class="fa-solid fa-chart-pie"></i></div>
+                            <div><h4 class="text-white font-bold text-base mb-1">Biro Analisis (BEA)</h4><p class="text-[11px] text-gray-400 leading-relaxed">Mengeluarkan PDB (Pertumbuhan Ekonomi) dan Indeks PCE (Inflasi favorit The Fed).</p></div>
+                        </a>
+
+                        <a href="https://www.census.gov/data.html" target="_blank" class="bg-[#0d1522] border border-gray-700 p-5 rounded-xl hover:border-brand hover:-translate-y-1 hover:shadow-lg transition-all group flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-orange-500/10 flex-shrink-0 flex items-center justify-center text-orange-600 group-hover:bg-orange-500 group-hover:text-white transition-colors"><i class="fa-solid fa-cart-shopping"></i></div>
+                            <div><h4 class="text-white font-bold text-base mb-1">US Census Bureau</h4><p class="text-[11px] text-gray-400 leading-relaxed">Sumber rilis Retail Sales (Penjualan Ritel). Indikator utama daya beli masyarakat AS.</p></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SLIDE 5: DISCORD CTA EKSKLUSIF (PUTIH) -->
+    <!-- Elemen Diluruskan Sepenuhnya (Transform Rotate Dihapus) -->
+    <section class="bg-white py-32 px-8 md:px-16 lg:px-24 relative overflow-hidden border-t border-gray-200">
+        <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[800px] h-[800px] bg-branddark/5 rounded-full blur-[150px] pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="text-left">
+                <div class="inline-flex items-center gap-2 mb-6 border border-branddark/30 bg-branddark/10 px-4 py-2 rounded-full text-xs font-bold text-branddark uppercase tracking-widest">
+                    <span class="w-2 h-2 rounded-full bg-branddark animate-blink"></span> LIVE COMMUNITY
+                </div>
+                <h2 class="text-7xl md:text-6xl font-black">
+                    Tingkatkan <span class="text-branddark">Trading Edge</span> Anda. <br>Execute <span class="text-branddark">Now</span>.
+                </h2>
+                <p class="text-gray-600 mb-10 text-xl leading-relaxed max-w-lg">
+                    Akses <span class="text-branddark font-bold">exclusive setup</span>, diskusi <span class="text-branddark font-bold">market action</span> secara real-time tiap <span class="text-branddark font-bold">New York Session</span>, dan bergabung bersama ribuan <span class="text-branddark font-bold">trader</span> lainnya di <span class="text-branddark font-bold">inner circle</span> Discord resmi AcademyFX.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-start gap-6">
+                    <!-- Tombol Discord tanpa efek Glow (Glow Dihapus, menggunakan shadow standar) -->
+                    <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand text-darkbg font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-md text-lg flex items-center gap-3">
+                        <i class="fa-brands fa-discord text-2xl"></i> Join Discord Sekarang
+                    </a>
+                    
+                    <a href="index.html" class="text-gray-500 hover:text-gray-900 font-bold text-sm flex items-center gap-2 transition-colors group">
+                        Kembali ke Beranda <i class="fa-solid fa-angle-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ilustrasi Chat Discord Mockup (LURUS PRESISI) -->
+            <div class="relative lg:ml-auto w-full max-w-md">
+                <div class="bg-[#313338] rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
+                    <div class="bg-[#2B2D31] px-5 py-4 flex items-center gap-3 border-b border-[#1E1F22] shadow-sm">
+                        <i class="fa-solid fa-hashtag text-gray-400 text-lg"></i>
+                        <span class="text-white font-bold text-base tracking-wide">live-trading-room</span>
+                    </div>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-branddark flex-shrink-0 flex items-center justify-center text-white font-black text-sm shadow-[0_0_10px_rgba(0,184,204,0.3)]">
+                                AFX
+                            </div>
+                            <div>
+                                <div class="flex items-baseline gap-2 mb-1">
+                                    <span class="text-branddark font-bold text-sm">Coach AcademyFX</span>
+                                    <span class="bg-branddark/20 text-branddark text-[9px] px-1.5 py-0.5 rounded uppercase font-bold">Mentor</span>
+                                    <span class="text-xs text-gray-400">Hari ini 08:30 PM</span>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    ⚠️ Perhatian semuanya! NFP rilis 15 menit lagi. Pastikan amankan posisi atau geser SL ke BEP. Prediksi volatilitas akan sangat ekstrim di XAUUSD.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-500 flex-shrink-0 flex items-center justify-center text-white font-bold">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-baseline gap-2 mb-1">
+                                    <span class="text-white font-bold text-sm">TraderPro99</span>
+                                    <span class="text-xs text-gray-400">Hari ini 08:32 PM</span>
+                                </div>
+                                <p class="text-gray-300 text-sm leading-relaxed">
+                                    Siap coach! Setup Gold kemarin udah running profit +40 pips, sebagian lot udah di-close. Santai nunggu news. 🔥💰
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 bg-[#313338] border-t border-[#1E1F22]">
+                        <div class="bg-[#383A40] rounded-xl px-4 py-3.5 text-gray-400 text-sm flex items-center gap-3">
+                            <i class="fa-solid fa-circle-plus text-gray-300"></i>
+                            <span>Message #live-trading-room...</span>
+                        </div>
+                    </div>
+    </section>
+
+    <!-- 7. FOOTER (HITAM) -->
+    <footer class="bg-darkbg text-gray-400 py-10 px-8 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6">
+            <p class="leading-relaxed">
+                <strong class="text-white">Disclaimer.</strong> AcademyFX adalah platform edukasi dan program funding berbasis skill. Seluruh konten bersifat edukatif, bukan rekomendasi investasi. AcademyFX tidak berafiliasi dengan broker manapun, tidak menjual sinyal, copy trading, atau layanan investasi, dan tidak menjamin profit. Trading memiliki risiko kerugian. 
+                <a href="#" class="text-brand font-medium hover:underline">Disclaimer</a> · 
+                <a href="#" class="text-brand font-medium hover:underline">Terms & Conditions</a>
+            </p>
+        </div>
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
+        <div class="flex items-center gap-6">
+                <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
+                    <i class="fa-brands fa-instagram text-xl"></i> Instagram
+                </a>
+                <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="text-[#5865F2] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
+                    <i class="fa-brands fa-discord text-xl"></i> Komunitas Discord
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOMBOL WHATSAPP MELAYANG -->
+    <a href="https://wa.me/6281217618728?text=Assalamualaikum%2C%20Wr.%20Wb.%20Permisi%20Mas%20Richo." target="_blank" class="fixed bottom-6 right-6 bg-white text-gray-800 px-4 py-3 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center gap-3 z-50 hover:-translate-y-1 transition duration-300 group">
+        <div class="bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center text-xl group-hover:bg-[#20b858] transition">
+            <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="flex flex-col pr-2">
+            <span class="text-[10px] font-bold text-[#25D366] uppercase tracking-wide leading-none mb-1">Butuh Bantuan?</span>
+            <span class="text-sm font-bold leading-none text-gray-800">Chat Admin</span>
+        </div>
+    </a>
+
+    <!-- SCRIPTS CONTROL & RENDER -->
+    <script>
+        // 1. REAL TIME CLOCK SCRIPT
+        function updateTerminalClock() {
+            const now = new Date();
+            const optionsTime = { timeZone: 'Asia/Jakarta', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            let timeStr = now.toLocaleTimeString('en-GB', optionsTime).replace(/:/g, '.'); 
+            if(document.getElementById('terminal-time')) document.getElementById('terminal-time').innerText = timeStr;
+            const optionsDate = { timeZone: 'Asia/Jakarta', day: '2-digit', month: 'short', year: 'numeric' };
+            if(document.getElementById('terminal-date')) document.getElementById('terminal-date').innerText = now.toLocaleDateString('id-ID', optionsDate);
+        }
+        updateTerminalClock(); 
+        setInterval(updateTerminalClock, 1000);
+
+        // 2. REAL-TIME MARKET SESSION LOGIC (WIB UTC+7 + WEEKEND DETECTION)
+        function updateMarketSessions() {
+            const now = new Date();
+            
+            // Konversi ke waktu UTC lalu ke WIB (+7)
+            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+            const wibDate = new Date(utcTime + (3600000 * 7));
+            
+            let hourWIB = wibDate.getHours();
+            let dayWIB = wibDate.getDay(); // 0 = Minggu, 1 = Senin, ..., 6 = Sabtu
+            
+            // Logika Penutupan Market Akhir Pekan (Weekend)
+            // Market Forex umumnya Tutup Sabtu jam 04:00 WIB dan Buka Senin jam 04:00 WIB
+            let isWeekend = false;
+            if (dayWIB === 0) isWeekend = true; // Seluruh hari Minggu tutup
+            if (dayWIB === 6 && hourWIB >= 4) isWeekend = true; // Sabtu setelah jam 4 pagi tutup
+            if (dayWIB === 1 && hourWIB < 4) isWeekend = true; // Senin sebelum jam 4 pagi masih tutup
+            
+            // Fungsi Helper Update Visual Box
+            const updateBoxStyle = (id, isOpen) => {
+                const box = document.getElementById(`session-${id}`);
+                const badge = document.getElementById(`badge-${id}`);
+                if (!box || !badge) return;
+                
+                if (isOpen) {
+                    box.classList.remove('opacity-50', 'grayscale', 'scale-95');
+                    box.classList.add('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
+                    badge.innerHTML = '<span class="text-green-500 font-bold text-[10px]"><i class="fa-solid fa-circle text-[8px] animate-pulse relative -top-[1px] mr-1"></i> OPEN</span>';
+                } else {
+                    box.classList.add('opacity-50', 'grayscale', 'scale-95');
+                    box.classList.remove('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
+                    badge.innerHTML = '<span class="text-gray-400 font-bold text-[10px]"><i class="fa-solid fa-moon text-[10px] mr-1"></i> CLOSED</span>';
+                }
+            };
+
+            // Terapkan Logika
+            if (isWeekend) {
+                // Paksa semua kotak tertutup jika akhir pekan
+                updateBoxStyle('sydney', false);
+                updateBoxStyle('tokyo', false);
+                updateBoxStyle('london', false);
+                updateBoxStyle('ny', false);
+            } else {
+                // Jika bukan akhir pekan, jalankan berdasarkan jam WIB
+                // Sydney (Pasifik): 05:00 - 14:00
+                updateBoxStyle('sydney', hourWIB >= 5 && hourWIB < 14);
+                // Tokyo (Asia): 07:00 - 16:00
+                updateBoxStyle('tokyo', hourWIB >= 7 && hourWIB < 16);
+                // London (Eropa): 14:00 - 23:00
+                updateBoxStyle('london', hourWIB >= 14 && hourWIB < 23);
+                // New York (US): 19:00 - 04:00 (Malam hingga pagi hari berikutnya)
+                updateBoxStyle('ny', hourWIB >= 19 || hourWIB < 4);
+            }
+        }
+        updateMarketSessions();
+        setInterval(updateMarketSessions, 60000); // Check ulang setiap 1 menit
+
+        // 3. INVESTING.COM FILTER CALENDAR LOGIC (FORCE GMT+7 ON LOAD)
+        const investingBaseUrl = "https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=17&lang=1";
+        
+        // Memaksa Iframe mengalahkan cache browser dan me-load GMT+7 secara mutlak saat web dibuka
+        window.addEventListener('load', function() {
+            const iframe = document.getElementById('investing-iframe');
+            if(iframe) iframe.src = investingBaseUrl;
+        });
+
+        // Filter High Impact Interaktif
+        const investingFilter = document.getElementById('investing-filter');
+        if(investingFilter) {
+            investingFilter.addEventListener('change', function(e) {
+                const iframe = document.getElementById('investing-iframe');
+                let newUrl = investingBaseUrl;
+                // Tambahkan parameter importance=3 (Hanya High Impact / Bintang 3) jika dipilih
+                if(e.target.value === 'high') {
+                    newUrl += "&importance=3";
+                }
+                iframe.src = newUrl;
+            });
+        }
+
+        // 4. 3D GLOBE INITIALIZATION SYSTEM
+        let worldInstance = null;
+        function initGlobe3D() {
+            const globeContainer = document.getElementById('globe-3d-container');
+            if(!globeContainer || worldInstance) return;
+
+            worldInstance = Globe()(globeContainer)
+                .width(globeContainer.clientWidth || 800)
+                .height(globeContainer.clientHeight || 500)
+                .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+                .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+                .backgroundColor('rgba(0,0,0,0)')
+                .showAtmosphere(true)
+                .atmosphereColor('#00b8cc')
+                .atmosphereAltitude(0.15);
+
+            const N = 30;
+            const arcsData = [...Array(N).keys()].map(() => ({
+                startLat: (Math.random() - 0.5) * 180, startLng: (Math.random() - 0.5) * 360,
+                endLat: (Math.random() - 0.5) * 180, endLng: (Math.random() - 0.5) * 360,
+                color: ['#00b8cc', '#009eb5'][Math.round(Math.random())]
+            }));
+
+            worldInstance.arcsData(arcsData).arcColor('color').arcDashLength(0.4).arcDashGap(4).arcDashAnimateTime(2000);
+            worldInstance.controls().autoRotate = true;
+            worldInstance.controls().autoRotateSpeed = 1.2;
+            worldInstance.controls().enableZoom = true;
+
+            window.addEventListener('resize', () => {
+                if(worldInstance && globeContainer.clientWidth > 0 && globeContainer.clientHeight > 0) {
+                    worldInstance.width(globeContainer.clientWidth).height(globeContainer.clientHeight);
+                }
+            });
+        }
+
+        // 5. TOGGLE LAYER SYSTEM (2D / 3D CONTROL MODULE)
+        const btn2D = document.getElementById('btn-toggle-2d');
+        const btn3D = document.getElementById('btn-toggle-3d');
+        const view2D = document.getElementById('map-2d-container');
+        const view3D = document.getElementById('globe-3d-container');
+        const statusMode = document.getElementById('map-status-mode');
+
+        btn2D.addEventListener('click', () => {
+            btn2D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50";
+            btn3D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1";
+            
+            view3D.classList.add('hidden');
+            view2D.classList.remove('hidden');
+            statusMode.innerText = "MODE: 2D FLAT (RADAR SYNC)";
+        });
+
+        btn3D.addEventListener('click', () => {
+            btn3D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50";
+            btn2D.className = "px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1";
+            
+            view2D.classList.add('hidden');
+            view3D.classList.remove('hidden');
+            statusMode.innerText = "MODE: 3D GLOBE RENDER";
+            
+            setTimeout(initGlobe3D, 50);
+        });
+    </script>
+</body>
+</html>
