@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- 3D Globe Libraries -->
-    <script src="https://unpkg.com/three"></script>
-    <script src="https://unpkg.com/globe.gl"></script>
 
     <script>
         tailwind.config = {
@@ -78,57 +74,20 @@
         }
 
         .tv-widget-wrapper { border-radius: 1rem; overflow: hidden; }
-        .globe-container { cursor: grab; display: flex; align-items: center; justify-content: center; }
-        .globe-container:active { cursor: grabbing; }
 
-        /* Mode 2D Map Background (TOSCA TEMA) */
-        .map-2d-bg {
-            background-color: #00b8cc; 
-            -webkit-mask-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
-            mask-image: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg');
-            -webkit-mask-size: cover;
-            mask-size: cover;
-            -webkit-mask-position: center;
-            mask-position: center;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-        }
-
-        /* Efek Sonar/Radar Ping yang Menarik (KUNING NEON) */
-        .radar-node {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #facc15; 
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 10px rgba(250, 204, 21, 0.8); 
-        }
-        .radar-node::before, .radar-node::after {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 2px solid #facc15; 
-            transform: translate(-50%, -50%);
-            animation: radar-pulse 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-        }
-        .radar-node::after {
-            animation-delay: 1.25s;
-        }
-        @keyframes radar-pulse {
-            0% { width: 10px; height: 10px; opacity: 1; }
-            100% { width: 70px; height: 70px; opacity: 0; }
-        }
+        /* Status Indicator Styles */
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+        .status-dot.active { background-color: #00b8cc; box-shadow: 0 0 8px #00e5ff; animation: blink 2s infinite; }
+        .status-dot.inactive { background-color: #9ca3af; }
         
-        /* Animasi Transisi Real-Time Box */
-        .session-box { transition: all 0.5s ease-in-out; }
+        .status-badge { border: 1px solid transparent; transition: all 0.3s ease; }
+        .status-badge.active { background-color: rgba(0, 184, 204, 0.1); border-color: rgba(0, 184, 204, 0.3); color: #00b8cc; }
+        .status-badge.inactive { background-color: #f3f4f6; border-color: #e5e7eb; color: #6b7280; }
     </style>
 </head>
 <body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- 1. NAVIGATION (HITAM) - Diubah px-8 jadi px-5 md:px-8 untuk mobile -->
+    <!-- 1. NAVIGATION (HITAM) -->
     <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
@@ -155,7 +114,7 @@
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
                     Join Discord
                 </a>
-                <!-- TAMBAHAN: Hamburger Menu Button khusus mobile -->
+                <!-- Hamburger Menu Button khusus mobile -->
                 <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
                     <i class="fa-solid fa-bars text-2xl"></i>
                 </button>
@@ -163,7 +122,7 @@
         </div>
     </nav>
 
-    <!-- TAMBAHAN: Mobile Menu Panel -->
+    <!-- Mobile Menu Panel -->
     <div id="mobile-menu" class="fixed top-[64px] left-0 w-full bg-[#060b13]/95 backdrop-blur-xl border-b border-gray-800 z-40 transform -translate-y-full transition-transform duration-300 ease-in-out flex flex-col text-center shadow-2xl md:hidden">
         <a href="index.html#home" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Home</a>
         <a href="index.html#academy" class="py-4 border-b border-gray-800 text-gray-300 hover:text-brand font-medium mobile-nav-link">Academy</a>
@@ -225,7 +184,6 @@
         <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
         
         <div class="max-w-[1400px] mx-auto relative z-10">
-            <!-- TEKS MARKET DRIVERS DIPERBARUI -->
             <div class="text-center mb-12">
                 <p class="text-brand font-bold text-xs tracking-widest uppercase mb-4">Live · Indikator Volatilitas</p>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"><span class="text-brand">Core</span> Market Index</h2>
@@ -257,8 +215,49 @@
                 </div>
             </div>
 
+            <!-- ================= ADVANCED INTERACTIVE CHART ================= -->
+            <div class="bg-[#0F0F0F] border border-gray-800 rounded-2xl shadow-xl hover:border-brand transition-colors mb-8 overflow-hidden h-[500px] md:h-[600px] lg:h-[700px] tv-widget-wrapper relative z-20">
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                  <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                  <div class="tradingview-widget-copyright"><a href="https://id.tradingview.com/symbols/XAUUSD/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
+                  <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                  {
+                  "allow_symbol_change": true,
+                  "calendar": false,
+                  "details": false,
+                  "hide_side_toolbar": true,
+                  "hide_top_toolbar": false,
+                  "hide_legend": false,
+                  "hide_volume": false,
+                  "hotlist": false,
+                  "interval": "60",
+                  "locale": "id",
+                  "save_image": true,
+                  "style": "2",
+                  "symbol": "OANDA:XAUUSD",
+                  "theme": "dark",
+                  "timezone": "Asia/Jakarta",
+                  "backgroundColor": "#0F0F0F",
+                  "gridColor": "rgba(242, 242, 242, 0.06)",
+                  "watchlist": [],
+                  "withdateranges": false,
+                  "compareSymbols": [
+                    {
+                      "symbol": "OANDA:BTCUSD",
+                      "position": "SameScale"
+                    }
+                  ],
+                  "studies": [],
+                  "autosize": true
+                }
+                  </script>
+                </div>
+                <!-- TradingView Widget END -->
+            </div>
+
             <!-- 5 Mini Charts Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
                 <!-- GOLD -->
                 <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
                     <div class="flex-1 tv-widget-wrapper pointer-events-none">
@@ -344,7 +343,7 @@
         </div>
     </section>
 
-    <!-- 4. SLIDE 3: KALENDER EKONOMI & GLOBE 2D/3D TOGGLE (PUTIH) -->
+    <!-- 4. SLIDE 3: KALENDER EKONOMI (DIUBAH MENJADI 3 KOLOM) -->
     <section class="bg-white py-16 md:py-32 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
@@ -356,13 +355,13 @@
                 <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau <span class="text-branddark font-bold">high-impact news</span>. Hindari <span class="text-branddark font-bold">liquidity sweep</span> dan <span class="text-branddark font-bold">fakeout</span> saat rilis berita penting.</p>
             </div>
 
-            <!-- Kalender Widgets -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16 md:mb-32">
-                <!-- TradingView Calendar -->
+            <!-- Kalender Widgets (Grid diubah ke 3 Kolom) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-32">
+                <!-- 1. TradingView Calendar -->
                 <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                         <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
-                            <i class="fa-solid fa-bolt text-branddark"></i> HIGH IMPACT NEWS <span class="hidden sm:inline">(TradingView)</span>
+                            <i class="fa-solid fa-bolt text-branddark"></i> HIGH IMPACT <span class="hidden sm:inline">(TradingView)</span>
                         </div>
                         <span class="bg-red-50 text-red-500 text-[10px] font-bold px-2 py-1 rounded border border-red-200">LIVE</span>
                     </div>
@@ -374,130 +373,74 @@
                     </div>
                 </div>
 
-                <!-- Investing.com Calendar (DENGAN FILTER HIGH IMPACT & GMT+7) -->
+                <!-- 2. Investing.com Calendar (KODE DIPERBARUI) -->
                 <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                         <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
-                            <i class="fa-solid fa-calendar-days text-branddark"></i> INVESTING.COM <span class="hidden sm:inline">CALENDAR</span>
+                            <i class="fa-solid fa-calendar-days text-branddark"></i> INVESTING.COM
                         </div>
                         <div class="flex items-center gap-2">
-                            <!-- Label Zona Waktu (Telah dipaksa ke Jakarta GMT+7 via JS) -->
                             <span class="bg-blue-50 text-blue-500 text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-1 rounded border border-blue-200">WIB (GMT+7)</span>
                             <!-- Dropdown Filter Interaktif -->
                             <select id="investing-filter" class="text-[9px] md:text-[10px] border border-gray-200 rounded px-1.5 md:px-2 py-1 bg-white font-bold text-gray-700 outline-none cursor-pointer hover:border-branddark transition-colors">
-                                <option value="all">Semua Impact</option>
-                                <option value="high">🔥 High Impact Saja</option>
+                                <option value="all">Semua</option>
+                                <option value="high">🔥 High Saja</option>
                             </select>
                         </div>
                     </div>
-                    <div class="flex-1 bg-white rounded-xl overflow-hidden relative">
-                        <!-- Iframe kosongan di awal, akan di-inject JS untuk memaksa GMT+7 mengalahkan cache browser -->
-                        <iframe id="investing-iframe" src="" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0"></iframe>
+                    <!-- Implementasi iframe khusus sesuai request -->
+                    <div class="flex-1 bg-white rounded-xl overflow-hidden relative flex flex-col">
+                        <iframe id="investing-iframe" src="" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" class="flex-1"></iframe>
+                        <div class="poweredBy text-center py-1 bg-gray-50 border-t border-gray-100" style="font-family: Arial, Helvetica, sans-serif;">
+                            <span style="font-size: 10px;color: #333333;text-decoration: none;">Kalender Ekonomi Real Time dipersembahkan oleh <a href="https://id.investing.com" rel="nofollow" target="_blank" style="font-size: 10px;color: #06529D; font-weight: bold;" class="underline_link">Investing.com Indonesia</a>.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. MetaTrader Tradays Calendar (REAL-TIME) -->
+                <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
+                    <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                        <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
+                            <i class="fa-solid fa-clock-rotate-left text-branddark"></i> TRADAYS <span class="hidden sm:inline">CALENDAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="bg-green-50 text-green-600 text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-1 rounded border border-green-200">REAL-TIME</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-white rounded-xl overflow-hidden relative flex flex-col p-1">
+                        <!-- Widget Injector Tradays -->
+                        <div id="economicCalendarWidget" class="flex-1 w-full h-full"></div>
+                        <div class="ecw-copyright text-center py-1 mt-1 bg-gray-50">
+                            <a href="https://www.metatrader.com/?utm_source=calendar.widget&utm_medium=link&utm_term=economic.calendar&utm_content=visit.mql5.calendar&utm_campaign=202.calendar.widget" rel="noopener nofollow" target="_blank" class="text-[8px] text-gray-400 hover:text-branddark">MetaTrader World Markets</a>
+                        </div>
+                        <script async type="text/javascript" data-type="calendar-widget" src="https://www.tradays.com/c/js/widgets/calendar/widget.js?v=15">
+                          {"width":"100%","height":"100%","mode":"1","fw":"html"}
+                        </script>
                     </div>
                 </div>
             </div>
 
-            <!-- Global Map Section (DENGAN KONTROL TOGGLE 2D / 3D) -->
-            <div class="text-center mb-6">
+            <!-- Global Map Section (TradingView Economic Map) -->
+            <div class="text-center mb-8 md:mb-12">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Visual Interaktif</p>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
-                <p class="text-gray-400 text-base md:text-lg mb-2 max-w-2xl mx-auto">Pantau pergerakan <span class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
-                
-                <!-- Tombol Pengatur Mode 2D / 3D -->
-                <div class="inline-flex p-1.5 bg-gray-100 rounded-2xl shadow-inner border border-gray-200 mb-8 z-30 relative w-full sm:w-auto overflow-x-auto whitespace-nowrap custom-scrollbar">
-                    <!-- Default Aktif (2D) -->
-                    <button id="btn-toggle-2d" class="px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0">
-                        <i class="fa-solid fa-map mr-1.5"></i> 2D Map Layout
-                    </button>
-                    <!-- Default Tidak Aktif (3D) -->
-                    <button id="btn-toggle-3d" class="px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0">
-                        <i class="fa-solid fa-earth-americas mr-1.5"></i> 3D Globe Render
-                    </button>
-                </div>
+                <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau pergerakan <span class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
             </div>
 
             <!-- CONTAINER UTAMA MAP -->
-            <div class="bg-gray-50 border border-gray-200 rounded-3xl shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] relative overflow-hidden flex items-center justify-center">
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-lg hover:border-branddark transition-colors h-[500px] md:h-[600px] relative overflow-hidden flex items-center justify-center p-2">
                 
-                <!-- Status Tag -->
-                <div class="absolute top-4 left-4 md:top-6 md:left-6 z-30 bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-4 rounded-xl pointer-events-none shadow-sm max-w-[200px] md:max-w-none">
-                    <div class="flex items-center gap-2 mb-1 md:mb-2">
-                        <span class="w-2 h-2 rounded-full bg-branddark animate-blink flex-shrink-0"></span>
-                        <span class="text-gray-900 font-bold text-[10px] md:text-xs tracking-wider leading-tight" id="map-status-mode">MODE: 2D FLAT (RADAR SYNC)</span>
-                    </div>
-                    <p class="text-[8px] md:text-[10px] text-gray-500 font-mono hidden sm:block">Real-Time WIB Session Highlight</p>
-                </div>
-
                 <!-- Buka World Monitor CTA -->
-                <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-30 bg-white/90 backdrop-blur border border-branddark/50 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-3 py-2 md:px-5 md:py-3 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
+                <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-30 bg-white/90 backdrop-blur border border-gray-300 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-3 py-2 md:px-5 md:py-3 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
                     <i class="fa-solid fa-map-location-dot"></i> <span class="hidden sm:inline">Buka World Monitor</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
                 </a>
 
-                <!-- ================= 2D MAP CONTAINER (Statis dengan Animasi Radar Pulse Kuning Neon) ================= -->
-                <div id="map-2d-container" class="w-full h-full relative bg-gray-50 flex items-center justify-center transition-opacity duration-300 z-10">
-                    
-                    <!-- Layer Peta Dunia (CSS Masking TOSCA PEKAT 50%) -->
-                    <div class="absolute inset-0 map-2d-bg opacity-50 pointer-events-none"></div>
-                    
-                    <!-- SVG Wrapper untuk menempatkan titik radar kuning neon secara proporsional sesuai peta -->
-                    <div class="absolute inset-0 w-full h-full max-w-[1000px] mx-auto pointer-events-none z-10">
-                        <!-- NY Radar (Approx location di map) -->
-                        <div class="radar-node top-[36%] left-[28%]"></div>
-                        <!-- London Radar -->
-                        <div class="radar-node top-[26%] left-[48%]"></div>
-                        <!-- Tokyo Radar -->
-                        <div class="radar-node top-[36%] left-[86%]"></div>
-                        <!-- Sydney Radar -->
-                        <div class="radar-node top-[76%] left-[88%]"></div>
-                    </div>
-
-                    <!-- Panel Info Sesi Makro (DIBUAT REAL-TIME MENGGUNAKAN JS DI BAWAH) -->
-                    <div class="z-20 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 w-full px-4 md:px-12 mt-8 md:mt-16 pointer-events-none">
-                        
-                        <!-- Tokyo Box -->
-                        <div id="session-tokyo" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">ASIAN</h4>
-                                <div id="badge-tokyo"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
-                            </div>
-                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">TOKYO</p>
-                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-circle-check text-green-500 mr-1 hidden md:inline"></i> JPY Flow</span>
-                        </div>
-                        
-                        <!-- London Box -->
-                        <div id="session-london" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">EUROPEAN</h4>
-                                <div id="badge-london"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
-                            </div>
-                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">LONDON</p>
-                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-clock text-blue-500 mr-1 hidden md:inline"></i> GBP / EUR</span>
-                        </div>
-                        
-                        <!-- New York Box -->
-                        <div id="session-ny" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">US SESSION</h4>
-                                <div id="badge-ny"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
-                            </div>
-                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">NEW YORK</p>
-                            <span class="text-[9px] md:text-[11px] text-gray-900 font-bold"><i class="fa-solid fa-bolt text-red-500 mr-1 hidden md:inline"></i> High Vol</span>
-                        </div>
-                        
-                        <!-- Sydney Box -->
-                        <div id="session-sydney" class="session-box bg-white/90 backdrop-blur border border-gray-200 p-3 md:p-5 rounded-2xl shadow-sm text-center opacity-50 grayscale scale-95 pointer-events-auto">
-                            <div class="flex justify-between items-center mb-1">
-                                <h4 class="text-gray-900 text-[8px] md:text-[10px] uppercase font-black tracking-widest truncate max-w-[50px] md:max-w-none">PACIFIC</h4>
-                                <div id="badge-sydney"><span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span></div>
-                            </div>
-                            <p class="text-branddark text-sm md:text-lg font-black font-mono mt-1 md:mt-0">SYDNEY</p>
-                            <span class="text-[9px] md:text-[11px] text-gray-500"><i class="fa-solid fa-water text-cyan-500 mr-1 hidden md:inline"></i> AUD / NZD</span>
-                        </div>
-                    </div>
+                <!-- TRADINGVIEW ECONOMIC MAP (Real-time) -->
+                <div class="w-full h-full relative z-10 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
+                    <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-economic-map.js"></script>
+                    <tv-economic-map metrics="gdp,ur,gdg,intr,iryy" style="width: 100%; height: 100%; display: block;"></tv-economic-map>
                 </div>
 
-                <!-- ================= 3D GLOBE CONTAINER (Disembunyikan secara default) ================= -->
-                <div id="globe-3d-container" class="w-full h-full globe-container outline-none hidden z-20"></div>
             </div>
         </div>
     </section>
@@ -771,147 +714,25 @@
         updateTerminalClock(); 
         setInterval(updateTerminalClock, 1000);
 
-        // 2. REAL-TIME MARKET SESSION LOGIC (WIB UTC+7 + WEEKEND DETECTION)
-        function updateMarketSessions() {
-            const now = new Date();
-            
-            // Konversi ke waktu UTC lalu ke WIB (+7)
-            const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-            const wibDate = new Date(utcTime + (3600000 * 7));
-            
-            let hourWIB = wibDate.getHours();
-            let dayWIB = wibDate.getDay(); // 0 = Minggu, 1 = Senin, ..., 6 = Sabtu
-            
-            // Logika Penutupan Market Akhir Pekan (Weekend)
-            // Market Forex umumnya Tutup Sabtu jam 04:00 WIB dan Buka Senin jam 04:00 WIB
-            let isWeekend = false;
-            if (dayWIB === 0) isWeekend = true; // Seluruh hari Minggu tutup
-            if (dayWIB === 6 && hourWIB >= 4) isWeekend = true; // Sabtu setelah jam 4 pagi tutup
-            if (dayWIB === 1 && hourWIB < 4) isWeekend = true; // Senin sebelum jam 4 pagi masih tutup
-            
-            // Fungsi Helper Update Visual Box
-            const updateBoxStyle = (id, isOpen) => {
-                const box = document.getElementById(`session-${id}`);
-                const badge = document.getElementById(`badge-${id}`);
-                if (!box || !badge) return;
-                
-                if (isOpen) {
-                    box.classList.remove('opacity-50', 'grayscale', 'scale-95');
-                    box.classList.add('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
-                    badge.innerHTML = '<span class="text-green-500 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-circle text-[6px] md:text-[8px] animate-pulse relative -top-[1px] mr-1"></i> OPEN</span>';
-                } else {
-                    box.classList.add('opacity-50', 'grayscale', 'scale-95');
-                    box.classList.remove('shadow-[0_0_20px_rgba(0,184,204,0.3)]', 'border-branddark/50', 'scale-105');
-                    badge.innerHTML = '<span class="text-gray-400 font-bold text-[8px] md:text-[10px]"><i class="fa-solid fa-moon text-[8px] md:text-[10px] mr-1"></i> CLOSED</span>';
-                }
-            };
-
-            // Terapkan Logika
-            if (isWeekend) {
-                // Paksa semua kotak tertutup jika akhir pekan
-                updateBoxStyle('sydney', false);
-                updateBoxStyle('tokyo', false);
-                updateBoxStyle('london', false);
-                updateBoxStyle('ny', false);
-            } else {
-                // Jika bukan akhir pekan, jalankan berdasarkan jam WIB
-                // Sydney (Pasifik): 05:00 - 14:00
-                updateBoxStyle('sydney', hourWIB >= 5 && hourWIB < 14);
-                // Tokyo (Asia): 07:00 - 16:00
-                updateBoxStyle('tokyo', hourWIB >= 7 && hourWIB < 16);
-                // London (Eropa): 14:00 - 23:00
-                updateBoxStyle('london', hourWIB >= 14 && hourWIB < 23);
-                // New York (US): 19:00 - 04:00 (Malam hingga pagi hari berikutnya)
-                updateBoxStyle('ny', hourWIB >= 19 || hourWIB < 4);
-            }
-        }
-        updateMarketSessions();
-        setInterval(updateMarketSessions, 60000); // Check ulang setiap 1 menit
-
         // 3. INVESTING.COM FILTER CALENDAR LOGIC (FORCE GMT+7 ON LOAD)
-        const investingBaseUrl = "https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=25,32,6,37,72,22,17,39,14,10,35,43,56,36,110,11,26,12,4,5&calType=week&timeZone=17&lang=1";
+        const investingBaseUrl = "https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=5,25,37,45,39,14,48,4,10,35,17,6,11,42,44,22,43,36,26,12,46,41,178,72&calType=day&timeZone=27&lang=54";
         
-        // Memaksa Iframe mengalahkan cache browser dan me-load GMT+7 secara mutlak saat web dibuka
         window.addEventListener('load', function() {
             const iframe = document.getElementById('investing-iframe');
             if(iframe) iframe.src = investingBaseUrl;
         });
 
-        // Filter High Impact Interaktif
         const investingFilter = document.getElementById('investing-filter');
         if(investingFilter) {
             investingFilter.addEventListener('change', function(e) {
                 const iframe = document.getElementById('investing-iframe');
                 let newUrl = investingBaseUrl;
-                // Tambahkan parameter importance=3 (Hanya High Impact / Bintang 3) jika dipilih
                 if(e.target.value === 'high') {
                     newUrl += "&importance=3";
                 }
                 iframe.src = newUrl;
             });
         }
-
-        // 4. 3D GLOBE INITIALIZATION SYSTEM
-        let worldInstance = null;
-        function initGlobe3D() {
-            const globeContainer = document.getElementById('globe-3d-container');
-            if(!globeContainer || worldInstance) return;
-
-            worldInstance = Globe()(globeContainer)
-                .width(globeContainer.clientWidth || 800)
-                .height(globeContainer.clientHeight || 500)
-                .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-                .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
-                .backgroundColor('rgba(0,0,0,0)')
-                .showAtmosphere(true)
-                .atmosphereColor('#00b8cc')
-                .atmosphereAltitude(0.15);
-
-            const N = 30;
-            const arcsData = [...Array(N).keys()].map(() => ({
-                startLat: (Math.random() - 0.5) * 180, startLng: (Math.random() - 0.5) * 360,
-                endLat: (Math.random() - 0.5) * 180, endLng: (Math.random() - 0.5) * 360,
-                color: ['#00b8cc', '#009eb5'][Math.round(Math.random())]
-            }));
-
-            worldInstance.arcsData(arcsData).arcColor('color').arcDashLength(0.4).arcDashGap(4).arcDashAnimateTime(2000);
-            worldInstance.controls().autoRotate = true;
-            worldInstance.controls().autoRotateSpeed = 1.2;
-            worldInstance.controls().enableZoom = true;
-
-            window.addEventListener('resize', () => {
-                if(worldInstance && globeContainer.clientWidth > 0 && globeContainer.clientHeight > 0) {
-                    worldInstance.width(globeContainer.clientWidth).height(globeContainer.clientHeight);
-                }
-            });
-        }
-
-        // 5. TOGGLE LAYER SYSTEM (2D / 3D CONTROL MODULE)
-        const btn2D = document.getElementById('btn-toggle-2d');
-        const btn3D = document.getElementById('btn-toggle-3d');
-        const view2D = document.getElementById('map-2d-container');
-        const view3D = document.getElementById('globe-3d-container');
-        const statusMode = document.getElementById('map-status-mode');
-
-        btn2D.addEventListener('click', () => {
-            btn2D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0";
-            btn3D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0";
-            
-            view3D.classList.add('hidden');
-            view2D.classList.remove('hidden');
-            statusMode.innerText = "MODE: 2D FLAT (RADAR SYNC)";
-        });
-
-        btn3D.addEventListener('click', () => {
-            btn3D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 bg-white text-gray-900 shadow-sm border border-gray-200/50 flex-shrink-0";
-            btn2D.className = "px-4 md:px-6 py-2 md:py-2.5 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-wider transition-all duration-300 text-gray-500 hover:text-gray-900 ml-1 flex-shrink-0";
-            
-            view2D.classList.add('hidden');
-            view3D.classList.remove('hidden');
-            statusMode.innerText = "MODE: 3D GLOBE RENDER";
-            
-            setTimeout(initGlobe3D, 50);
-        });
     </script>
 </body>
 </html>
