@@ -215,7 +215,7 @@
                 </div>
             </div>
 
-            <!-- ================= ADVANCED INTERACTIVE CHART ================= -->
+            <!-- ADVANCED INTERACTIVE CHART -->
             <div class="bg-[#0F0F0F] border border-gray-800 rounded-2xl shadow-xl hover:border-brand transition-colors mb-8 overflow-hidden h-[500px] md:h-[600px] lg:h-[700px] tv-widget-wrapper relative z-20">
                 <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%;width:100%">
@@ -257,7 +257,7 @@
             </div>
 
             <!-- 5 Mini Charts Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
                 <!-- GOLD -->
                 <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
                     <div class="flex-1 tv-widget-wrapper pointer-events-none">
@@ -324,22 +324,175 @@
                 </div>
             </div>
 
-            <!-- Currency Strength Heatmap -->
-            <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300">
-                <div class="flex items-center gap-2 mb-6">
-                    <i class="fa-solid fa-table-cells text-brand text-lg"></i>
-                    <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CURRENCY STRENGTH · 8 MATA UANG MAYOR</h3>
+            <!-- ================= ASSET HEATMAPS & LIVE NEWS ================= -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-1.5 h-6 bg-brand rounded-full"></div>
+                    <h3 class="text-xl md:text-2xl font-bold text-white tracking-wide">Market Heatmaps & Live News</h3>
                 </div>
-                
-                <div class="h-[400px] w-full tv-widget-wrapper">
-                    <div class="tradingview-widget-container">
-                        <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
-                        { "width": "100%", "height": "100%", "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ], "isTransparent": true, "colorTheme": "dark", "locale": "id" }
-                        </script>
+
+                <!-- Grid 1: Currency Strength (Terbesar) & News Timeline -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
+                    
+                    <!-- Currency Strength Heatmap (Lebar 2 Kolom) -->
+                    <div class="lg:col-span-2 bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[500px] md:h-[650px] flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-table-cells text-brand text-lg"></i>
+                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CURRENCY STRENGTH (FOREX HEATMAP)</h3>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full">
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
+                                { 
+                                    "width": "100%", 
+                                    "height": "100%", 
+                                    "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ], 
+                                    "isTransparent": true, 
+                                    "colorTheme": "dark", 
+                                    "locale": "id" 
+                                }
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Timeline -->
+                    <div class="lg:col-span-1 bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[500px] md:h-[650px] flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-newspaper text-brand text-lg"></i>
+                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">LIVE MARKET NEWS</h3>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full relative">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                              <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/news/top-providers/tradingview/" rel="noopener nofollow" target="_blank"><span class="blue-text">Top stories</span></a><span class="trademark"> by TradingView</span></div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+                              {
+                                "displayMode": "regular",
+                                "feedMode": "all_symbols",
+                                "colorTheme": "dark",
+                                "isTransparent": true,
+                                "locale": "en",
+                                "width": "100%",
+                                "height": "100%"
+                              }
+                              </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
                     </div>
                 </div>
+
+                <!-- Grid 2: Stock, Crypto, ETF Heatmaps -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                    
+                    <!-- Stock Heatmap -->
+                    <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[450px] flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-layer-group text-brand text-lg"></i>
+                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">S&P 500 STOCK HEATMAP</h3>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full relative">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                              <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/stock/" rel="noopener nofollow" target="_blank"><span class="blue-text">Stock Heatmap</span></a><span class="trademark"> by TradingView</span></div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+                              {
+                                "dataSource": "SPX500",
+                                "blockSize": "market_cap_basic",
+                                "blockColor": "change",
+                                "grouping": "sector",
+                                "locale": "en",
+                                "symbolUrl": "",
+                                "colorTheme": "dark",
+                                "exchanges": [],
+                                "hasTopBar": false,
+                                "isDataSetEnabled": false,
+                                "isZoomEnabled": true,
+                                "hasSymbolTooltip": true,
+                                "isMonoSize": false,
+                                "width": "100%",
+                                "height": "100%"
+                              }
+                              </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+
+                    <!-- Crypto Heatmap -->
+                    <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[450px] flex flex-col">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-brands fa-bitcoin text-brand text-lg"></i>
+                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CRYPTO HEATMAP</h3>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                              <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/crypto/" rel="noopener nofollow" target="_blank"><span class="blue-text">Crypto Heatmap</span></a><span class="trademark"> by TradingView</span></div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
+                              {
+                                "dataSource": "Crypto",
+                                "blockSize": "market_cap_calc",
+                                "blockColor": "24h_close_change|5",
+                                "locale": "en",
+                                "symbolUrl": "",
+                                "colorTheme": "dark",
+                                "hasTopBar": false,
+                                "isDataSetEnabled": false,
+                                "isZoomEnabled": true,
+                                "hasSymbolTooltip": true,
+                                "isMonoSize": false,
+                                "width": "100%",
+                                "height": "100%"
+                              }
+                              </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+
+                    <!-- ETF Heatmap -->
+                    <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[450px] flex flex-col sm:col-span-2 lg:col-span-1">
+                        <div class="flex items-center gap-2 mb-4">
+                            <i class="fa-solid fa-chart-pie text-brand text-lg"></i>
+                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">ETF HEATMAP</h3>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full">
+                            <!-- TradingView Widget BEGIN -->
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                              <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/etf/" rel="noopener nofollow" target="_blank"><span class="blue-text">ETF Heatmap</span></a><span class="trademark"> by TradingView</span></div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-etf-heatmap.js" async>
+                              {
+                                "dataSource": "AllUSEtf",
+                                "blockSize": "volume",
+                                "blockColor": "change",
+                                "grouping": "asset_class",
+                                "locale": "en",
+                                "symbolUrl": "",
+                                "colorTheme": "dark",
+                                "hasTopBar": false,
+                                "isDataSetEnabled": false,
+                                "isZoomEnabled": true,
+                                "hasSymbolTooltip": true,
+                                "isMonoSize": false,
+                                "width": "100%",
+                                "height": "100%"
+                              }
+                              </script>
+                            </div>
+                            <!-- TradingView Widget END -->
+                        </div>
+                    </div>
+
+                </div>
             </div>
+            
         </div>
     </section>
 
@@ -424,7 +577,7 @@
             <div class="text-center mb-8 md:mb-12">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Visual Interaktif</p>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
-                <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau pergerakan <span class="text-branddark font-bold">capital flow</span> dan <span class="text-branddark font-bold">market activity</span> dunia.</p>
+                <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau indikator <span class="text-branddark font-bold">makroekonomi global</span> seperti <span class="text-branddark font-bold">PDB, Suku Bunga, dan tingkat Inflasi</span> berbagai negara.</p>
             </div>
 
             <!-- CONTAINER UTAMA MAP -->
