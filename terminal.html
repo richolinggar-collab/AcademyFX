@@ -136,7 +136,7 @@
             </div>
             
             <!-- Trik 'inline-block' menahan kata agar tidak terpotong sendirian di bawah -->
-            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-4 md:mb-6 text-gray-900">
+            <h1 class="text-6xl md:text-6xl lg:text-6xl font-black leading-tight mb-4 md:mb-6 text-gray-900">
                 Master the <span class="text-branddark">Market</span>.<br>
                 Kuasai <span class="text-branddark">Data</span>, <span class="inline-block">Eksekusi <span class="text-branddark">Presisi</span>.</span>
             </h1>
@@ -240,74 +240,6 @@
                   "autosize": true
                 }
                   </script>
-                </div>
-            </div>
-
-            <!-- 5 Mini Charts Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-16">
-                <!-- GOLD -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
-                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
-                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                        { "symbol": "OANDA:XAUUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-                        </script></div>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-gray-800">
-                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Emas (XAU/USD).</strong> Aset safe haven utama, sangat sensitif terhadap suku bunga & inflasi.</p>
-                    </div>
-                </div>
-
-                <!-- BITCOIN -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
-                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
-                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                        { "symbol": "BINANCE:BTCUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-                        </script></div>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-gray-800">
-                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Bitcoin (BTC).</strong> Penggerak pasar kripto & proksi selera risiko (risk-on) global.</p>
-                    </div>
-                </div>
-
-                <!-- USD/IDR -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
-                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
-                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                        { "symbol": "FX_IDC:USDIDR", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-                        </script></div>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-gray-800">
-                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Rupiah (USD/IDR).</strong> Pantau pelemahan/penguatan Rupiah terhadap Dolar secara real-time.</p>
-                    </div>
-                </div>
-
-                <!-- NASDAQ -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default">
-                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
-                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                        { "symbol": "CAPITALCOM:US100", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-                        </script></div>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-gray-800">
-                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">Nasdaq 100.</strong> Indeks saham teknologi AS. Sangat fluktuatif & aktif di sesi New York.</p>
-                    </div>
-                </div>
-
-                <!-- EUR/USD -->
-                <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 shadow-xl hover:border-brand transition-colors h-64 flex flex-col group cursor-default sm:col-span-2 lg:col-span-1">
-                    <div class="flex-1 tv-widget-wrapper pointer-events-none">
-                        <div class="tradingview-widget-container"><div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-                        { "symbol": "OANDA:EURUSD", "width": "100%", "height": "100%", "locale": "id", "dateRange": "1M", "colorTheme": "dark", "isTransparent": true, "autosize": true }
-                        </script></div>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-gray-800">
-                        <p class="text-[10px] text-gray-400 leading-tight"><strong class="text-white">EUR/USD.</strong> Pair forex paling likuid. Cerminan langsung pelemahan/penguatan Dolar AS.</p>
-                    </div>
                 </div>
             </div>
 
