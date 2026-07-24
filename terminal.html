@@ -78,7 +78,7 @@
 <body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
     <!-- 1. NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
+    <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
                 <div class="w-8 h-8 rounded-full bg-brand flex items-center justify-center text-darkbg shadow-[0_0_10px_rgba(0,229,255,0.5)] group-hover:scale-110 group-hover:rotate-180 transition-all duration-500">
@@ -123,7 +123,7 @@
         <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
     </div>
 
-    <!-- 2. HERO TERMINAL (DIUPDATE FIX TEXT CENTER) -->
+    <!-- 2. HERO TERMINAL (DIUPDATE FIX TEXT CENTER & MOBILE RESPONSIVE) -->
     <section class="pt-8 md:pt-32 pb-10 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
@@ -136,8 +136,8 @@
             </div>
             
             <!-- Trik 'inline-block' menahan kata agar tidak terpotong sendirian di bawah -->
-            <h1 class="text-6xl md:text-6xl lg:text-6xl font-black leading-tight mb-4 md:mb-6 text-gray-900">
-                Master the <span class="text-branddark">Market</span>.<br>
+            <h1 class="text-6xl md:text-6xl lg:text-6xl font-black leading-tight mb-4 md:mb-6 text-gray-900 px-2 sm:px-0">
+                Master the <span class="text-branddark">Market</span>.<br class="hidden sm:block">
                 Kuasai <span class="text-branddark">Data</span>, <span class="inline-block">Eksekusi <span class="text-branddark">Presisi</span>.</span>
             </h1>
             
