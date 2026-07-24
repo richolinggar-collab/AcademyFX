@@ -73,15 +73,6 @@
         }
 
         .tv-widget-wrapper { border-radius: 1rem; overflow: hidden; }
-
-        /* Status Indicator Styles */
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-        .status-dot.active { background-color: #00b8cc; box-shadow: 0 0 8px #00e5ff; animation: blink 2s infinite; }
-        .status-dot.inactive { background-color: #9ca3af; }
-        
-        .status-badge { border: 1px solid transparent; transition: all 0.3s ease; }
-        .status-badge.active { background-color: rgba(0, 184, 204, 0.1); border-color: rgba(0, 184, 204, 0.3); color: #00b8cc; }
-        .status-badge.inactive { background-color: #f3f4f6; border-color: #e5e7eb; color: #6b7280; }
     </style>
 </head>
 <body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
@@ -132,24 +123,25 @@
         <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
     </div>
 
-    <!-- 2. HERO TERMINAL (SPACING ATAS DISESUAIKAN UNTUK HP: pt-16 md:pt-32) -->
-    <section class="pt-16 md:pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
+    <!-- 2. HERO TERMINAL (DIUPDATE FIX TEXT CENTER) -->
+    <section class="pt-8 md:pt-32 pb-10 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
         <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center relative z-10">
-            <div class="inline-flex items-center gap-3 mb-8">
-                <span class="text-gray-500 font-bold text-sm">Economic Terminal</span>
+            <div class="inline-flex items-center gap-3 mb-4 md:mb-8">
+                <span class="text-gray-500 font-bold text-xs md:text-sm">Economic Terminal</span>
                 <div class="border border-branddark/40 bg-branddark/10 px-3 py-1 rounded-full text-[9px] font-bold text-branddark uppercase tracking-widest flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-branddark animate-blink"></span> LIVE · REAL-TIME
                 </div>
             </div>
             
-            <h1 class="text-6xl md:text-6xl lg:text-6xl font-black leading-tight mb-4 text-gray-900">
-                Master the <span class="text-branddark">Market</span>. <br>
-                Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.
+            <!-- Trik 'inline-block' menahan kata agar tidak terpotong sendirian di bawah -->
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-4 md:mb-6 text-gray-900">
+                Master the <span class="text-branddark">Market</span>.<br>
+                Kuasai <span class="text-branddark">Data</span>, <span class="inline-block">Eksekusi <span class="text-branddark">Presisi</span>.</span>
             </h1>
             
-            <p class="text-gray-600 text-base md:text-2xl max-w-3xl leading-relaxed mb-12 md:mb-16 font-medium mt-4">
+            <p class="text-gray-600 text-base md:text-2xl max-w-3xl leading-relaxed mb-8 md:mb-16 font-medium">
                 Satu layar untuk menganalisa <span class="text-branddark font-bold">fundamental flow</span> global secara <span class="text-branddark font-bold">real-time</span>. Keputusan akurat dimulai dari sini.
             </p>
 
