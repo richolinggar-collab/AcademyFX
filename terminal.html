@@ -45,7 +45,6 @@
     </script>
     <style>
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        /* Ditambahkan overflow-x: hidden untuk mencegah scroll horizontal di HP */
         body { padding-top: 64px; overflow-x: hidden; }
         
         /* Nav Link Hover Animation */
@@ -58,7 +57,7 @@
         .nav-link:hover::after,
         .nav-link.active-nav::after { 
             width: 100%;
-            }
+        }
 
         /* Custom Scrollbar for tables */
         .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 6px; }
@@ -87,7 +86,7 @@
 </head>
 <body class="antialiased font-sans flex flex-col min-h-screen text-gray-900 bg-white overflow-x-hidden">
 
-    <!-- 1. NAVIGATION (HITAM) -->
+    <!-- 1. NAVIGATION -->
     <nav class="fixed top-0 w-full z-50 px-5 md:px-8 py-4 bg-[#060b13]/90 backdrop-blur-md border-b border-gray-800 transition-all z-50">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-3 cursor-pointer group">
@@ -114,7 +113,6 @@
                 <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="hidden md:inline-block bg-brand hover:bg-[#00c2d6] hover:-translate-y-1 transform text-darkbg font-bold py-2.5 px-6 rounded-full text-sm transition duration-300 shadow-lg hover:shadow-brand/50">
                     Join Discord
                 </a>
-                <!-- Hamburger Menu Button khusus mobile -->
                 <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
                     <i class="fa-solid fa-bars text-2xl"></i>
                 </button>
@@ -134,8 +132,8 @@
         <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="py-4 bg-brand text-darkbg font-bold mobile-nav-link">Join Discord</a>
     </div>
 
-    <!-- 2. SLIDE 1: HERO TERMINAL (PUTIH) -->
-    <section class="pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
+    <!-- 2. HERO TERMINAL (SPACING ATAS DISESUAIKAN UNTUK HP: pt-16 md:pt-32) -->
+    <section class="pt-16 md:pt-32 pb-16 md:pb-24 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden bg-white">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
         <div class="max-w-5xl mx-auto w-full flex flex-col items-center text-center relative z-10">
@@ -146,12 +144,12 @@
                 </div>
             </div>
             
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6 text-gray-900">
-                Master the <span class="text-branddark">Market</span>. <br class="hidden md:block">
-                <span class="text-3xl md:text-5xl lg:text-6xl font-black mb-6">Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.</span>
+            <h1 class="text-6xl md:text-6xl lg:text-6xl font-black leading-tight mb-4 text-gray-900">
+                Master the <span class="text-branddark">Market</span>. <br>
+                Kuasai <span class="text-branddark">Data</span>, Eksekusi <span class="text-branddark">Presisi</span>.
             </h1>
             
-            <p class="text-gray-600 text-base md:text-2xl max-w-3xl leading-relaxed mb-12 md:mb-16 font-medium">
+            <p class="text-gray-600 text-base md:text-2xl max-w-3xl leading-relaxed mb-12 md:mb-16 font-medium mt-4">
                 Satu layar untuk menganalisa <span class="text-branddark font-bold">fundamental flow</span> global secara <span class="text-branddark font-bold">real-time</span>. Keputusan akurat dimulai dari sini.
             </p>
 
@@ -179,7 +177,7 @@
         </div>
     </section>
 
-    <!-- 3. SLIDE 2: PENGGERAK PASAR (HITAM) -->
+    <!-- 3. PENGGERAK PASAR & HEATMAPS -->
     <section class="bg-darkbg py-16 md:py-24 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative">
         <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
         
@@ -217,10 +215,8 @@
 
             <!-- ADVANCED INTERACTIVE CHART -->
             <div class="bg-[#0F0F0F] border border-gray-800 rounded-2xl shadow-xl hover:border-brand transition-colors mb-8 overflow-hidden h-[500px] md:h-[600px] lg:h-[700px] tv-widget-wrapper relative z-20">
-                <!-- TradingView Widget BEGIN -->
                 <div class="tradingview-widget-container" style="height:100%;width:100%">
                   <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
-                  <div class="tradingview-widget-copyright"><a href="https://id.tradingview.com/symbols/XAUUSD/?exchange=OANDA" rel="noopener nofollow" target="_blank"><span class="blue-text">Track all markets on TradingView</span></a></div>
                   <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
                   {
                   "allow_symbol_change": true,
@@ -253,7 +249,6 @@
                 }
                   </script>
                 </div>
-                <!-- TradingView Widget END -->
             </div>
 
             <!-- 5 Mini Charts Grid -->
@@ -331,43 +326,55 @@
                     <h3 class="text-xl md:text-2xl font-bold text-white tracking-wide">Market Heatmaps & Live News</h3>
                 </div>
 
-                <!-- Grid 1: Currency Strength (Terbesar) & News Timeline -->
+                <!-- Grid 1: FOREX HEATMAP UTAMA (2 Kolom) & News Timeline (1 Kolom) -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
                     
-                    <!-- Currency Strength Heatmap (Lebar 2 Kolom) -->
+                    <!-- FOREX HEATMAP UTAMA (Lebar 2 Kolom) -->
                     <div class="lg:col-span-2 bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[500px] md:h-[650px] flex flex-col">
-                        <div class="flex items-center gap-2 mb-4">
-                            <i class="fa-solid fa-table-cells text-brand text-lg"></i>
-                            <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CURRENCY STRENGTH (FOREX HEATMAP)</h3>
-                        </div>
-                        <div class="flex-1 tv-widget-wrapper w-full h-full">
-                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
-                                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-                                <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-cross-rates.js" async>
-                                { 
-                                    "width": "100%", 
-                                    "height": "100%", 
-                                    "currencies": [ "EUR", "USD", "JPY", "GBP", "CHF", "AUD", "CAD", "NZD" ], 
-                                    "isTransparent": true, 
-                                    "colorTheme": "dark", 
-                                    "locale": "id" 
-                                }
-                                </script>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-fire text-brand text-lg"></i>
+                                <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">FOREX HEATMAP UTAMA (MAJOR CURRENCIES)</h3>
                             </div>
+                            <span class="bg-brand/10 border border-brand/30 text-brand text-[9px] md:text-[10px] font-bold px-2 py-0.5 rounded-full">MAIN FEATURE</span>
+                        </div>
+                        <div class="flex-1 tv-widget-wrapper w-full h-full relative">
+                            <!-- TradingView FOREX HEATMAP Widget BEGIN -->
+                            <div class="tradingview-widget-container" style="height:100%;width:100%;">
+                              <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
+                              <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-forex-heat-map.js" async>
+                              {
+                                "width": "100%",
+                                "height": "100%",
+                                "currencies": [
+                                  "EUR",
+                                  "USD",
+                                  "JPY",
+                                  "GBP",
+                                  "CHF",
+                                  "AUD",
+                                  "CAD",
+                                  "NZD"
+                                ],
+                                "isTransparent": true,
+                                "colorTheme": "dark",
+                                "locale": "id"
+                              }
+                              </script>
+                            </div>
+                            <!-- TradingView Widget END -->
                         </div>
                     </div>
 
-                    <!-- News Timeline -->
+                    <!-- Live Market News (1 Kolom) -->
                     <div class="lg:col-span-1 bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[500px] md:h-[650px] flex flex-col">
                         <div class="flex items-center gap-2 mb-4">
                             <i class="fa-solid fa-newspaper text-brand text-lg"></i>
                             <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">LIVE MARKET NEWS</h3>
                         </div>
                         <div class="flex-1 tv-widget-wrapper w-full h-full relative">
-                            <!-- TradingView Widget BEGIN -->
                             <div class="tradingview-widget-container" style="height:100%;width:100%;">
                               <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/news/top-providers/tradingview/" rel="noopener nofollow" target="_blank"><span class="blue-text">Top stories</span></a><span class="trademark"> by TradingView</span></div>
                               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
                               {
                                 "displayMode": "regular",
@@ -380,25 +387,22 @@
                               }
                               </script>
                             </div>
-                            <!-- TradingView Widget END -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Grid 2: Stock, Crypto, ETF Heatmaps -->
+                <!-- Grid 2: Stock, Crypto, ETF -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                     
-                    <!-- Stock Heatmap -->
+                    <!-- Stock Heatmap (S&P 500) -->
                     <div class="bg-darkpanel border border-gray-800 rounded-2xl p-4 md:p-6 shadow-xl hover:border-brand transition-all duration-300 h-[450px] flex flex-col">
                         <div class="flex items-center gap-2 mb-4">
                             <i class="fa-solid fa-layer-group text-brand text-lg"></i>
                             <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">S&P 500 STOCK HEATMAP</h3>
                         </div>
-                        <div class="flex-1 tv-widget-wrapper w-full h-full relative">
-                            <!-- TradingView Widget BEGIN -->
+                        <div class="flex-1 tv-widget-wrapper w-full h-full">
                             <div class="tradingview-widget-container" style="height:100%;width:100%;">
                               <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/stock/" rel="noopener nofollow" target="_blank"><span class="blue-text">Stock Heatmap</span></a><span class="trademark"> by TradingView</span></div>
                               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
                               {
                                 "dataSource": "SPX500",
@@ -419,7 +423,6 @@
                               }
                               </script>
                             </div>
-                            <!-- TradingView Widget END -->
                         </div>
                     </div>
 
@@ -430,10 +433,8 @@
                             <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">CRYPTO HEATMAP</h3>
                         </div>
                         <div class="flex-1 tv-widget-wrapper w-full h-full">
-                            <!-- TradingView Widget BEGIN -->
                             <div class="tradingview-widget-container" style="height:100%;width:100%;">
                               <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/crypto/" rel="noopener nofollow" target="_blank"><span class="blue-text">Crypto Heatmap</span></a><span class="trademark"> by TradingView</span></div>
                               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js" async>
                               {
                                 "dataSource": "Crypto",
@@ -452,7 +453,6 @@
                               }
                               </script>
                             </div>
-                            <!-- TradingView Widget END -->
                         </div>
                     </div>
 
@@ -463,10 +463,8 @@
                             <h3 class="font-bold text-white uppercase text-[10px] md:text-xs tracking-widest">ETF HEATMAP</h3>
                         </div>
                         <div class="flex-1 tv-widget-wrapper w-full h-full">
-                            <!-- TradingView Widget BEGIN -->
                             <div class="tradingview-widget-container" style="height:100%;width:100%;">
                               <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%;"></div>
-                              <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/etf/" rel="noopener nofollow" target="_blank"><span class="blue-text">ETF Heatmap</span></a><span class="trademark"> by TradingView</span></div>
                               <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-etf-heatmap.js" async>
                               {
                                 "dataSource": "AllUSEtf",
@@ -486,7 +484,6 @@
                               }
                               </script>
                             </div>
-                            <!-- TradingView Widget END -->
                         </div>
                     </div>
 
@@ -496,19 +493,17 @@
         </div>
     </section>
 
-    <!-- 4. SLIDE 3: KALENDER EKONOMI (DIUBAH MENJADI 3 KOLOM) -->
+    <!-- 4. KALENDER EKONOMI -->
     <section class="bg-white py-16 md:py-32 px-5 md:px-16 lg:px-24 border-b border-gray-200 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern-light opacity-50 pointer-events-none"></div>
 
         <div class="max-w-[1400px] mx-auto relative z-10">
-            <!-- Header Kalender -->
             <div class="text-center mb-12 md:mb-16">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Jadwal & Data Rilis</p>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Economic <span class="text-branddark">Calendar</span></h2>
                 <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau <span class="text-branddark font-bold">high-impact news</span>. Hindari <span class="text-branddark font-bold">liquidity sweep</span> dan <span class="text-branddark font-bold">fakeout</span> saat rilis berita penting.</p>
             </div>
 
-            <!-- Kalender Widgets (Grid diubah ke 3 Kolom) -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-16 md:mb-32">
                 <!-- 1. TradingView Calendar -->
                 <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
@@ -526,7 +521,7 @@
                     </div>
                 </div>
 
-                <!-- 2. Investing.com Calendar (KODE DIPERBARUI) -->
+                <!-- 2. Investing.com Calendar -->
                 <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                         <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
@@ -534,14 +529,12 @@
                         </div>
                         <div class="flex items-center gap-2">
                             <span class="bg-blue-50 text-blue-500 text-[9px] md:text-[10px] font-bold px-1.5 md:px-2 py-1 rounded border border-blue-200">WIB (GMT+7)</span>
-                            <!-- Dropdown Filter Interaktif -->
                             <select id="investing-filter" class="text-[9px] md:text-[10px] border border-gray-200 rounded px-1.5 md:px-2 py-1 bg-white font-bold text-gray-700 outline-none cursor-pointer hover:border-branddark transition-colors">
                                 <option value="all">Semua</option>
                                 <option value="high">🔥 High Saja</option>
                             </select>
                         </div>
                     </div>
-                    <!-- Implementasi iframe khusus sesuai request -->
                     <div class="flex-1 bg-white rounded-xl overflow-hidden relative flex flex-col">
                         <iframe id="investing-iframe" src="" width="100%" height="100%" frameborder="0" allowtransparency="true" marginwidth="0" marginheight="0" class="flex-1"></iframe>
                         <div class="poweredBy text-center py-1 bg-gray-50 border-t border-gray-100" style="font-family: Arial, Helvetica, sans-serif;">
@@ -550,7 +543,7 @@
                     </div>
                 </div>
 
-                <!-- 3. MetaTrader Tradays Calendar (REAL-TIME) -->
+                <!-- 3. MetaTrader Tradays Calendar -->
                 <div class="bg-gray-50 border border-gray-200 rounded-3xl p-4 md:p-6 shadow-sm hover:border-branddark transition-colors h-[500px] md:h-[600px] flex flex-col w-full">
                     <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                         <div class="flex items-center gap-2 text-gray-900 font-bold text-xs md:text-sm">
@@ -561,7 +554,6 @@
                         </div>
                     </div>
                     <div class="flex-1 bg-white rounded-xl overflow-hidden relative flex flex-col p-1">
-                        <!-- Widget Injector Tradays -->
                         <div id="economicCalendarWidget" class="flex-1 w-full h-full"></div>
                         <div class="ecw-copyright text-center py-1 mt-1 bg-gray-50">
                             <a href="https://www.metatrader.com/?utm_source=calendar.widget&utm_medium=link&utm_term=economic.calendar&utm_content=visit.mql5.calendar&utm_campaign=202.calendar.widget" rel="noopener nofollow" target="_blank" class="text-[8px] text-gray-400 hover:text-branddark">MetaTrader World Markets</a>
@@ -573,32 +565,27 @@
                 </div>
             </div>
 
-            <!-- Global Map Section (TradingView Economic Map) -->
+            <!-- Global Map Section -->
             <div class="text-center mb-8 md:mb-12">
                 <p class="text-branddark font-bold text-xs tracking-widest uppercase mb-4">Visual Interaktif</p>
                 <h2 class="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4">Global <span class="text-branddark">Macro</span> Heatmap</h2>
                 <p class="text-gray-500 text-base md:text-lg max-w-2xl mx-auto">Pantau indikator <span class="text-branddark font-bold">makroekonomi global</span> seperti <span class="text-branddark font-bold">PDB, Suku Bunga, dan tingkat Inflasi</span> berbagai negara.</p>
             </div>
 
-            <!-- CONTAINER UTAMA MAP -->
             <div class="bg-white border border-gray-200 rounded-3xl shadow-lg hover:border-branddark transition-colors h-[500px] md:h-[600px] relative overflow-hidden flex items-center justify-center p-2">
-                
-                <!-- Buka World Monitor CTA -->
                 <a href="https://finance.worldmonitor.app/dashboard?lat=20.0000&lon=0.0000&zoom=1.00&view=global&timeRange=7d&layers=cables%2Cpipelines%2Csanctions%2Cweather%2Ceconomic%2Cwaterways%2Coutages%2Cnatural%2CtradeRoutes" target="_blank" class="absolute bottom-4 right-4 md:bottom-6 md:right-6 z-30 bg-white/90 backdrop-blur border border-gray-300 hover:border-branddark text-branddark hover:bg-branddark hover:text-white px-3 py-2 md:px-5 md:py-3 rounded-xl font-bold text-[10px] md:text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-sm group">
                     <i class="fa-solid fa-map-location-dot"></i> <span class="hidden sm:inline">Buka World Monitor</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
                 </a>
 
-                <!-- TRADINGVIEW ECONOMIC MAP (Real-time) -->
                 <div class="w-full h-full relative z-10 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
                     <script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-economic-map.js"></script>
                     <tv-economic-map metrics="gdp,ur,gdg,intr,iryy" style="width: 100%; height: 100%; display: block;"></tv-economic-map>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- 5. SLIDE 4: INDIKATOR MAKRO - SEMUA TEKS DIKEMBALIKAN SESUAI SUMBER (HITAM) -->
+    <!-- 5. INDIKATOR MAKRO -->
     <section class="bg-darkbg py-16 md:py-32 px-5 md:px-16 lg:px-24 border-b border-gray-800 relative">
         <div class="absolute inset-0 bg-grid-pattern-dark opacity-30 pointer-events-none"></div>
         
@@ -609,11 +596,8 @@
                 <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto">Histori rilis <span class="text-brand font-bold">high-impact data</span> 3 bulan terakhir beserta <span class="text-brand font-bold">first-hand sources</span> aslinya.</p>
             </div>
 
-            <!-- Dashboard Wrapper -->
             <div class="bg-darkpanel border border-gray-800 rounded-[2rem] p-4 md:p-6 lg:p-10 shadow-xl">
-                <!-- 2 Tabel Makro Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-12">
-                    
                     <!-- Table 1: Inflasi & Tenaga Kerja -->
                     <div class="bg-[#0d1522] border border-gray-700 rounded-2xl shadow-sm overflow-hidden group hover:border-brand transition-colors">
                         <div class="p-4 md:p-5 border-b border-gray-700 flex items-center gap-3">
@@ -709,13 +693,11 @@
         </div>
     </section>
 
-    <!-- 6. SLIDE 5: DISCORD CTA EKSKLUSIF (PUTIH) -->
-    <!-- Elemen Diluruskan Sepenuhnya (Transform Rotate Dihapus) -->
+    <!-- 6. DISCORD CTA EKSKLUSIF -->
     <section class="bg-white py-16 md:py-32 px-5 md:px-16 lg:px-24 relative overflow-hidden border-t border-gray-200">
         <div class="absolute top-1/2 left-0 -translate-y-1/2 w-[400px] h-[400px] md:w-[800px] md:h-[800px] bg-branddark/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none"></div>
         
         <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
-            
             <div class="text-center lg:text-left">
                 <div class="inline-flex items-center gap-2 mb-6 border border-branddark/30 bg-branddark/10 px-4 py-2 rounded-full text-[10px] md:text-xs font-bold text-branddark uppercase tracking-widest">
                     <span class="w-2 h-2 rounded-full bg-branddark animate-blink"></span> LIVE COMMUNITY
@@ -728,7 +710,6 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 md:gap-6">
-                    <!-- Tombol Discord tanpa efek Glow (Glow Dihapus, menggunakan shadow standar) -->
                     <a href="https://discord.gg/hDJQ7ubvFA" target="_blank" class="bg-brand text-darkbg font-bold py-4 px-8 md:px-10 rounded-full transition-all duration-300 transform md:hover:scale-105 shadow-md text-base md:text-lg flex items-center justify-center gap-3 w-full sm:w-auto">
                         <i class="fa-brands fa-discord text-xl md:text-2xl"></i> Join Discord Sekarang
                     </a>
@@ -739,7 +720,6 @@
                 </div>
             </div>
 
-            <!-- Ilustrasi Chat Discord Mockup (LURUS PRESISI) -->
             <div class="relative w-full max-w-md mx-auto lg:ml-auto mt-10 lg:mt-0">
                 <div class="bg-[#313338] rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50 text-left">
                     <div class="bg-[#2B2D31] px-4 md:px-5 py-3 md:py-4 flex items-center gap-3 border-b border-[#1E1F22] shadow-sm">
@@ -791,7 +771,7 @@
         </div>
     </section>
 
-    <!-- 7. FOOTER (HITAM) -->
+    <!-- 7. FOOTER -->
     <footer class="bg-darkbg text-gray-400 py-10 px-5 md:px-16 lg:px-24 text-xs font-sans relative z-10 border-t border-gray-800">
         <div class="max-w-6xl mx-auto border-b border-gray-800 pb-6 mb-6 text-center md:text-left">
             <p class="leading-relaxed">
@@ -803,7 +783,7 @@
         </div>
         <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
             <p class="text-center md:text-left w-full md:w-auto">Copyright &copy; 2026 AcademyFX. Semua hak dilindungi.</p>
-        <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
+            <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6 w-full md:w-auto">
                 <a href="https://www.instagram.com/richolinggar_?igsh=b28zZmxsdjV6ejM5" target="_blank" class="text-[#E1306C] font-semibold hover:underline flex items-center gap-2 transition hover:-translate-y-1">
                     <i class="fa-brands fa-instagram text-lg md:text-xl"></i> <span class="hidden md:inline">Instagram</span>
                 </a>
@@ -867,7 +847,7 @@
         updateTerminalClock(); 
         setInterval(updateTerminalClock, 1000);
 
-        // 3. INVESTING.COM FILTER CALENDAR LOGIC (FORCE GMT+7 ON LOAD)
+        // 3. INVESTING.COM FILTER CALENDAR LOGIC
         const investingBaseUrl = "https://sslecal2.investing.com?columns=exc_flags,exc_currency,exc_importance,exc_actual,exc_forecast,exc_previous&features=datepicker,timezone&countries=5,25,37,45,39,14,48,4,10,35,17,6,11,42,44,22,43,36,26,12,46,41,178,72&calType=day&timeZone=27&lang=54";
         
         window.addEventListener('load', function() {
